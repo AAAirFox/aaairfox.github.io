@@ -1,0 +1,202 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>udev创建USB挂载点 | AAAirFox</title><meta name="author" content="Zhang"><meta name="copyright" content="Zhang"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="USB插入的次序不同会影响设备的运行以及节点的开启与运行。无法得知设备挂载点&#x2F;dev&#x2F;ttyACM0和&#x2F;dev&#x2F;ttyACM1哪一个挂载点对应哪一个设备，使用udev保证每次开机后唯一的设备挂载点对应一个确定的设备。 但同时使用udev规则来创建设备挂载点新的映射时，需要注意不能随意更换USB设备插的USB口，因为每次更换USB口，那么相应的KERNELS就">
+<meta property="og:type" content="article">
+<meta property="og:title" content="udev创建USB挂载点">
+<meta property="og:url" content="https://aaairfox.github.io/udev%E5%88%9B%E5%BB%BAUSB%E6%8C%82%E8%BD%BD%E7%82%B9/index.html">
+<meta property="og:site_name" content="AAAirFox">
+<meta property="og:description" content="USB插入的次序不同会影响设备的运行以及节点的开启与运行。无法得知设备挂载点&#x2F;dev&#x2F;ttyACM0和&#x2F;dev&#x2F;ttyACM1哪一个挂载点对应哪一个设备，使用udev保证每次开机后唯一的设备挂载点对应一个确定的设备。 但同时使用udev规则来创建设备挂载点新的映射时，需要注意不能随意更换USB设备插的USB口，因为每次更换USB口，那么相应的KERNELS就">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://aaairfox.github.io/img/avatar.jpg">
+<meta property="article:published_time" content="2020-02-02T17:54:21.000Z">
+<meta property="article:modified_time" content="2024-04-05T17:58:21.583Z">
+<meta property="article:author" content="Zhang">
+<meta property="article:tag" content="ROS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://aaairfox.github.io/img/avatar.jpg"><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://aaairfox.github.io/udev%E5%88%9B%E5%BB%BAUSB%E6%8C%82%E8%BD%BD%E7%82%B9/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'udev创建USB挂载点',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-04-06 01:58:21'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.1.1"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">37</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">11</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="AAAirFox"><img class="site-icon" src="/img/favicon.ico"/><span class="site-name">AAAirFox</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">udev创建USB挂载点</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2020-02-02T17:54:21.000Z" title="发表于 2020-02-03 01:54:21">2020-02-03</time></span></div><div class="meta-secondline"></div></div></div><article class="post-content" id="article-container"><p>USB插入的次序不同会影响设备的运行以及节点的开启与运行。无法得知设备挂载点&#x2F;dev&#x2F;ttyACM0和&#x2F;dev&#x2F;ttyACM1哪一个挂载点对应哪一个设备，使用udev保证每次开机后唯一的设备挂载点对应一个确定的设备。</p>
+<p>但同时使用udev规则来创建设备挂载点新的映射时，需要注意不能随意更换USB设备插的USB口，因为每次更换USB口，那么相应的KERNELS就换了。</p>
+<p>与传统的顺序加载相比，udev 通过并行加载内核模块提供了潜在的性能优势。</p>
+<h2 id="编写规则"><a href="#编写规则" class="headerlink" title="编写规则"></a>编写规则</h2><p>Tips：</p>
+<ol>
+<li><p>一般默认都会保存在 &#x2F;etc&#x2F;udev&#x2F;rules.c&#x2F;目录下并以filename.rules命令，必须是.rules结尾，不然udev机制无法识。</p>
+</li>
+<li><p>在安装的新版本的udev可能会有一些规则案例，比如在&#x2F;etc&#x2F;udev&#x2F;50.udev.rules文件下，可以用来参考。</p>
+</li>
+<li><p>在每一个规则文件中，以 # 或者 ; 开头的行都被认为是注释，每一个非空白行都是一条规则，规则必须在一行写完，不能换行或跨行。</p>
+</li>
+<li><p>一个设备是可以被多条规则同时匹配的，因此可以利用这点来创建多个命令节点，设置NAME，因此就可以有多个可选节点可以创建。</p>
+</li>
+</ol>
+<p>语法规则：</p>
+<p>​	每条规则都一系列的键值对来创建，这些键值对通过逗号分隔，键分为匹配键和赋值键，当此条匹配键的逐个被匹配后，将使用赋值键使用的赋值用来创建对应的命令节点或者链接，然后进行下一条进行处理，每条规则至少有一个匹配件和赋值键。</p>
+<p>eg：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">KERNEL==<span class="string">&quot;sdc&quot;</span>,NAME=<span class="string">&quot;my_usb_disk&quot;</span></span><br><span class="line"><span class="comment">#这里有一个匹配键及KERNEL为sdc的设备，还有一个赋值键(NAME)，及节点命令设置为my_usb_disk。</span></span><br></pre></td></tr></table></figure>
+
+<p>​	<em>1、这里匹配键通常使用key&#x3D; &#x3D;value，及键与值之间使用&#x3D; &#x3D;及两个等号连接，而赋值键则要使用	一个&#x3D;号表示对其赋值，有点类似于shell或常见变成语言中的匹配字符或对象相对以及对变量或对	象赋值。</em></p>
+<p>​	<em>2、再次强调每一行的为一条完整的规则配置，不能使用平时在shell脚步里或配置文件中的 \ 来续	行，也不要进行换行，必须要写为一行，不然就会认为是分开的两条或多条规则。</em></p>
+<h3 id="常见基本的规则键值"><a href="#常见基本的规则键值" class="headerlink" title="常见基本的规则键值"></a>常见基本的规则键值</h3><ul>
+<li><p>匹配键</p>
+<p>KERNEL  -  #匹配系统定义s的设备在内置中的名称，比如默认定义的sda、sdb2等<br>SUBSYSTEM  -  #匹配设备的子系统，比如block等<br>DRIVER  -  #匹配设备支持的驱动名称</p>
+<p><em>1、每一个匹配键都会决定着匹配的设备，如果一个设备有很多设备，有可变的有不可变的（可能在某些环境下），那么就可以直接设置为多个匹配键进行，然后再赋值键的值设置为相同，这样可以确保这个设备的节点名会更加稳定。</em></p>
+<p><em>2、但是如果有多个设备有很多相同的属性特征，这时就可以进行设置极少的相同匹配键，并使用更多的不同的属性匹配键来匹配，同样设置多行，这样匹配时就可以不同的赋值键的值来区分不同的设备。</em></p>
+</li>
+<li><p>赋值键</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">NAME  - <span class="comment">#根据匹配键找出对应的设备，并对其进行进行设置命令节点，也就是设备应该使用的名称</span></span><br><span class="line">SYMLINK  - <span class="comment">#一个设备节点的可选名字的符号链接</span></span><br></pre></td></tr></table></figure>
+
+<p><em>无论是自己配置规则还是不写，被识别到的设备都会被udev创建一个命令节点，这时如果再次设置条目节点，那么就会覆盖掉之前的节点名。如果想要有多个不同节点名来访问设备，可以使用SYMLINK+&#x3D;”aa bb cc”，这样可以对设备创建符号链接名称，同样使用这些名称一样可以访问和使用此设备，注意，多个要是使用+&#x3D;符号，且里面的多个值使用空格隔开。</em></p>
+<p><strong>例如下列几条规则配置：</strong></p>
+<p>1. </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">KERNEL==<span class="string">&quot;sdc&quot;</span>,NAME=<span class="string">&quot;my_usb_disk&quot;</span></span><br><span class="line"><span class="comment">#匹配设备名为sdc的设备，并重新设置其设备名为my_usb_disk，访问此设备节点为/dev/my_usb_disk</span></span><br></pre></td></tr></table></figure>
+
+<p>2. </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">KERNEL==<span class="string">&quot;sdc&quot;</span>,DRIVER==<span class="string">&quot;usb-storage&quot;</span>,SYMLINK+=<span class="string">&quot;myusb_link&quot;</span></span><br><span class="line"><span class="comment">#匹配设备名为sdc，且驱动为usb-storage的设备，添加一个符号链接命名为myusb_link，并对现有的命令节点进行链接，</span></span><br><span class="line"><span class="comment">#没有指定NAME赋值键及设备名里的定义，设备使用默认缺省的设备来命令设备名，默认不写NAME为/dev/sdc，及对/dev/sdc创建符号链接。</span></span><br><span class="line"><span class="comment">#需要使用此符号链接名访问设备，则访问/dev/myusb_link。</span></span><br></pre></td></tr></table></figure>
+
+<p>3. </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">KERNEL==<span class="string">&quot;sdc&quot;</span>,SYSMLINK+=<span class="string">&quot;myusb myusb0&quot;</span></span><br><span class="line"><span class="comment">#匹配设备名为sdc，并追加两个设备符号链接名各为myusb、myusb0。同样指向的是匹配sdc的设备及/dev/sdc。</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>参考链接：</p>
+<p><a target="_blank" rel="noopener" href="https://www.corvin.cn/474.html">使用udev规则创建USB设备挂载点映射 </a></p>
+<p><a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/Udev_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">udev</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.51cto.com/mengzhaofu/1856428">Linux入门之内核管理番外篇(4)udev入门(1)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/sopost/archive/2013/01/09/2853200.html">udev-无双</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://aaairfox.github.io">Zhang</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://aaairfox.github.io/udev%E5%88%9B%E5%BB%BAUSB%E6%8C%82%E8%BD%BD%E7%82%B9/">https://aaairfox.github.io/udev%E5%88%9B%E5%BB%BAUSB%E6%8C%82%E8%BD%BD%E7%82%B9/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://aaairfox.github.io" target="_blank">AAAirFox</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/ROS/">ROS</a></div><div class="post_share"><div class="social-share" data-image="/img/avatar.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/Win10%E5%AE%89%E8%A3%85PostgreSQL9.6%EF%BC%9AUnable%20to%20write%20inside%20TEMP%20environment%20variable%20path/" title="Win10安装PostgreSQL9.6：Unable to write inside TEMP environment variable path"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Win10安装PostgreSQL9.6：Unable to write inside TEMP environment variable path</div></div></a></div><div class="next-post pull-right"><a href="/ROS%E7%9A%84%E9%A2%84%E5%A4%87%E5%BD%B9%E5%B0%8F%E5%86%9B%E5%9B%A2/" title="ROS预备役小军团"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">ROS预备役小军团</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/ROS%E7%9A%84%E9%A2%84%E5%A4%87%E5%BD%B9%E5%B0%8F%E5%86%9B%E5%9B%A2/" title="ROS预备役小军团"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-01-23</div><div class="title">ROS预备役小军团</div></div></a></div><div><a href="/Robo%E6%AF%94%E8%B5%9B%E6%B5%81%E7%A8%8B/" title="Robo比赛编译&amp;运行流程"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-07-21</div><div class="title">Robo比赛编译&amp;运行流程</div></div></a></div><div><a href="/Rules%E8%A7%84%E5%88%99%E8%AE%B0%E5%BD%95%E8%AF%B4%E6%98%8E/" title="Rules规则记录说明"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-07-19</div><div class="title">Rules规则记录说明</div></div></a></div><div><a href="/cartographer%E5%AE%89%E8%A3%85/" title="cartographer安装"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-03-16</div><div class="title">cartographer安装</div></div></a></div><div><a href="/explorer%E5%BA%95%E5%B1%82%E8%AE%B0%E5%BD%95/" title="explorer底层记录"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-04-06</div><div class="title">explorer底层记录</div></div></a></div><div><a href="/rplidar%E9%A9%B1%E5%8A%A8%E8%AF%B4%E6%98%8E/" title="lidar驱动说明"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-01-16</div><div class="title">lidar驱动说明</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Zhang</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">37</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">11</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E5%86%99%E8%A7%84%E5%88%99"><span class="toc-number">1.</span> <span class="toc-text">编写规则</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E5%9F%BA%E6%9C%AC%E7%9A%84%E8%A7%84%E5%88%99%E9%94%AE%E5%80%BC"><span class="toc-number">1.1.</span> <span class="toc-text">常见基本的规则键值</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/explorer%E5%BA%95%E5%B1%82%E8%AE%B0%E5%BD%95/" title="explorer底层记录">explorer底层记录</a><time datetime="2024-04-05T17:20:23.332Z" title="发表于 2024-04-06 01:20:23">2024-04-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/%E4%BD%BF%E7%94%A8Github+Hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" title="使用Github+Hexo搭建个人博客">使用Github+Hexo搭建个人博客</a><time datetime="2024-04-05T16:02:32.000Z" title="发表于 2024-04-06 00:02:32">2024-04-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/windows%E9%80%9A%E8%BF%87vscode%E8%BF%9E%E6%8E%A5%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="windows通过vscode连接服务器">windows通过vscode连接服务器</a><time datetime="2024-04-01T08:20:31.000Z" title="发表于 2024-04-01 16:20:31">2024-04-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/CUDA/" title="CUDA基础">CUDA基础</a><time datetime="2024-02-28T23:14:27.000Z" title="发表于 2024-02-29 07:14:27">2024-02-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/windows%E9%80%9A%E8%BF%87xshell-vnc%E8%BF%9E%E6%8E%A5%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="windows通过xshell+vnc连接服务器">windows通过xshell+vnc连接服务器</a><time datetime="2023-01-25T02:09:06.000Z" title="发表于 2023-01-25 10:09:06">2023-01-25</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Zhang</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div></div></body></html>
