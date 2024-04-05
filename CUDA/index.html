@@ -1,0 +1,271 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>CUDA基础 | AAAirFox</title><meta name="author" content="Zhang"><meta name="copyright" content="Zhang"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="1. 基础1.1 简介普通的GPU就包含了几百个核，高端的有上万个核，这对于多媒体处理中大量的重复处理过程有着天生的优势，同时更重要的是，它可以用来做大规模并行数据处理。 借用某老师的话说，CPU可以看做一个博士解一道超难的数学题目，GPU可以看做是一百个小学生在写海量的类似1+1的简单数学题。 1.2 结构&amp;线程模型  GPU存储结构  local memory【本地内存，超快】 sha">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CUDA基础">
+<meta property="og:url" content="https://aaairfox.github.io/CUDA/index.html">
+<meta property="og:site_name" content="AAAirFox">
+<meta property="og:description" content="1. 基础1.1 简介普通的GPU就包含了几百个核，高端的有上万个核，这对于多媒体处理中大量的重复处理过程有着天生的优势，同时更重要的是，它可以用来做大规模并行数据处理。 借用某老师的话说，CPU可以看做一个博士解一道超难的数学题目，GPU可以看做是一百个小学生在写海量的类似1+1的简单数学题。 1.2 结构&amp;线程模型  GPU存储结构  local memory【本地内存，超快】 sha">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://aaairfox.github.io/img/avatar.jpg">
+<meta property="article:published_time" content="2024-02-28T23:14:27.000Z">
+<meta property="article:modified_time" content="2024-04-05T14:01:32.565Z">
+<meta property="article:author" content="Zhang">
+<meta property="article:tag" content="Cuda">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://aaairfox.github.io/img/avatar.jpg"><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://aaairfox.github.io/CUDA/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'CUDA基础',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-04-05 22:01:32'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.1.1"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">24</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="AAAirFox"><img class="site-icon" src="/img/favicon.ico"/><span class="site-name">AAAirFox</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">CUDA基础</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2024-02-28T23:14:27.000Z" title="发表于 2024-02-29 07:14:27">2024-02-29</time></span></div><div class="meta-secondline"></div></div></div><article class="post-content" id="article-container"><h1 id="1-基础"><a href="#1-基础" class="headerlink" title="1. 基础"></a>1. 基础</h1><h2 id="1-1-简介"><a href="#1-1-简介" class="headerlink" title="1.1 简介"></a>1.1 简介</h2><p>普通的GPU就包含了几百个核，高端的有上万个核，这对于多媒体处理中大量的重复处理过程有着天生的优势，同时更重要的是，它可以用来做大规模并行数据处理。</p>
+<p>借用某老师的话说，CPU可以看做一个博士解一道超难的数学题目，GPU可以看做是一百个小学生在写海量的类似1+1的简单数学题。</p>
+<h2 id="1-2-结构-线程模型"><a href="#1-2-结构-线程模型" class="headerlink" title="1.2 结构&amp;线程模型"></a>1.2 结构&amp;线程模型</h2><p><img src="/./CUDA/c678b20f07d6464fb34738b695f6bb7c.png" alt="img"></p>
+<ol>
+<li><p>GPU存储结构</p>
+<ul>
+<li>local memory【本地内存，超快】</li>
+<li>shared memory【共享内存，同一block种可以读取，比global快】</li>
+<li>global memory【全局内存，慢】</li>
+</ul>
+</li>
+<li><p>kernel→grid→block→thread</p>
+</li>
+<li><p>线程ID读取</p>
+<table>
+<thead>
+<tr>
+<th align="center">在Grid内</th>
+<th align="center">在Block内</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">blockIdx</td>
+<td align="center">threadIdx</td>
+</tr>
+<tr>
+<td align="center">blockDim</td>
+<td align="center">threadDim</td>
+</tr>
+</tbody></table>
+<p>这些事内置参数，隐式传输到函数。</p>
+</li>
+</ol>
+<h2 id="1-3-安装测试"><a href="#1-3-安装测试" class="headerlink" title="1.3 安装测试"></a>1.3 安装测试</h2><h2 id="1-4-nvidia-smi"><a href="#1-4-nvidia-smi" class="headerlink" title="1.4 nvidia-smi"></a>1.4 nvidia-smi</h2><p>linux查看资源</p>
+<h1 id="2-基本函数"><a href="#2-基本函数" class="headerlink" title="2. 基本函数"></a>2. 基本函数</h1><h2 id="2-1-基本定义"><a href="#2-1-基本定义" class="headerlink" title="2.1 基本定义"></a>2.1 基本定义</h2><ol>
+<li><p>关键字</p>
+<ul>
+<li><p><code>__global__</code></p>
+<p>【核函数】【异步执行】 </p>
+<p>后需要使用void</p>
+<p>CPU可调用，但不能调用CPU上定义的函数</p>
+</li>
+<li><p><code>__device__</code></p>
+<p>GPU上定义，CPU函数不能调用</p>
+<p>​                        →内联函数</p>
+</li>
+<li><p><code>__host__</code></p>
+<p>CPU上定义</p>
+<p>如果不加修饰则默认使用</p>
+</li>
+</ul>
+<p>可以使用<code>__host__ __device__ int func()</code>，在这个函数中可以使用以下代码进行选择区分：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">if</span> __CUDA_ARCH__ &gt;=700</span></span><br><span class="line">	<span class="comment">//Device - 7.x</span></span><br><span class="line"><span class="meta">#<span class="keyword">elif</span> __CUDA_ARCH__ &gt;= 300</span></span><br><span class="line">	<span class="comment">//Device - 3.x</span></span><br><span class="line"><span class="meta">#<span class="keyword">elif</span> !defined(__CUDA_ARCH__)</span></span><br><span class="line">	<span class="comment">//Host</span></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>针对<code>__device__</code>来说</p>
+<p><code>__noinline__</code>	      不要内联</p>
+<p><code>__forceinline__</code>	强制内联</p>
+</li>
+</ul>
+</li>
+<li><p>核函数使用</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//多个block</span></span><br><span class="line"><span class="function">dim3 <span class="title">griddim</span><span class="params">(x, y, z)</span></span>;</span><br><span class="line"><span class="comment">//多个thread</span></span><br><span class="line"><span class="function">dim3 <span class="title">blockdim</span><span class="params">(x, y, z)</span></span>;</span><br><span class="line"><span class="comment">//使用</span></span><br><span class="line">function &lt;&lt; &lt;griddim, blockdim&gt; &gt;&gt;(参数传递);</span><br></pre></td></tr></table></figure>
+
+<p>也可直接使用整数。</p>
+</li>
+</ol>
+<h2 id="2-2-数据相关"><a href="#2-2-数据相关" class="headerlink" title="2.2 数据相关"></a>2.2 数据相关</h2><ol>
+<li><p>初始化&amp;销毁</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cudaMalloc</span>((<span class="type">void</span>**)&amp;cudaData, N * <span class="built_in">sizeof</span>(<span class="type">int</span>));</span><br><span class="line"><span class="built_in">cudaMemset</span>();</span><br><span class="line"><span class="built_in">cudaFree</span>(cudaData);</span><br><span class="line"><span class="comment">//锁页主机内存</span></span><br><span class="line"><span class="type">void</span>* ptr = <span class="literal">nullptr</span>;</span><br><span class="line"><span class="built_in">cudaHostAlloc</span>(&amp;ptr, size, cudaHostAllocPortable);</span><br><span class="line"><span class="type">float</span>* devicePtr;</span><br><span class="line"><span class="built_in">cudaGetDevicePointer</span>((<span class="type">void</span>**)&amp;devicePtr, ptr);</span><br><span class="line">devicePtr[<span class="number">0</span>] = <span class="number">1.0f</span>; <span class="comment">// 在GPU上直接写入数据</span></span><br><span class="line"><span class="built_in">cudaFreeHost</span>(ptr);</span><br><span class="line"><span class="comment">//倾斜内存区域</span></span><br><span class="line"><span class="built_in">cudaMallocPitch</span>();</span><br><span class="line"><span class="comment">//GPU分配可移动、一致的内存</span></span><br><span class="line"><span class="built_in">cudaMallocManaged</span>();</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>传输</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//错误定义</span></span><br><span class="line">cudaError_t err = cudaSuccess;</span><br><span class="line"></span><br><span class="line"><span class="comment">//复制【同步函数，不用添加cudaDeviceSynchronize函数】</span></span><br><span class="line"><span class="comment">//host→device</span></span><br><span class="line"><span class="built_in">cudaMemcpy</span>(cudaData, &amp;data, N*<span class="built_in">sizeof</span>(<span class="type">int</span>), cudaMemcpyHostToDevice);</span><br><span class="line"><span class="comment">//device→host</span></span><br><span class="line"><span class="built_in">cudaMemcpy</span>(&amp;data, cudaData, N*<span class="built_in">sizeof</span>(<span class="type">int</span>), cudaMemcpyDeviceToHost);</span><br><span class="line"></span><br><span class="line"><span class="comment">//数据异步复制</span></span><br><span class="line">err = <span class="built_in">cudaMemcpyAsync</span>(&amp;cudaData, &amp;data, streamBytes_in, cudaMemcpyHostToDevice, stream[i]);</span><br><span class="line"></span><br><span class="line"><span class="comment">//设备数组复制</span></span><br><span class="line"><span class="built_in">cudaMemcpyToArray</span>();</span><br><span class="line"><span class="built_in">cudaMemcpyFromArray</span>();</span><br><span class="line"><span class="comment">//二维数组复制</span></span><br><span class="line"><span class="built_in">cudaMemcpy2D</span>();</span><br><span class="line"><span class="built_in">cudaMemcpy2DToArray</span>();</span><br><span class="line"><span class="built_in">cudaMemcpy2DFromArray</span>();</span><br><span class="line"><span class="comment">//全局内存中符号（变量）复制</span></span><br><span class="line"><span class="built_in">cudaMemcpyToSymbol</span>();</span><br><span class="line"><span class="built_in">cudaMemcpyFromSymbol</span>();</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="2-3-事件相关"><a href="#2-3-事件相关" class="headerlink" title="2.3 事件相关"></a>2.3 事件相关</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cudaEventCreate</span>();</span><br><span class="line"><span class="built_in">cudaEventRecord</span>();</span><br><span class="line"><span class="built_in">cudaEventSynchronize</span>();</span><br><span class="line"><span class="built_in">cudaEventDestory</span>();</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-4-属性相关"><a href="#2-4-属性相关" class="headerlink" title="2.4 属性相关"></a>2.4 属性相关</h2><ol>
+<li><p>读取设备相关属性</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cudaDeviceProp prop;</span><br><span class="line"><span class="built_in">cudaGetDeviceProperties</span>(&amp;prop, <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>deviceOverlap</p>
+<p>是否支持流</p>
+</li>
+<li><p>canMapHostMemory</p>
+<p>是否能映射主机内存</p>
+</li>
+<li></li>
+</ul>
+</li>
+<li></li>
+</ol>
+<h1 id="3-高级结构"><a href="#3-高级结构" class="headerlink" title="3. 高级结构"></a>3. 高级结构</h1><h2 id="3-1-CUDA流"><a href="#3-1-CUDA流" class="headerlink" title="3.1 CUDA流"></a>3.1 CUDA流</h2><ol>
+<li><p>流并行相当于CPU任务的并行；</p>
+</li>
+<li><p>查看设备是否支持</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cudaDeviceProp mprop;</span><br><span class="line"><span class="built_in">cudaGetDeviceProperties</span>(&amp;mprop, <span class="number">0</span>);</span><br><span class="line"><span class="keyword">if</span>(!mprop.deviceOverlap)&#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;invaild!&quot;</span> &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义</span></span><br><span class="line">cudaStream_t s;</span><br><span class="line"><span class="comment">//创建</span></span><br><span class="line"><span class="built_in">cudaStreamCreate</span>(cudaStream_t *s);</span><br><span class="line"><span class="comment">//销毁</span></span><br><span class="line"><span class="built_in">cudaStreamDestory</span>(cudaStream_t s);</span><br><span class="line"><span class="comment">//同步</span></span><br><span class="line"><span class="built_in">cudaStreamSynchronize</span>(cudaStream_t s);</span><br><span class="line"><span class="built_in">cudaDeviceSynchronize</span>();</span><br><span class="line"><span class="comment">//等待流任务完成</span></span><br><span class="line"><span class="built_in">cudaStreamWaitEvent</span>(cudaStream_t s);</span><br><span class="line"><span class="comment">//查询流是否完成</span></span><br><span class="line"><span class="built_in">cudaStreamQuery</span>(cudaStream_t s);</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="3-2-nvcc编译流程"><a href="#3-2-nvcc编译流程" class="headerlink" title="3.2 nvcc编译流程"></a>3.2 nvcc编译流程</h2><p><img src="/./CUDA/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NodW5ncnk=,size_16,color_FFFFFF,t_70.png" alt="CUDA Compilation Trajectory"></p>
+<p>NVCC的编译过程分为离线编译和即时编译两部分组成：</p>
+<p><strong>离线编译（绿色虚线框内）：</strong></p>
+<p>CUDA源程序（即xxx.cu文件）在编译前的预处理会被分为主机端代码和设备段代码（即图中的左右分支）：</p>
+<p>1.如图右分支：在设备端代码会被编译成ptx文件（可以看作是用于设备端的汇编文件）或是直接可运行的二进制文件xxx.cubin，然后将起.ptx&#x2F;.cubin文件放在fatbinary文件中。</p>
+<p>2.如图左分支：在主机端代码进行预处理，并将其嵌入到fatbinary文件中，并将CUDA特定的C++扩展转换成标准C++结构(通过cudafe++和cudafe1.stub.c合成为。cudafe1.cpp),然后C++主机编译器将所合成的主机代码与嵌入的fatbinary编译成主机.o&#x2F;.obj文件。</p>
+<p><strong>即时编译（图片绿色虚线框下方）：</strong></p>
+<p>在主机设备启动代码时，CUDA run-time系统会对fatbinary文件进行检测，以获得一个对于GPU设备合适的映像（之后还会提及）：</p>
+<p>1.如果之前的cubin文件与当前GPU相匹配，run-time系统通过nvlink对多个设备端文件进行链接，最后通过host linker链接主机端文件成可执行文件。</p>
+<p>2.如果cubin文件所表示的虚拟设备与当前GPU不符或者fatbinary文件中只包含ptx文件，将会对fatbinary文件中的ptx文件进行即时编译，并对其进行链接（nvlink）最后通过host linker链接主机端文件成可执行文件。</p>
+<h2 id="3-3-程序兼容问题"><a href="#3-3-程序兼容问题" class="headerlink" title="3.3 程序兼容问题"></a>3.3 程序兼容问题</h2><h1 id="4-程序"><a href="#4-程序" class="headerlink" title="4. 程序"></a>4. 程序</h1><h2 id="4-1-矩阵"><a href="#4-1-矩阵" class="headerlink" title="4.1 矩阵"></a>4.1 矩阵</h2><h2 id="4-2-错误检查"><a href="#4-2-错误检查" class="headerlink" title="4.2 错误检查"></a>4.2 错误检查</h2><h2 id="4-3-计时"><a href="#4-3-计时" class="headerlink" title="4.3 计时"></a>4.3 计时</h2><h2 id="4-4-组织线程模型"><a href="#4-4-组织线程模型" class="headerlink" title="4.4 组织线程模型"></a>4.4 组织线程模型</h2><h1 id="5-内存详情"><a href="#5-内存详情" class="headerlink" title="5. 内存详情"></a>5. 内存详情</h1><h2 id="5-1-GPU硬件资源"><a href="#5-1-GPU硬件资源" class="headerlink" title="5.1 GPU硬件资源"></a>5.1 GPU硬件资源</h2><h2 id="5-2-寄存器-本地内存"><a href="#5-2-寄存器-本地内存" class="headerlink" title="5.2 寄存器&amp;本地内存"></a>5.2 寄存器&amp;本地内存</h2><h2 id="5-3-全局内存"><a href="#5-3-全局内存" class="headerlink" title="5.3 全局内存"></a>5.3 全局内存</h2><h2 id="5-4-共享内存等"><a href="#5-4-共享内存等" class="headerlink" title="5.4 共享内存等"></a>5.4 共享内存等</h2><h2 id="5-5-避免线程束分化"><a href="#5-5-避免线程束分化" class="headerlink" title="5.5 避免线程束分化"></a>5.5 避免线程束分化</h2></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://aaairfox.github.io">Zhang</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://aaairfox.github.io/CUDA/">https://aaairfox.github.io/CUDA/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://aaairfox.github.io" target="_blank">AAAirFox</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Cuda/">Cuda</a></div><div class="post_share"><div class="social-share" data-image="/img/avatar.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/windows%E9%80%9A%E8%BF%87vscode%E8%BF%9E%E6%8E%A5%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="windows通过vscode连接服务器"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">windows通过vscode连接服务器</div></div></a></div><div class="next-post pull-right"><a href="/windows%E9%80%9A%E8%BF%87xshell-vnc%E8%BF%9E%E6%8E%A5%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="windows通过xshell+vnc连接服务器"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">windows通过xshell+vnc连接服务器</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Zhang</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">24</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-%E5%9F%BA%E7%A1%80"><span class="toc-number">1.</span> <span class="toc-text">1. 基础</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-%E7%AE%80%E4%BB%8B"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-%E7%BB%93%E6%9E%84-%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 结构&amp;线程模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-%E5%AE%89%E8%A3%85%E6%B5%8B%E8%AF%95"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 安装测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-4-nvidia-smi"><span class="toc-number">1.4.</span> <span class="toc-text">1.4 nvidia-smi</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-%E5%9F%BA%E6%9C%AC%E5%87%BD%E6%95%B0"><span class="toc-number">2.</span> <span class="toc-text">2. 基本函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-%E5%9F%BA%E6%9C%AC%E5%AE%9A%E4%B9%89"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 基本定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-%E6%95%B0%E6%8D%AE%E7%9B%B8%E5%85%B3"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 数据相关</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3-%E4%BA%8B%E4%BB%B6%E7%9B%B8%E5%85%B3"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 事件相关</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-4-%E5%B1%9E%E6%80%A7%E7%9B%B8%E5%85%B3"><span class="toc-number">2.4.</span> <span class="toc-text">2.4 属性相关</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-%E9%AB%98%E7%BA%A7%E7%BB%93%E6%9E%84"><span class="toc-number">3.</span> <span class="toc-text">3. 高级结构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-CUDA%E6%B5%81"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 CUDA流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-nvcc%E7%BC%96%E8%AF%91%E6%B5%81%E7%A8%8B"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 nvcc编译流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3-%E7%A8%8B%E5%BA%8F%E5%85%BC%E5%AE%B9%E9%97%AE%E9%A2%98"><span class="toc-number">3.3.</span> <span class="toc-text">3.3 程序兼容问题</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-%E7%A8%8B%E5%BA%8F"><span class="toc-number">4.</span> <span class="toc-text">4. 程序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#4-1-%E7%9F%A9%E9%98%B5"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 矩阵</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-2-%E9%94%99%E8%AF%AF%E6%A3%80%E6%9F%A5"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 错误检查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-3-%E8%AE%A1%E6%97%B6"><span class="toc-number">4.3.</span> <span class="toc-text">4.3 计时</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-4-%E7%BB%84%E7%BB%87%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B"><span class="toc-number">4.4.</span> <span class="toc-text">4.4 组织线程模型</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-%E5%86%85%E5%AD%98%E8%AF%A6%E6%83%85"><span class="toc-number">5.</span> <span class="toc-text">5. 内存详情</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#5-1-GPU%E7%A1%AC%E4%BB%B6%E8%B5%84%E6%BA%90"><span class="toc-number">5.1.</span> <span class="toc-text">5.1 GPU硬件资源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-2-%E5%AF%84%E5%AD%98%E5%99%A8-%E6%9C%AC%E5%9C%B0%E5%86%85%E5%AD%98"><span class="toc-number">5.2.</span> <span class="toc-text">5.2 寄存器&amp;本地内存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-3-%E5%85%A8%E5%B1%80%E5%86%85%E5%AD%98"><span class="toc-number">5.3.</span> <span class="toc-text">5.3 全局内存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-4-%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98%E7%AD%89"><span class="toc-number">5.4.</span> <span class="toc-text">5.4 共享内存等</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-5-%E9%81%BF%E5%85%8D%E7%BA%BF%E7%A8%8B%E6%9D%9F%E5%88%86%E5%8C%96"><span class="toc-number">5.5.</span> <span class="toc-text">5.5 避免线程束分化</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/%E4%BD%BF%E7%94%A8Github+Hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" title="使用Github+Hexo搭建个人博客">使用Github+Hexo搭建个人博客</a><time datetime="2024-04-05T16:02:32.000Z" title="发表于 2024-04-06 00:02:32">2024-04-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/test/" title="test">test</a><time datetime="2024-04-05T13:24:31.000Z" title="发表于 2024-04-05 21:24:31">2024-04-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/windows%E9%80%9A%E8%BF%87vscode%E8%BF%9E%E6%8E%A5%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="windows通过vscode连接服务器">windows通过vscode连接服务器</a><time datetime="2024-04-01T08:20:31.000Z" title="发表于 2024-04-01 16:20:31">2024-04-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/CUDA/" title="CUDA基础">CUDA基础</a><time datetime="2024-02-28T23:14:27.000Z" title="发表于 2024-02-29 07:14:27">2024-02-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/windows%E9%80%9A%E8%BF%87xshell-vnc%E8%BF%9E%E6%8E%A5%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="windows通过xshell+vnc连接服务器">windows通过xshell+vnc连接服务器</a><time datetime="2023-01-25T02:09:06.000Z" title="发表于 2023-01-25 10:09:06">2023-01-25</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Zhang</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div></div></body></html>
