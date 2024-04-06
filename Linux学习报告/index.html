@@ -1,0 +1,225 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Linux学习笔记 | AAAirFox</title><meta name="author" content="Zhang"><meta name="copyright" content="Zhang"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="Linux学习报告一些码一些学   下载安装卸载 下载文件脚本wget url    安装软件apt-get install software     卸载软件  apt-get purge software  #卸载  apt-get autoremove  apt-get clean           #清除残余文件  dpkg –configure -a     #解放lock   压缩解">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux学习笔记">
+<meta property="og:url" content="https://aaairfox.github.io/Linux%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/index.html">
+<meta property="og:site_name" content="AAAirFox">
+<meta property="og:description" content="Linux学习报告一些码一些学   下载安装卸载 下载文件脚本wget url    安装软件apt-get install software     卸载软件  apt-get purge software  #卸载  apt-get autoremove  apt-get clean           #清除残余文件  dpkg –configure -a     #解放lock   压缩解">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://aaairfox.github.io/self/img/cover/linux.jpg">
+<meta property="article:published_time" content="2019-03-28T09:14:39.000Z">
+<meta property="article:modified_time" content="2024-04-06T17:05:35.571Z">
+<meta property="article:author" content="Zhang">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://aaairfox.github.io/self/img/cover/linux.jpg"><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://aaairfox.github.io/Linux%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Linux学习笔记',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-04-07 01:05:35'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.1.1"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">44</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-tags"></i><span> 标签</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tags/%E7%AE%97%E6%B3%95/"><span> 算法</span></a></li><li><a class="site-page child" href="/tags/Cuda/"><span> CUDA</span></a></li><li><a class="site-page child" href="/tags/C/"><span> C++</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/Ubuntu%E6%93%8D%E4%BD%9C/"><span> Ubuntu</span></a></li><li><a class="site-page child" href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA/"><span> 机器人</span></a></li><li><a class="site-page child" href="/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"><span> 博客搭建</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="AAAirFox"><img class="site-icon" src="/img/favicon.ico"/><span class="site-name">AAAirFox</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-tags"></i><span> 标签</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tags/%E7%AE%97%E6%B3%95/"><span> 算法</span></a></li><li><a class="site-page child" href="/tags/Cuda/"><span> CUDA</span></a></li><li><a class="site-page child" href="/tags/C/"><span> C++</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/Ubuntu%E6%93%8D%E4%BD%9C/"><span> Ubuntu</span></a></li><li><a class="site-page child" href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA/"><span> 机器人</span></a></li><li><a class="site-page child" href="/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"><span> 博客搭建</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">Linux学习笔记</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2019-03-28T09:14:39.000Z" title="发表于 2019-03-28 17:14:39">2019-03-28</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Ubuntu%E6%93%8D%E4%BD%9C/">Ubuntu操作</a></span></div><div class="meta-secondline"></div></div></div><article class="post-content" id="article-container"><h1 id="Linux学习报告"><a href="#Linux学习报告" class="headerlink" title="Linux学习报告"></a>Linux学习报告</h1><p>一些码一些学</p>
+<hr>
+<hr>
+<h1 id="下载安装卸载"><a href="#下载安装卸载" class="headerlink" title="下载安装卸载"></a>下载安装卸载</h1><ul>
+<li><p>下载文件脚本<br><code>wget url</code>  </p>
+</li>
+<li><p>安装软件<br><code>apt-get install software</code>   </p>
+</li>
+<li><p>卸载软件<br>  apt-get purge software  #卸载<br>  apt-get autoremove<br>  apt-get clean           #清除残余文件<br>  dpkg –configure -a     #解放lock</p>
+</li>
+</ul>
+<h1 id="压缩解压"><a href="#压缩解压" class="headerlink" title="压缩解压"></a>压缩解压</h1><p>tar<br>linux传播的文件基本是压缩文件tgz,tar.gz</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">-c(生成)</span><br><span class="line">-f(文件)</span><br><span class="line">-v(verbose)</span><br><span class="line">-z(压缩)</span><br><span class="line">-t(测试)</span><br><span class="line">-x(展开)</span><br><span class="line">tar cz(v)f mydir.tar.gz mydir</span><br><span class="line">tar xz(v)f mydir.tar.gz mydir</span><br><span class="line"></span><br><span class="line">tar -tvzf 20140221130101.log.tgz    #查看该压缩包下是否有文件</span><br><span class="line">tar xfv 20140221130101.log.tgz      #解压到当前文件夹下</span><br></pre></td></tr></table></figure>
+<h1 id="vim文本编辑"><a href="#vim文本编辑" class="headerlink" title="vim文本编辑"></a>vim文本编辑</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">Vi有三种基本的工作模式：指令行模式、文本输入模式、行末模式。他们的相互关系如所示。</span><br><span class="line">指令模式(Command Mode）下输入  a、i、o进入文本输入模式(Input Mode)</span><br><span class="line">文本输入模式(Input Mode)下按ESC进入指令模式（Command Mode）</span><br><span class="line"> </span><br><span class="line">指令模式(Command Mode）下输入:进入末行模式（Last line Mode）</span><br><span class="line">末行模式（Last line Mode）下指令错误则返回指令模式(Command Mode）</span><br><span class="line">下面分别介绍这三种模式</span><br><span class="line"><span class="meta prompt_"> </span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">指令模式(Command Mode）</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">指令模式主要使用方向键移动光标位置进行文字的编辑，下面列出了常用的操作命令及含义。</span></span><br><span class="line">0  －－－－－光标移动至行首</span><br><span class="line">h  －－－－－光标左移一格</span><br><span class="line">l  －－－－－光标右移一格</span><br><span class="line">j  －－－－－光标下移一行</span><br><span class="line">k  －－－－－光标上移一行</span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">+A－－－－－将光标移动到该行最后</span></span><br><span class="line">PageDn －－－－－ 向下移动一页</span><br><span class="line">PageUp －－－－－ 向上移动一页</span><br><span class="line">d+方向键 －－－－－删除文字</span><br><span class="line">dd －－－－－删除整行</span><br><span class="line">pp －－－－－整行复制</span><br><span class="line">r  －－－－－修改光标所在的字符</span><br><span class="line">S  －－－－－删除光标所在的列，并进入输入模式</span><br><span class="line"><span class="meta prompt_"> </span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">文本输入模式（Input Mode）</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">在指令模式下（Command Mode）按a／A键、i/I键、o／O键进入文本模式，文本输入模式的命令及其含义如下所示。</span></span><br><span class="line">a －－－－－在光标后开始插入</span><br><span class="line">A －－－－－在行尾开始插入</span><br><span class="line">i －－－－－从光标所在位置前面开始插入</span><br><span class="line">I －－－－－从光标所在列的第一个非空白字元前面开始插入</span><br><span class="line">o －－－－－在光标所在列下新增一列并进入输入模式</span><br><span class="line">O －－－－－在光标所在列上方新增一列并进入输入模式</span><br><span class="line">ESC －－－－－返回命令行模式</span><br><span class="line"><span class="meta prompt_"> </span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">末行模式（Last line Mode）</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">末行模式主要进行一些文字编辑辅助功能，比如字串搜索、替代、保存文件等操作。主要命令如下</span></span><br><span class="line">：q －－－－－结束Vi程序，如果文件有过修改，先保存文件</span><br><span class="line">：q！ －－－－－强制退出Vi程序</span><br><span class="line">：wq  －－－－－保存修改并退出程序</span><br><span class="line">：set nu －－－－－设置行号</span><br></pre></td></tr></table></figure>
+
+<h1 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h1><ul>
+<li><p>find</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">find -name #按文件名称查找，可以只用通配符</span><br><span class="line">find -size #按万大小查找，可以使用K,M等容量单位</span><br><span class="line">find -type #按文件类型查找，类型f,d,l,b,c分别表示普通文件，目录，链接文件，块设备文件，字符设备文件</span><br></pre></td></tr></table></figure></li>
+<li><p>cd<br>更改工作目录  </p>
+</li>
+<li><p>查找文件<br><code>where is</code></p>
+</li>
+<li><p>定位文件<br><code>locate</code></p>
+</li>
+<li><p>创建新目录</p>
+  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir</span><br><span class="line">mkdir -p   #递归创建多级目录</span><br></pre></td></tr></table></figure></li>
+<li><p>复制文件或目录，复制源是目录或多个文件，目标必须是目录</p>
+  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cp -f  #直接强制复制不进行提醒</span><br><span class="line">cp -i  #复制时进行提醒确认</span><br><span class="line">cp -l  #为源文件建立硬链接，而不是直接复制磁盘数据块</span><br><span class="line">cp -p  #复制时保持原文件权限，宿主及时间</span><br><span class="line">cp -r  #复制目录时，递归复制所有文件及子目录</span><br></pre></td></tr></table></figure></li>
+<li><p>移动文件或目录，可在同时改名。移动多个文件或目录时，目标必须是目录</p>
+  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mv -f   #直接强制移动不进行提醒</span><br><span class="line">mv -i   #移动时进行提醒确认</span><br></pre></td></tr></table></figure></li>
+<li><p>删除文件或目录</p>
+  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mv -f   #直接强制删除而不进行提醒</span><br><span class="line">mv -i   #删除是时进行提醒确认</span><br><span class="line">mv -r   #递归删除所有文件及目录</span><br></pre></td></tr></table></figure></li>
+<li><p>cat命令</p>
+  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">使用方式：<span class="built_in">cat</span> [-AbeEnstTuv] [--<span class="built_in">help</span>] [--version] fileName</span> </span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">说明：把档案串连接后传到基本输出（萤幕或加 &gt; fileName 到另一个档案）</span> </span><br><span class="line">参数： </span><br><span class="line">-n 或 --number     #由1开始对所有输出的行数编号 </span><br><span class="line">-b 或 --number-nonblank   #和-n 相似，只不过对于空白行不编号 </span><br><span class="line">-s 或 --squeeze-blank   #当遇到有连续两行以上的空白行，就代换为一行的空白行 </span><br><span class="line">-v 或 --show-nonprinting</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">范例：</span> </span><br><span class="line">cat -n textfile1 &gt; textfile2 </span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">把 textfile1 的档案内容加上行号后输入 textfile2 这个档案里</span> </span><br><span class="line">cat -b textfile1 textfile2 &gt;&gt; textfile3 </span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">把 textfile1 和 textfile2 的档案内容加上行号（空白行不加）之后将内容附加到 textfile3 里</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">范例：</span> </span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">把 textfile1 的档案内容加上行号后输入 textfile2 这个档案里</span> </span><br><span class="line">cat -n textfile1 &gt; textfile2 </span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">把 textfile1 和 textfile2 的档案内容加上行号（空白行不加）之后将内容附加到 textfile3 里。</span> </span><br><span class="line">cat -b textfile1 textfile2 &gt;&gt; textfile3 </span><br><span class="line">cat /dev/ null &gt; /etc/test.txt #此为清空/etc/test.txt档案内容 </span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="built_in">cat</span> 也可以用来制作 image file。例如要制作软碟的 image file，将软碟放好后打</span> </span><br><span class="line">cat /dev/fd0 &gt; OUTFILE </span><br></pre></td></tr></table></figure></li>
+<li><p>批量查找某个目下文件的包含的内容，例如：<br><code>grep -rn &quot;要找查找的文本&quot; ./</code><br>批量查找并替换文件内容。<br><code>sed -i &quot;s/要找查找的文本/替换后的文本/g&quot; &#39;grep -rl &quot;要找查找的文本&quot; ./&#39;</code></p>
+</li>
+</ul>
+<h1 id="Linux快捷键"><a href="#Linux快捷键" class="headerlink" title="Linux快捷键"></a>Linux快捷键</h1><p>​    将光标移到行首   Ctrl + a<br>​    将光标移到行尾   Ctrl + e<br>​    擦除光标前的整行 Ctrl + u<br>​    擦除光标后的整行 Ctrl + k<br>​    删除光标前的一个词 Ctrl + w  （以空格分隔）<br>​    清屏             Ctrl + l<br>​    杀掉当前进程     ctrl + c<br>​    重起             Ctrl + Alt + Del </p>
+<h1 id="环境相关"><a href="#环境相关" class="headerlink" title="环境相关"></a>环境相关</h1><ul>
+<li>显示指定的字符串或变量的内容，不指定任何参数时将显示一个空行<br><code>echo</code></li>
+<li>从标准输入读入一个字符串并赋值给指定的变量 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">read  </span><br><span class="line">read -p /*在接受输入内容前显示提示字符串的内容，以增强交互性*/</span><br></pre></td></tr></table></figure></li>
+<li>将局部变量导出为全局变量或取消设置，允许在命令中直接为变量赋值  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export</span><br><span class="line">export -p   #查看当前命令环境中导出的全局变量  </span><br><span class="line">export -n   #取消全局变量的全局属性</span><br></pre></td></tr></table></figure></li>
+<li>退出当前shell程序或命令环境，并返回一个退出状态的数字（0为正常，1为异常<br><code>exit</code></li>
+</ul>
+<h1 id="命令运行"><a href="#命令运行" class="headerlink" title="命令运行"></a>命令运行</h1><ul>
+<li><code> &amp;</code><br>加在一个命令的最后，可以把这个命令放到后台执行,如gftp &amp;,</li>
+<li><code>ctrl + z</code><br>可以将一个正在前台执行的命令放到后台，并且处于暂停状态，不</li>
+<li><code>jobs</code><br>前有多少在后台运行的命令<br>jobs -l选项可显示所有任务的PID，jobs的状态可以是running, stopped, Terminated,但是如果任务被终止了（kill），shell 从当前的shell环境已知的列表中删除任务的进程标识；也就是说，jobs命令显示的是当前shell环境中所起的后台正在运行或者被挂起的任务信息；</li>
+<li><code>fg</code><br>将后台中的命令调至前台继续运行<br>如果后台中有多个命令，可以用fg %jobnumber将选中的命令调出，%jobnumber是通过jobs命令查到的后台正在执行的命令的序号(不是pid)</li>
+<li><code>bg</code><br>将一个在后台暂停的命令，变成继续执行 （在后台执行）<br>如果后台中有多个命令，可以用bg %jobnumber将选中的命令调出，%jobnumber是通过jobs命令查到的后台正在执行的命令的序号(不是pid)</li>
+</ul>
+<p><em>将任务转移到后台运行：<br>先ctrl + z；再bg %jobnumber，这样进程就被移到后台运行，终端还能继续接受命令。</em></p>
+<h1 id="软链接"><a href="#软链接" class="headerlink" title="软链接"></a>软链接</h1><p>软链接，又称符号连接，与硬链接不同的是，软链接不链向索引节点号，而是链向目录。相当于的Windows中的快捷方式。它实际上是一个特殊的文件。在符号连接中，文件实际上是一个文本文件，其中包含的有另一文件的位置信息。 </p>
+<ul>
+<li><p>创建</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="built_in">ln</span> -s [源目标] [链接名字]</span></span><br><span class="line">ln -s /softwarehouse /var/www/html   #将/softwarehouse映射到/var/www/html</span><br><span class="line">cd /var/www/html                     #进入文件夹下</span><br><span class="line">ls                                   #查看文件夹下文件</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">产生一淡蓝色‘softwarehouse’即为软链接如果源目录有内容，比如a.txt中，那么目标目录也会有一个a.txt中的镜像</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>删除<br>到目标文件夹下输入：<br><code>rm softwarehouse</code><br>终端直接输入：<br><code>rm -rf /var/www/html</code><br>一定不能<code>rm -rf /var/www/html/</code></p>
+</li>
+</ul>
+<h1 id="管道命令"><a href="#管道命令" class="headerlink" title="管道命令"></a>管道命令</h1><p><strong>什么是管道命令</strong><br>管道命令能够将一个命令的执行结果经过筛选，只保留我们需要的信息。<br>如，&#x2F;etc目录下会有大量的文件，如果使用ls很难找到需要的文件，因此可以使用管道命令将ls的结果进行一次筛选，只保留需要的信息。  </p>
+<p><strong>有哪些</strong></p>
+<ul>
+<li>cut<br>它能将一行行的数据按照指定的分隔符切成一列列，然后只显示特定列的数据。</li>
+</ul>
+<p>按照指定字符分隔<br>这个命令会按照特定的分隔符将数据切分，并只显示第n列的数据。</p>
+<pre><code><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cut -d &#x27;分隔符&#x27; -f n</span><br><span class="line">echo $PATH | cut -d &#x27;:&#x27; -f 1,6    #显示环境变量PATH第1和6列的数据</span><br></pre></td></tr></table></figure>
+</code></pre>
+<p>选择特定范围内的数据<br><code>cut -c 起始字符的下标-结束字符的下标</code></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://aaairfox.github.io">Zhang</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://aaairfox.github.io/Linux%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">https://aaairfox.github.io/Linux%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://aaairfox.github.io" target="_blank">AAAirFox</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Linux/">Linux</a></div><div class="post_share"><div class="social-share" data-image="/self/img/cover/linux.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/%E5%AF%BC%E8%88%AA%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89%E5%90%8C%E6%AD%A5%E5%AE%9A%E4%BD%8D%E4%B8%8E%E5%9C%B0%E5%9B%BE%E6%9E%84%E5%BB%BA/" title="导航学习（二）同步定位与地图构建"><img class="cover" src="/self/img/cover/slam.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">导航学习（二）同步定位与地图构建</div></div></a></div><div class="next-post pull-right"><a href="/cartographer%E5%AE%89%E8%A3%85/" title="cartographer安装"><img class="cover" src="/self/img/cover/carto.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">cartographer安装</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/Linux%E4%B8%8BC++%E7%A8%8B%E5%BA%8F%E4%B8%89%E7%A7%8D%E7%BC%96%E8%AF%91%E6%96%B9%E6%B3%95/" title="Linux下C++程序三种编译方法"><img class="cover" src="/self/img/cover/linux.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-03-15</div><div class="title">Linux下C++程序三种编译方法</div></div></a></div><div><a href="/Linux%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4%E3%80%81%E5%BF%AB%E6%8D%B7%E9%94%AE%E5%8F%8A%E7%8E%AF%E5%A2%83%E7%9B%B8%E5%85%B3/" title="Linux学习记录（一）基础操作命令、快捷键及环境相关"><img class="cover" src="/self/img/cover/linux.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-05-04</div><div class="title">Linux学习记录（一）基础操作命令、快捷键及环境相关</div></div></a></div><div><a href="/Robo%E6%AF%94%E8%B5%9B%E6%B5%81%E7%A8%8B/" title="Robo比赛编译&amp;运行流程"><img class="cover" src="/self/img/cover/ros-2.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-07-21</div><div class="title">Robo比赛编译&amp;运行流程</div></div></a></div><div><a href="/Rules%E8%A7%84%E5%88%99%E8%AE%B0%E5%BD%95%E8%AF%B4%E6%98%8E/" title="Rules规则记录说明"><img class="cover" src="/self/img/cover/linux.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-07-19</div><div class="title">Rules规则记录说明</div></div></a></div><div><a href="/Shell/" title="Shell"><img class="cover" src="/self/img/cover/linux.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-07-05</div><div class="title">Shell</div></div></a></div><div><a href="/Ubuntu16.04%E7%AE%80%E5%8D%95%E7%9A%84%E7%BE%8E%E5%8C%96%E6%94%B9%E9%80%A0/" title="Ubuntu16.04简单的美化改造"><img class="cover" src="/self/img/cover/linux.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-10-03</div><div class="title">Ubuntu16.04简单的美化改造</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Zhang</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">44</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A"><span class="toc-number">1.</span> <span class="toc-text">Linux学习报告</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85%E5%8D%B8%E8%BD%BD"><span class="toc-number">2.</span> <span class="toc-text">下载安装卸载</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8E%8B%E7%BC%A9%E8%A7%A3%E5%8E%8B"><span class="toc-number">3.</span> <span class="toc-text">压缩解压</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#vim%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91"><span class="toc-number">4.</span> <span class="toc-text">vim文本编辑</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C"><span class="toc-number">5.</span> <span class="toc-text">文件操作</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="toc-number">6.</span> <span class="toc-text">Linux快捷键</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E7%9B%B8%E5%85%B3"><span class="toc-number">7.</span> <span class="toc-text">环境相关</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E8%BF%90%E8%A1%8C"><span class="toc-number">8.</span> <span class="toc-text">命令运行</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BD%AF%E9%93%BE%E6%8E%A5"><span class="toc-number">9.</span> <span class="toc-text">软链接</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AE%A1%E9%81%93%E5%91%BD%E4%BB%A4"><span class="toc-number">10.</span> <span class="toc-text">管道命令</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/Hexo+Butterfly%E7%BE%8E%E5%8C%96%E6%93%8D%E4%BD%9C/" title="Hexo+Butterfly美化操作"><img src="/self/img/cover/hexo.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hexo+Butterfly美化操作"/></a><div class="content"><a class="title" href="/Hexo+Butterfly%E7%BE%8E%E5%8C%96%E6%93%8D%E4%BD%9C/" title="Hexo+Butterfly美化操作">Hexo+Butterfly美化操作</a><time datetime="2024-04-06T09:33:17.000Z" title="发表于 2024-04-06 17:33:17">2024-04-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/Hexo+Butterfly%E5%9F%BA%E7%A1%80%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" title="Hexo+Butterfly基础环境配置"><img src="/self/img/cover/hexo.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hexo+Butterfly基础环境配置"/></a><div class="content"><a class="title" href="/Hexo+Butterfly%E5%9F%BA%E7%A1%80%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" title="Hexo+Butterfly基础环境配置">Hexo+Butterfly基础环境配置</a><time datetime="2024-04-06T08:08:43.000Z" title="发表于 2024-04-06 16:08:43">2024-04-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/windows%E9%80%9A%E8%BF%87vscode%E8%BF%9E%E6%8E%A5%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="windows通过vscode连接服务器"><img src="/self/img/cover/vscode.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="windows通过vscode连接服务器"/></a><div class="content"><a class="title" href="/windows%E9%80%9A%E8%BF%87vscode%E8%BF%9E%E6%8E%A5%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="windows通过vscode连接服务器">windows通过vscode连接服务器</a><time datetime="2024-04-01T08:20:31.000Z" title="发表于 2024-04-01 16:20:31">2024-04-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/CUDA/" title="CUDA基础"><img src="/self/img/cover/cuda.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CUDA基础"/></a><div class="content"><a class="title" href="/CUDA/" title="CUDA基础">CUDA基础</a><time datetime="2024-02-28T23:14:27.000Z" title="发表于 2024-02-29 07:14:27">2024-02-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/windows%E9%80%9A%E8%BF%87xshell-vnc%E8%BF%9E%E6%8E%A5%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="windows通过xshell+vnc连接服务器"><img src="/self/img/cover/xshell.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="windows通过xshell+vnc连接服务器"/></a><div class="content"><a class="title" href="/windows%E9%80%9A%E8%BF%87xshell-vnc%E8%BF%9E%E6%8E%A5%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="windows通过xshell+vnc连接服务器">windows通过xshell+vnc连接服务器</a><time datetime="2023-01-25T02:09:06.000Z" title="发表于 2023-01-25 10:09:06">2023-01-25</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2024 By Zhang</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hello World!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div></div></body></html>

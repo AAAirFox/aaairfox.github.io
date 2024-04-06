@@ -1,0 +1,222 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>导航学习（一）基础算法及地图 | AAAirFox</title><meta name="author" content="Zhang"><meta name="copyright" content="Zhang"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="算法Dijkstra算法 使用了广度优先搜索解决赋权有向图或者无向图的单源最短路径问题。以起始点为中心向外层层扩展，直到扩展到终点为止。 一定能找到最短路径，效率低。  A*算法 静态路网中求解最短路最有效的方法。  找到的不一定是最短路径，效率高。   F&#x3D;G+H F:Start到Goal的估计路径值 G:Start到现在点的路径值 H:现在点到Goal的估计路径值 每次取最小的F值点">
+<meta property="og:type" content="article">
+<meta property="og:title" content="导航学习（一）基础算法及地图">
+<meta property="og:url" content="https://aaairfox.github.io/%E5%AF%BC%E8%88%AA%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:site_name" content="AAAirFox">
+<meta property="og:description" content="算法Dijkstra算法 使用了广度优先搜索解决赋权有向图或者无向图的单源最短路径问题。以起始点为中心向外层层扩展，直到扩展到终点为止。 一定能找到最短路径，效率低。  A*算法 静态路网中求解最短路最有效的方法。  找到的不一定是最短路径，效率高。   F&#x3D;G+H F:Start到Goal的估计路径值 G:Start到现在点的路径值 H:现在点到Goal的估计路径值 每次取最小的F值点">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://aaairfox.github.io/self/img/cover/slam.jpg">
+<meta property="article:published_time" content="2019-04-14T09:33:45.000Z">
+<meta property="article:modified_time" content="2024-04-06T17:14:36.760Z">
+<meta property="article:author" content="Zhang">
+<meta property="article:tag" content="SLAM">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://aaairfox.github.io/self/img/cover/slam.jpg"><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://aaairfox.github.io/%E5%AF%BC%E8%88%AA%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '导航学习（一）基础算法及地图',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-04-07 01:14:36'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.1.1"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">44</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-tags"></i><span> 标签</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tags/%E7%AE%97%E6%B3%95/"><span> 算法</span></a></li><li><a class="site-page child" href="/tags/Cuda/"><span> CUDA</span></a></li><li><a class="site-page child" href="/tags/C/"><span> C++</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/Ubuntu%E6%93%8D%E4%BD%9C/"><span> Ubuntu</span></a></li><li><a class="site-page child" href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA/"><span> 机器人</span></a></li><li><a class="site-page child" href="/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"><span> 博客搭建</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="AAAirFox"><img class="site-icon" src="/img/favicon.ico"/><span class="site-name">AAAirFox</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-tags"></i><span> 标签</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tags/%E7%AE%97%E6%B3%95/"><span> 算法</span></a></li><li><a class="site-page child" href="/tags/Cuda/"><span> CUDA</span></a></li><li><a class="site-page child" href="/tags/C/"><span> C++</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/Ubuntu%E6%93%8D%E4%BD%9C/"><span> Ubuntu</span></a></li><li><a class="site-page child" href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA/"><span> 机器人</span></a></li><li><a class="site-page child" href="/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"><span> 博客搭建</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">导航学习（一）基础算法及地图</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2019-04-14T09:33:45.000Z" title="发表于 2019-04-14 17:33:45">2019-04-14</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA/">机器人</a></span></div><div class="meta-secondline"></div></div></div><article class="post-content" id="article-container"><h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><h3 id="Dijkstra算法"><a href="#Dijkstra算法" class="headerlink" title="Dijkstra算法"></a>Dijkstra算法</h3><ul>
+<li>使用了广度优先搜索解决赋权有向图或者无向图的单源最短路径问题。以起始点为中心向外层层扩展，直到扩展到终点为止。</li>
+<li>一定能找到最短路径，效率低。</li>
+</ul>
+<h3 id="A-算法"><a href="#A-算法" class="headerlink" title="A*算法"></a>A*算法</h3><ul>
+<li><p>静态路网中求解最短路最有效的方法。</p>
+</li>
+<li><p>找到的不一定是最短路径，效率高。</p>
+</li>
+</ul>
+<p><strong>F&#x3D;G+H</strong></p>
+<p>F:Start到Goal的估计路径值</p>
+<p>G:Start到现在点的路径值</p>
+<p>H:现在点到Goal的估计路径值</p>
+<p>每次取最小的F值点，再继续进行下一步F计算，直到检测到Goal。采用<strong>曼哈顿距离</strong>。</p>
+<h3 id="D-算法（……-编程失败）"><a href="#D-算法（……-编程失败）" class="headerlink" title="D*算法（…….编程失败）"></a>D*算法（…….编程失败）</h3><ul>
+<li><p>启发式的路径搜索算法，适合面对周围环境未知或者周围环境存在动态变化的场景。（动态A*）</p>
+</li>
+<li><p>不由起始点开始搜索，而是以目标点为起始。</p>
+</li>
+</ul>
+<p><img src="/./%E5%AF%BC%E8%88%AA%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/dijkstra_astar_dstar_introduce_5.jpg" alt="dijkstra_astar_dstar_introduce_5"></p>
+<p>从目标节点G向起始节点搜索。储存路网中目标点到各个节点的最短路和该位置到目标点的实际值h,k（k为所有变化h之中最小的值,当前为k&#x3D;h。每个节点包含上一节点到目标点的最短路信息1(2),2(5),5(4)，4（7）。则1到4的最短路为1-2-5-4。原OPEN和CLOSE中节点信息保存。</p>
+<p>沿最短路开始移动，在移动的下一节点没有变化时，无需计算，利用上一步Dijstra计算出的最短路信息从出发点向后追述即可，当在Y点探测到下一节点X状态发生改变，如堵塞。机器人首先调整自己在当前位置Y到目标点G的实际值h(Y)，h(Y)&#x3D;X到Y的新权值c(X,Y)+X的原实际值h(X).X为下一节点(到目标点方向Y-&gt;X-&gt;G），Y是当前点。k值取h值变化前后的最小。</p>
+<p>假设用A*算法,遍历Y的子节点，点放入CLOSE,调整Y的子节点a的h值，h(a)&#x3D;h(Y)+Y到子节点a的权重C(Y,a),比较a点是否存在于OPEN和CLOSE中，方法如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">从OPEN表中取k值最小的节点Y;</span><br><span class="line">遍历Y的子节点a,计算a的h值 h(a)=h(Y)+Y到子节点a的权重C(Y,a)</span><br><span class="line">&#123;</span><br><span class="line">    if(a in OPEN)     比较两个a的h值 </span><br><span class="line">    if( a的h值小于OPEN表a的h值 )</span><br><span class="line">    &#123;</span><br><span class="line">　　　　　更新OPEN表中a的h值;k值取最小的h值</span><br><span class="line">          有未受影响的最短路经存在</span><br><span class="line">          break; </span><br><span class="line">    &#125;</span><br><span class="line">    if(a in CLOSE) 比较两个a的h值 //注意是同一个节点的两个不同路径的估价值</span><br><span class="line">    if( a的h值小于CLOSE表的h值 )</span><br><span class="line">    &#123;</span><br><span class="line">　　　　　更新CLOSE表中a的h值; k值取最小的h值;将a节点放入OPEN表</span><br><span class="line">          有未受影响的最短路经存在</span><br><span class="line">          break;</span><br><span class="line">    &#125;</span><br><span class="line">    if(a not in both)</span><br><span class="line">        将a插入OPEN表中;　//还没有排序</span><br><span class="line">&#125;</span><br><span class="line">放Y到CLOSE表；</span><br><span class="line">OPEN表比较k值大小进行排序；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>向目标点移动中，只检查最短路径上下一节点或临近节点的变化情况。</p>
+<h3 id="启发式A-算法"><a href="#启发式A-算法" class="headerlink" title="启发式A*算法"></a>启发式A*算法</h3><ul>
+<li>在于当前搜索结点往下选择下一步结点时，可以通过一个启发函数来进行选择，选择代价最少的结点作为下一步搜索结点而跳转其上（遇到有一个以上代价最少的结点，不妨选距离当前搜索点最近一次展开的搜索点进行下一步搜索）。</li>
+</ul>
+<p>先定义一个估算函数 。</p>
+<p>其中g(n)表示起点到当前点实际走的代价，h(n)表示当前点到终点的估算代价。 所以上面两个合起来就是其走当前点到终点的总代价函数。</p>
+<p> 而这个估计函数不同的估计情况，结果也不会相同。</p>
+<blockquote>
+<p>先考虑极端情况， 如果的情况下，只有起作用，那么A*算法就是Dijkstra算法。</p>
+<p>如果始终小于等于实际点到终点的距离，那么<strong>必然能够保证A*算法找的解就是最优解</strong>。而且越小，则A<em>扩展的节点也就越多，A</em>算法运行的也就越慢。</p>
+<p>如果始终都等于实际点到终点的距离，那么A*算法只会严格走从起点到终点的最短路径。虽然这种情况一般不可能发生，当然一些特殊情况下会发生【比如没有障碍物的情况】。</p>
+<p>如果有时候大于实际点到终点的距离，那么不能保证A*算法能够找到最短路径</p>
+<p>另外一种极端情况，就是如果只有发挥作用，则A*算法就相当于贪心算法。</p>
+</blockquote>
+<h2 id="距离表示方式"><a href="#距离表示方式" class="headerlink" title="距离表示方式"></a>距离表示方式</h2><p><img src="/./%E5%AF%BC%E8%88%AA%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/Center.jpg"></p>
+<h3 id="欧氏距离（绿）"><a href="#欧氏距离（绿）" class="headerlink" title="欧氏距离（绿）"></a>欧氏距离（绿）</h3><p>表示距离：两点间的直线距离</p>
+<p>缺点：当任意一对点之间欧氏距离相等时，无法进行比较</p>
+<h3 id="曼哈顿距离（红…）"><a href="#曼哈顿距离（红…）" class="headerlink" title="曼哈顿距离（红…）"></a>曼哈顿距离（红…）</h3><p>表示距离：“出租车距离”，如图所示，S&#x3D;|x<del>1</del>- x<del>2</del>|+|y<del>1</del>-y<del>2</del>|</p>
+<p>缺点：如果数据集中某些特征值很大，用曼哈顿距离的话，这些特征会<br>掩盖其他特征间的邻近关系</p>
+<h3 id="对角线距离"><a href="#对角线距离" class="headerlink" title="对角线距离"></a>对角线距离</h3><p>可以简单地移动（4 northeast）代替，所以启发函数应该是4*D。这个函数使用对角线，假设直线和对角线的代价都是D：</p>
+<p>h(n) &#x3D; D * max(abs(n.x - goal.x), abs(n.y - goal.y))</p>
+<p><img src="/./%E5%AF%BC%E8%88%AA%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/diagonal.png" alt="diagonal"></p>
+<p>更精确：</p>
+<p>h_diagonal(n) &#x3D; min(abs(n.x - goal.x), abs(n.y - goal.y))</p>
+<p>h_straight(n) &#x3D; (abs(n.x - goal.x) + abs(n.y - goal.y))</p>
+<p>h(n) &#x3D; D2 * h_diagonal(n) + D * (h_straight(n) - 2*h_diagonal(n)))</p>
+<p>这里，计算：</p>
+<p>h_diagonal(n)：沿着斜线可以移动的步数</p>
+<p>h_straight(n)：曼哈顿距离</p>
+<p>然后合并这两项，让所有的斜线步都乘以D2，剩下的所有直线步(注意这里是曼哈顿距离的步数减去2倍的斜线步数)都乘以D。</p>
+<h2 id="地图"><a href="#地图" class="headerlink" title="地图"></a>地图</h2><h3 id="栅格地图"><a href="#栅格地图" class="headerlink" title="栅格地图"></a>栅格地图</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_33835307/article/details/82925820">https://blog.csdn.net/qq_33835307/article/details/82925820</a></p>
+<p>雷达扫描过程中，光线撞到（hit）的地方所处坐标位置就对应一种灰度值，没有撞到（miss）的地方所处坐标位置对应另外的灰度值。栅格图中，一个格子某一时刻只有两种状态，要么被光线撞到了要么没有；但是该格子可能多次被撞到或多次没被撞到。如果某个格子多次被撞到了，说明它很有可能是被占用了（有障碍物的意思）。因此，可以用概率的方式来表示某个格子有多大的可能被占用了。</p>
+<h3 id="代价地图"><a href="#代价地图" class="headerlink" title="代价地图"></a>代价地图</h3><p>ROS的代价地图（costmap）采用网格（grid）形式，每个网格的值（cell cost）从0~255。分成三种状态：<strong>被占用（有障碍</strong>）、<strong>自由区域（无障碍）、未知区域；</strong></p>
+<p><img src="/./%E5%AF%BC%E8%88%AA%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/20170504191642538.png" alt="20170504191642538"></p>
+<p>上图中，红色部分代表costmap中的障碍物，<strong>蓝色部分表示通过机器人内切圆半径膨胀出的障碍</strong>（注意是机器人内切圆形状），红色多边形是<strong>footprint</strong>（<strong>脚印</strong>）(<strong>机器人轮廓的垂直投影</strong>)。</p>
+<p><strong>机器人避障的规则：</strong>为了避免碰撞，footprint不应该和红色部分有交叉，机器人中心不应该与蓝色部分有交叉。</p>
+<p>（1） <strong>Lethal</strong>（致命的）:机器人的中心与该网格的中心重合，此时机器人必然与障碍物冲突。<br>（2） <strong>Inscribed</strong>（内切）：网格的外切圆与机器人的轮廓内切，此时机器人也必然与障碍物冲突。<br>（3）<strong>Possibly circumscribed</strong>（外切）：网格的外切圆与机器人的轮廓外切，此时机器人相当于靠在障碍物附近，所以不一定冲突。<br>（4） <strong>Freespace</strong>（自由空间）：没有障碍物的空间。<br>（5） <strong>Unknown</strong>（未知）：未知的空间。</p>
+<p>所以大概就是机器人行进过程中可行进区域地图</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://aaairfox.github.io">Zhang</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://aaairfox.github.io/%E5%AF%BC%E8%88%AA%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/">https://aaairfox.github.io/%E5%AF%BC%E8%88%AA%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://aaairfox.github.io" target="_blank">AAAirFox</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/SLAM/">SLAM</a><a class="post-meta__tags" href="/tags/Linux/">Linux</a></div><div class="post_share"><div class="social-share" data-image="/self/img/cover/slam.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/%E5%AF%BC%E8%88%AA%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%89%EF%BC%89%E5%85%B7%E4%BD%93SLAM%E7%AE%97%E6%B3%95/" title="导航学习（三）具体SLAM算法"><img class="cover" src="/self/img/cover/slam.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">导航学习（三）具体SLAM算法</div></div></a></div><div class="next-post pull-right"><a href="/%E5%AF%BC%E8%88%AA%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89%E5%90%8C%E6%AD%A5%E5%AE%9A%E4%BD%8D%E4%B8%8E%E5%9C%B0%E5%9B%BE%E6%9E%84%E5%BB%BA/" title="导航学习（二）同步定位与地图构建"><img class="cover" src="/self/img/cover/slam.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">导航学习（二）同步定位与地图构建</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/Robo%E6%AF%94%E8%B5%9B%E6%B5%81%E7%A8%8B/" title="Robo比赛编译&amp;运行流程"><img class="cover" src="/self/img/cover/ros-2.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-07-21</div><div class="title">Robo比赛编译&amp;运行流程</div></div></a></div><div><a href="/Rules%E8%A7%84%E5%88%99%E8%AE%B0%E5%BD%95%E8%AF%B4%E6%98%8E/" title="Rules规则记录说明"><img class="cover" src="/self/img/cover/linux.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-07-19</div><div class="title">Rules规则记录说明</div></div></a></div><div><a href="/rplidar%E9%A9%B1%E5%8A%A8%E8%AF%B4%E6%98%8E/" title="lidar驱动说明"><img class="cover" src="/self/img/cover/rplidar.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-01-16</div><div class="title">lidar驱动说明</div></div></a></div><div><a href="/rplidar%E7%9A%84ROS&tf%E8%AF%B4%E6%98%8E/" title="lidar的ROS&amp;tf说明"><img class="cover" src="/self/img/cover/rplidar.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-01-16</div><div class="title">lidar的ROS&amp;tf说明</div></div></a></div><div><a href="/explorer%E5%BA%95%E5%B1%82%E8%AE%B0%E5%BD%95/" title="explorer底层记录"><img class="cover" src="/self/img/cover/ros-2.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-07-23</div><div class="title">explorer底层记录</div></div></a></div><div><a href="/%E5%AF%BC%E8%88%AA%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%89%EF%BC%89%E5%85%B7%E4%BD%93SLAM%E7%AE%97%E6%B3%95/" title="导航学习（三）具体SLAM算法"><img class="cover" src="/self/img/cover/slam.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-04-21</div><div class="title">导航学习（三）具体SLAM算法</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Zhang</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">44</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%97%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dijkstra%E7%AE%97%E6%B3%95"><span class="toc-number">1.1.</span> <span class="toc-text">Dijkstra算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#A-%E7%AE%97%E6%B3%95"><span class="toc-number">1.2.</span> <span class="toc-text">A*算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#D-%E7%AE%97%E6%B3%95%EF%BC%88%E2%80%A6%E2%80%A6-%E7%BC%96%E7%A8%8B%E5%A4%B1%E8%B4%A5%EF%BC%89"><span class="toc-number">1.3.</span> <span class="toc-text">D*算法（…….编程失败）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E5%8F%91%E5%BC%8FA-%E7%AE%97%E6%B3%95"><span class="toc-number">1.4.</span> <span class="toc-text">启发式A*算法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%9D%E7%A6%BB%E8%A1%A8%E7%A4%BA%E6%96%B9%E5%BC%8F"><span class="toc-number">2.</span> <span class="toc-text">距离表示方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AC%A7%E6%B0%8F%E8%B7%9D%E7%A6%BB%EF%BC%88%E7%BB%BF%EF%BC%89"><span class="toc-number">2.1.</span> <span class="toc-text">欧氏距离（绿）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%BC%E5%93%88%E9%A1%BF%E8%B7%9D%E7%A6%BB%EF%BC%88%E7%BA%A2%E2%80%A6%EF%BC%89"><span class="toc-number">2.2.</span> <span class="toc-text">曼哈顿距离（红…）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E8%A7%92%E7%BA%BF%E8%B7%9D%E7%A6%BB"><span class="toc-number">2.3.</span> <span class="toc-text">对角线距离</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%B0%E5%9B%BE"><span class="toc-number">3.</span> <span class="toc-text">地图</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%85%E6%A0%BC%E5%9C%B0%E5%9B%BE"><span class="toc-number">3.1.</span> <span class="toc-text">栅格地图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E4%BB%B7%E5%9C%B0%E5%9B%BE"><span class="toc-number">3.2.</span> <span class="toc-text">代价地图</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/Hexo+Butterfly%E7%BE%8E%E5%8C%96%E6%93%8D%E4%BD%9C/" title="Hexo+Butterfly美化操作"><img src="/self/img/cover/hexo.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hexo+Butterfly美化操作"/></a><div class="content"><a class="title" href="/Hexo+Butterfly%E7%BE%8E%E5%8C%96%E6%93%8D%E4%BD%9C/" title="Hexo+Butterfly美化操作">Hexo+Butterfly美化操作</a><time datetime="2024-04-06T09:33:17.000Z" title="发表于 2024-04-06 17:33:17">2024-04-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/Hexo+Butterfly%E5%9F%BA%E7%A1%80%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" title="Hexo+Butterfly基础环境配置"><img src="/self/img/cover/hexo.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hexo+Butterfly基础环境配置"/></a><div class="content"><a class="title" href="/Hexo+Butterfly%E5%9F%BA%E7%A1%80%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" title="Hexo+Butterfly基础环境配置">Hexo+Butterfly基础环境配置</a><time datetime="2024-04-06T08:08:43.000Z" title="发表于 2024-04-06 16:08:43">2024-04-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/windows%E9%80%9A%E8%BF%87vscode%E8%BF%9E%E6%8E%A5%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="windows通过vscode连接服务器"><img src="/self/img/cover/vscode.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="windows通过vscode连接服务器"/></a><div class="content"><a class="title" href="/windows%E9%80%9A%E8%BF%87vscode%E8%BF%9E%E6%8E%A5%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="windows通过vscode连接服务器">windows通过vscode连接服务器</a><time datetime="2024-04-01T08:20:31.000Z" title="发表于 2024-04-01 16:20:31">2024-04-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/CUDA/" title="CUDA基础"><img src="/self/img/cover/cuda.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CUDA基础"/></a><div class="content"><a class="title" href="/CUDA/" title="CUDA基础">CUDA基础</a><time datetime="2024-02-28T23:14:27.000Z" title="发表于 2024-02-29 07:14:27">2024-02-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/windows%E9%80%9A%E8%BF%87xshell-vnc%E8%BF%9E%E6%8E%A5%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="windows通过xshell+vnc连接服务器"><img src="/self/img/cover/xshell.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="windows通过xshell+vnc连接服务器"/></a><div class="content"><a class="title" href="/windows%E9%80%9A%E8%BF%87xshell-vnc%E8%BF%9E%E6%8E%A5%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="windows通过xshell+vnc连接服务器">windows通过xshell+vnc连接服务器</a><time datetime="2023-01-25T02:09:06.000Z" title="发表于 2023-01-25 10:09:06">2023-01-25</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2024 By Zhang</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hello World!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div></div></body></html>

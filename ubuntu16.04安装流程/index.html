@@ -1,0 +1,205 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>ubuntu16.04安装流程 | AAAirFox</title><meta name="author" content="Zhang"><meta name="copyright" content="Zhang"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="Ubuntu16.04LTS安装流程 Part.1 压缩硬盘空间右键&gt;我的电脑&gt;管理&gt;磁盘管理，选中空闲空间较大的F盘，右键&gt;压缩卷，输入想给Ubuntu的空间大小1024×110MB，点击压缩，可得一空闲分区。（一定要记住空间大小）       Part.2 制作USB启动盘在此之前准备一个空U盘，备份电脑上重要文件防止系统出现问题文件丢失。在一神秘网址下载ubuntu1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ubuntu16.04安装流程">
+<meta property="og:url" content="https://aaairfox.github.io/ubuntu16.04%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/index.html">
+<meta property="og:site_name" content="AAAirFox">
+<meta property="og:description" content="Ubuntu16.04LTS安装流程 Part.1 压缩硬盘空间右键&gt;我的电脑&gt;管理&gt;磁盘管理，选中空闲空间较大的F盘，右键&gt;压缩卷，输入想给Ubuntu的空间大小1024×110MB，点击压缩，可得一空闲分区。（一定要记住空间大小）       Part.2 制作USB启动盘在此之前准备一个空U盘，备份电脑上重要文件防止系统出现问题文件丢失。在一神秘网址下载ubuntu1">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://aaairfox.github.io/self/img/cover/linux.jpg">
+<meta property="article:published_time" content="2019-03-14T14:10:55.000Z">
+<meta property="article:modified_time" content="2024-04-06T16:47:34.938Z">
+<meta property="article:author" content="Zhang">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://aaairfox.github.io/self/img/cover/linux.jpg"><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://aaairfox.github.io/ubuntu16.04%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'ubuntu16.04安装流程',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-04-07 00:47:34'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.1.1"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">44</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-tags"></i><span> 标签</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tags/%E7%AE%97%E6%B3%95/"><span> 算法</span></a></li><li><a class="site-page child" href="/tags/Cuda/"><span> CUDA</span></a></li><li><a class="site-page child" href="/tags/C/"><span> C++</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/Ubuntu%E6%93%8D%E4%BD%9C/"><span> Ubuntu</span></a></li><li><a class="site-page child" href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA/"><span> 机器人</span></a></li><li><a class="site-page child" href="/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"><span> 博客搭建</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="AAAirFox"><img class="site-icon" src="/img/favicon.ico"/><span class="site-name">AAAirFox</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-tags"></i><span> 标签</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tags/%E7%AE%97%E6%B3%95/"><span> 算法</span></a></li><li><a class="site-page child" href="/tags/Cuda/"><span> CUDA</span></a></li><li><a class="site-page child" href="/tags/C/"><span> C++</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/Ubuntu%E6%93%8D%E4%BD%9C/"><span> Ubuntu</span></a></li><li><a class="site-page child" href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA/"><span> 机器人</span></a></li><li><a class="site-page child" href="/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"><span> 博客搭建</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">ubuntu16.04安装流程</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2019-03-14T14:10:55.000Z" title="发表于 2019-03-14 22:10:55">2019-03-14</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Ubuntu%E6%93%8D%E4%BD%9C/">Ubuntu操作</a></span></div><div class="meta-secondline"></div></div></div><article class="post-content" id="article-container"><h1 id="Ubuntu16-04LTS安装流程"><a href="#Ubuntu16-04LTS安装流程" class="headerlink" title="Ubuntu16.04LTS安装流程"></a>Ubuntu16.04LTS安装流程</h1><hr>
+<h2 id="Part-1-压缩硬盘空间"><a href="#Part-1-压缩硬盘空间" class="headerlink" title="Part.1 压缩硬盘空间"></a>Part.1 压缩硬盘空间</h2><p>右键&gt;我的电脑&gt;管理&gt;磁盘管理，选中空闲空间较大的F盘，右键&gt;压缩卷，输入想给Ubuntu的空间大小1024×110MB，点击压缩，可得一空闲分区。（<strong>一定要记住空间大小</strong>）  </p>
+<p><img src="/./ubuntu16.04%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/image-20240407004656242.png" alt="image-20240407004656242"></p>
+<p><img src="/./ubuntu16.04%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/image-20240407004627990.png" alt="image-20240407004627990">  </p>
+<h2 id="Part-2-制作USB启动盘"><a href="#Part-2-制作USB启动盘" class="headerlink" title="Part.2 制作USB启动盘"></a>Part.2 制作USB启动盘</h2><p><em>在此之前准备一个空U盘，备份电脑上重要文件防止系统出现问题文件丢失。</em><br>在一神秘网址下载ubuntu16.04-desktop的ios文件。  </p>
+<p><img src="/./ubuntu16.04%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/image-20240407004557008.png" alt="image-20240407004557008">  </p>
+<p>下载完毕。  </p>
+<p><img src="/./ubuntu16.04%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/image-20240407004514257.png" alt="image-20240407004514257">  </p>
+<p>从官网上下载Universal-USB-Install程序。  </p>
+<p><img src="/./ubuntu16.04%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/image-20240407004451812.png" alt="image-20240407004451812">  </p>
+<p>运行Universal-USB-Install程序，Step1中选择ubuntu系统，Step2中再选中之前下载的ubuntu16.04的ios文件，Step3中选中自己要制作启动盘的U盘。（<strong>一定不要选错！！！</strong>）  </p>
+<p><img src="/./ubuntu16.04%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/image-20240407004424749.png" alt="image-20240407004424749">  </p>
+<p>最后Create，等待启动盘做好。  </p>
+<p><img src="/./ubuntu16.04%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/image-20240407004356902.png" alt="image-20240407004356902">  </p>
+<h2 id="Part-3-进入BIOS"><a href="#Part-3-进入BIOS" class="headerlink" title="Part.3 进入BIOS"></a>Part.3 进入BIOS</h2><p>Lenovo E480型号电脑在开机时按F12进入BIOS&gt;Windows Boot Manager,进去后找到Security调整其下Secure Boot为Disabled。  </p>
+<p><img src="/./ubuntu16.04%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/image-20240407004310976.png" alt="image-20240407004310976"></p>
+<p><img src="/./ubuntu16.04%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/image-20240407004248381.png" alt="image-20240407004248381">  </p>
+<h2 id="Part-4-从U盘启动"><a href="#Part-4-从U盘启动" class="headerlink" title="Part.4 从U盘启动"></a>Part.4 从U盘启动</h2><p>再次重启并进入BIOS，选择从U盘启动。(<em>此电脑为USB HDD选项</em>)  </p>
+<p><img src="/./ubuntu16.04%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/image-20240407004214089.png" alt="image-20240407004214089"></p>
+<h2 id="Part-5-开始安装系统"><a href="#Part-5-开始安装系统" class="headerlink" title="Part.5 开始安装系统"></a>Part.5 开始安装系统</h2><p>选择第二个Install Ubuntu进入，等。  </p>
+<p><img src="/./ubuntu16.04%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/image-20240407004150644.png" alt="image-20240407004150644"></p>
+<p>选择配置语言（<em>为了方便上手我选了汉语</em>）    </p>
+<p>（应该中间有个是否联网的选择但我的电脑却是从第一步直接跳到了第三步…哭了，写文档的现在还没搞好Wifi只能连有线）<br>然后直接把安装第三方软件也选上了  </p>
+<p><img src="/./ubuntu16.04%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/image-20240407004058657.png" alt="image-20240407004058657">  </p>
+<p>(<strong>IMPORTANT!!!</strong>)安装类型配置选<strong>其他选项</strong>  </p>
+<p><img src="/./ubuntu16.04%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/image-20240407004038441.png" alt="image-20240407004038441">  </p>
+<p>然后找到自己划分出的110G的空间，选中，点击<strong>左下角+号</strong>创建分区。<br>看博客上的经验我只创建了两个分区。一个<strong>8192MB&#x2F;逻辑分区&#x2F;空间结束位置</strong>的swap空间，一个<strong>剩余所有&#x2F;主分区&#x2F;空间起始位置&#x2F;Ext4日志文件系统</strong>的分区。  </p>
+<p><img src="/./ubuntu16.04%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/image-20240407004020134.png" alt="image-20240407004020134"></p>
+<p><img src="/./ubuntu16.04%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/image-20240407003959782.png" alt="image-20240407003959782">  </p>
+<p>选择安装在NVMe Device位置  </p>
+<p><img src="/./ubuntu16.04%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/image-20240407003936152.png" alt="image-20240407003936152">  </p>
+<p>现在安装&gt;继续，写入磁盘  </p>
+<p><img src="/./ubuntu16.04%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/image-20240407003910466.png" alt="image-20240407003910466">  </p>
+<p>选择所在时区（上海）  </p>
+<p><img src="/./ubuntu16.04%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/image-20240407003853652.png" alt="image-20240407003853652">  </p>
+<p>选择汉语键盘布局 .  </p>
+<p>输入一个用户名，输一个<strong>尽量短一些</strong>的密码  </p>
+<p><img src="/./ubuntu16.04%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/image-20240407003818573.png" alt="image-20240407003818573">  </p>
+<p>点击继续进行Ubuntu的安装，等等等等….  </p>
+<p><img src="/./ubuntu16.04%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/image-20240407003758113.png" alt="image-20240407003758113"></p>
+<p>再次打开电脑时就有四个选项了，选第一个Ubuntu进入  </p>
+<p><img src="/./ubuntu16.04%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/image-20240407003739915.png" alt="image-20240407003739915">  </p>
+<p>输入密码，得到快乐   <img src="/./ubuntu16.04%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/image-20240407003657864.png" alt="image-20240407003657864"></p>
+<hr>
+<p><strong>然而快乐是短暂的。</strong></p>
+<p>在网上无数次失败后终于找到了对的阿里云镜像源，找到Sources.list文件进行内容删除复制，然后执行sudo apt-get update获取软件源。（<em>原谅我忘了拍照这一步</em>）  </p>
+<blockquote>
+<p>#坑<br>##巨坑<br>###超巨坑<br>#！！！<br><em><strong>Lenovo的笔记本本来就是个坑！！！无线网卡RLT8821 ce本来就是个巨坑！！！全网找无线驱动和安装方法竟然全都是坑！！！没有一种方法能让我拥有Wifi！！！我不快乐！！！差评！！！</strong></em><br>还有网上各种软件&#x2F;驱动&#x2F;内核教程….真的……….ball ball把话解释清楚，不要抄来抄去参考来参考去了……..我已经掉坑无数了………….一时掉坑一时爽，一直掉坑一直爽………爽的我魂飞九天………</p>
+</blockquote>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://aaairfox.github.io">Zhang</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://aaairfox.github.io/ubuntu16.04%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/">https://aaairfox.github.io/ubuntu16.04%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://aaairfox.github.io" target="_blank">AAAirFox</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Linux/">Linux</a></div><div class="post_share"><div class="social-share" data-image="/self/img/cover/linux.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-full"><a href="/Linux%E4%B8%8BC++%E7%A8%8B%E5%BA%8F%E4%B8%89%E7%A7%8D%E7%BC%96%E8%AF%91%E6%96%B9%E6%B3%95/" title="Linux下C++程序三种编译方法"><img class="cover" src="/self/img/cover/linux.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Linux下C++程序三种编译方法</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/Linux%E4%B8%8BC++%E7%A8%8B%E5%BA%8F%E4%B8%89%E7%A7%8D%E7%BC%96%E8%AF%91%E6%96%B9%E6%B3%95/" title="Linux下C++程序三种编译方法"><img class="cover" src="/self/img/cover/linux.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-03-15</div><div class="title">Linux下C++程序三种编译方法</div></div></a></div><div><a href="/Linux%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/" title="Linux学习笔记"><img class="cover" src="/self/img/cover/linux.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-03-28</div><div class="title">Linux学习笔记</div></div></a></div><div><a href="/Linux%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4%E3%80%81%E5%BF%AB%E6%8D%B7%E9%94%AE%E5%8F%8A%E7%8E%AF%E5%A2%83%E7%9B%B8%E5%85%B3/" title="Linux学习记录（一）基础操作命令、快捷键及环境相关"><img class="cover" src="/self/img/cover/linux.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-05-04</div><div class="title">Linux学习记录（一）基础操作命令、快捷键及环境相关</div></div></a></div><div><a href="/Robo%E6%AF%94%E8%B5%9B%E6%B5%81%E7%A8%8B/" title="Robo比赛编译&amp;运行流程"><img class="cover" src="/self/img/cover/ros-2.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-07-21</div><div class="title">Robo比赛编译&amp;运行流程</div></div></a></div><div><a href="/Rules%E8%A7%84%E5%88%99%E8%AE%B0%E5%BD%95%E8%AF%B4%E6%98%8E/" title="Rules规则记录说明"><img class="cover" src="/self/img/cover/linux.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-07-19</div><div class="title">Rules规则记录说明</div></div></a></div><div><a href="/Shell/" title="Shell"><img class="cover" src="/self/img/cover/linux.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-07-05</div><div class="title">Shell</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Zhang</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">44</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Ubuntu16-04LTS%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">Ubuntu16.04LTS安装流程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Part-1-%E5%8E%8B%E7%BC%A9%E7%A1%AC%E7%9B%98%E7%A9%BA%E9%97%B4"><span class="toc-number">1.1.</span> <span class="toc-text">Part.1 压缩硬盘空间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Part-2-%E5%88%B6%E4%BD%9CUSB%E5%90%AF%E5%8A%A8%E7%9B%98"><span class="toc-number">1.2.</span> <span class="toc-text">Part.2 制作USB启动盘</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Part-3-%E8%BF%9B%E5%85%A5BIOS"><span class="toc-number">1.3.</span> <span class="toc-text">Part.3 进入BIOS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Part-4-%E4%BB%8EU%E7%9B%98%E5%90%AF%E5%8A%A8"><span class="toc-number">1.4.</span> <span class="toc-text">Part.4 从U盘启动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Part-5-%E5%BC%80%E5%A7%8B%E5%AE%89%E8%A3%85%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.5.</span> <span class="toc-text">Part.5 开始安装系统</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/Hexo+Butterfly%E7%BE%8E%E5%8C%96%E6%93%8D%E4%BD%9C/" title="Hexo+Butterfly美化操作"><img src="/self/img/cover/hexo.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hexo+Butterfly美化操作"/></a><div class="content"><a class="title" href="/Hexo+Butterfly%E7%BE%8E%E5%8C%96%E6%93%8D%E4%BD%9C/" title="Hexo+Butterfly美化操作">Hexo+Butterfly美化操作</a><time datetime="2024-04-06T09:33:17.000Z" title="发表于 2024-04-06 17:33:17">2024-04-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/Hexo+Butterfly%E5%9F%BA%E7%A1%80%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" title="Hexo+Butterfly基础环境配置"><img src="/self/img/cover/hexo.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hexo+Butterfly基础环境配置"/></a><div class="content"><a class="title" href="/Hexo+Butterfly%E5%9F%BA%E7%A1%80%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" title="Hexo+Butterfly基础环境配置">Hexo+Butterfly基础环境配置</a><time datetime="2024-04-06T08:08:43.000Z" title="发表于 2024-04-06 16:08:43">2024-04-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/windows%E9%80%9A%E8%BF%87vscode%E8%BF%9E%E6%8E%A5%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="windows通过vscode连接服务器"><img src="/self/img/cover/vscode.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="windows通过vscode连接服务器"/></a><div class="content"><a class="title" href="/windows%E9%80%9A%E8%BF%87vscode%E8%BF%9E%E6%8E%A5%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="windows通过vscode连接服务器">windows通过vscode连接服务器</a><time datetime="2024-04-01T08:20:31.000Z" title="发表于 2024-04-01 16:20:31">2024-04-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/CUDA/" title="CUDA基础"><img src="/self/img/cover/cuda.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CUDA基础"/></a><div class="content"><a class="title" href="/CUDA/" title="CUDA基础">CUDA基础</a><time datetime="2024-02-28T23:14:27.000Z" title="发表于 2024-02-29 07:14:27">2024-02-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/windows%E9%80%9A%E8%BF%87xshell-vnc%E8%BF%9E%E6%8E%A5%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="windows通过xshell+vnc连接服务器"><img src="/self/img/cover/xshell.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="windows通过xshell+vnc连接服务器"/></a><div class="content"><a class="title" href="/windows%E9%80%9A%E8%BF%87xshell-vnc%E8%BF%9E%E6%8E%A5%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="windows通过xshell+vnc连接服务器">windows通过xshell+vnc连接服务器</a><time datetime="2023-01-25T02:09:06.000Z" title="发表于 2023-01-25 10:09:06">2023-01-25</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2024 By Zhang</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hello World!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div></div></body></html>
