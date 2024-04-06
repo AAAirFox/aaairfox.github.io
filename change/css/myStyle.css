@@ -1,13 +1,5 @@
-/* #web_bg {
-    background-image: url("../img/background.jpg"),
-        linear-gradient(60deg, rgba(255, 165, 150, 0.5) 5%, rgba(0, 228, 255, 0.35))
-}
-#post_bg {
-    background-image: url("../img/background.jpg"),
-        linear-gradient(60deg, rgba(255, 165, 150, 0.5) 5%, rgba(0, 228, 255, 0.35))
-} */
 /* 侧边栏个人信息卡片动态渐变色 */
-/* #aside-content>.card-widget.card-info{
+#aside-content>.card-widget.card-info{
     background: linear-gradient(-45deg, rgba(225,235,255,.6), 
 rgba(225,235,255,.9), 
 rgba(225,235,255,.9), 
@@ -20,7 +12,7 @@ rgba(35,37,58,.9),
 rgba(24,40,72,.2));
 }
 /* 侧边栏公告栏卡片渐变色 */
-/* #aside-content>.card-widget.card-announcement{
+#aside-content>.card-widget.card-announcement{
     background: linear-gradient(-45deg, rgba(225,235,255,.6), 
 rgba(225,235,255,.9), 
 rgba(225,235,255,.9), 
@@ -31,9 +23,9 @@ rgba(225,235,255,.6));
 rgba(35,37,58,.9), 
 rgba(35,37,58,.9), 
 rgba(24,40,72,.2));
-} */
+}
 /* 侧边栏目录最新文章卡片渐变色 */
-/* #aside-content>.sticky_layout>.card-widget{
+#aside-content>.sticky_layout>.card-widget{
     background: linear-gradient(-45deg, rgba(225,235,255,.6), 
 rgba(225,235,255,.9), 
 rgba(225,235,255,.9), 
@@ -44,12 +36,12 @@ rgba(225,235,255,.6));
 rgba(35,37,58,.9), 
 rgba(35,37,58,.9), 
 rgba(24,40,72,.2));
-} */
+}
 /* 个人信息Follow me按钮 */
-/* #aside-content>.card-widget.card-info>#card-info-btn {
+#aside-content>.card-widget.card-info>#card-info-btn {
     background-color: #3eb8be;
     border-radius: 8px;
-} */ 
+}
 /*文章页面*/
 /* .layout>#post {
     background: linear-gradient(-45deg, rgba(225,235,255,.8), 
@@ -64,7 +56,7 @@ rgba(35,37,58,.9),
 rgba(24,40,72,.2));
 } */
 /*主页文章预览页面*/
-/* #recent-posts>.recent-post-item{
+#recent-posts>.recent-post-item{
     background: linear-gradient(-45deg, rgba(225,235,255,.8), 
 rgba(225,235,255,.9), 
 rgba(225,235,255,.9), 
@@ -75,10 +67,10 @@ rgba(225,235,255,.8));
 rgba(35,37,58,.9), 
 rgba(35,37,58,.9), 
 rgba(24,40,72,.2));
-} */
+}
 
 /*分类页面*/
-/* .layout>#page {
+.layout>#page {
     background: linear-gradient(-45deg, rgba(225,235,255,.8), 
 rgba(225,235,255,.9), 
 rgba(225,235,255,.9), 
@@ -89,10 +81,10 @@ rgba(225,235,255,.8));
 rgba(35,37,58,.9), 
 rgba(35,37,58,.9), 
 rgba(24,40,72,.2));
-} */
+}
 
 /*时间轴页面*/
-/* .layout>#archive {
+.layout>#archive {
     background: linear-gradient(-45deg, rgba(225,235,255,.8), 
 rgba(225,235,255,.9), 
 rgba(225,235,255,.9), 
@@ -103,10 +95,4 @@ rgba(225,235,255,.8));
 rgba(35,37,58,.9), 
 rgba(35,37,58,.9), 
 rgba(24,40,72,.2));
-} */
-
-
-/* #footer-wrap {  
-    background-color: var(--footer-background-color);  
-    color: var(--footer-text-color);  
-} */
+}
