@@ -1,0 +1,225 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>C++关键字 | AAAirFox</title><meta name="author" content="Zhang"><meta name="copyright" content="Zhang"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="staticconstinline用于建议编译器对函数进行内联展开。内联展开是一种编译器优化技术，它会在调用函数的地方直接展开函数体，而不是通过函数调用的方式执行函数体。  减少函数调用开销：主要目的。函数调用会涉及到压栈、跳转等操作，而内联函数在编译阶段会直接将函数体插入到调用处，避免了这些开销。 提高性能： 对于短小的函数或者频繁调用的函数，避免了函数调用的开销，可以减少不必要的指令执行和内存">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++关键字">
+<meta property="og:url" content="https://aaairfox.github.io/C%E5%85%B3%E9%94%AE%E5%AD%97/index.html">
+<meta property="og:site_name" content="AAAirFox">
+<meta property="og:description" content="staticconstinline用于建议编译器对函数进行内联展开。内联展开是一种编译器优化技术，它会在调用函数的地方直接展开函数体，而不是通过函数调用的方式执行函数体。  减少函数调用开销：主要目的。函数调用会涉及到压栈、跳转等操作，而内联函数在编译阶段会直接将函数体插入到调用处，避免了这些开销。 提高性能： 对于短小的函数或者频繁调用的函数，避免了函数调用的开销，可以减少不必要的指令执行和内存">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://aaairfox.github.io/self/img/cover/c.jpg">
+<meta property="article:published_time" content="2023-06-10T08:20:42.000Z">
+<meta property="article:modified_time" content="2024-04-10T09:23:16.275Z">
+<meta property="article:author" content="Zhang">
+<meta property="article:tag" content="C++">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://aaairfox.github.io/self/img/cover/c.jpg"><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://aaairfox.github.io/C%E5%85%B3%E9%94%AE%E5%AD%97/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'C++关键字',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-04-10 17:23:16'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.1.1"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">57</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">18</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-tags"></i><span> 标签</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tags/%E7%AE%97%E6%B3%95/"><span> 算法</span></a></li><li><a class="site-page child" href="/tags/Cuda/"><span> CUDA</span></a></li><li><a class="site-page child" href="/tags/C/"><span> C++</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/%E5%85%AB%E8%82%A1/"><span> 八股</span></a></li><li><a class="site-page child" href="/categories/Ubuntu%E6%93%8D%E4%BD%9C/"><span> Ubuntu</span></a></li><li><a class="site-page child" href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA/"><span> 机器人</span></a></li><li><a class="site-page child" href="/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"><span> 博客搭建</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="AAAirFox"><img class="site-icon" src="/img/favicon.ico"/><span class="site-name">AAAirFox</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-tags"></i><span> 标签</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tags/%E7%AE%97%E6%B3%95/"><span> 算法</span></a></li><li><a class="site-page child" href="/tags/Cuda/"><span> CUDA</span></a></li><li><a class="site-page child" href="/tags/C/"><span> C++</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/%E5%85%AB%E8%82%A1/"><span> 八股</span></a></li><li><a class="site-page child" href="/categories/Ubuntu%E6%93%8D%E4%BD%9C/"><span> Ubuntu</span></a></li><li><a class="site-page child" href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA/"><span> 机器人</span></a></li><li><a class="site-page child" href="/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"><span> 博客搭建</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">C++关键字</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2023-06-10T08:20:42.000Z" title="发表于 2023-06-10 16:20:42">2023-06-10</time></span></div><div class="meta-secondline"></div></div></div><article class="post-content" id="article-container"><h1 id="static"><a href="#static" class="headerlink" title="static"></a>static</h1><h1 id="const"><a href="#const" class="headerlink" title="const"></a>const</h1><h1 id="inline"><a href="#inline" class="headerlink" title="inline"></a>inline</h1><p>用于建议编译器对函数进行内联展开。内联展开是一种编译器优化技术，它会在调用函数的地方直接<strong>展开函数体</strong>，而不是通过函数调用的方式执行函数体。</p>
+<ol>
+<li><strong>减少函数调用开销</strong>：主要目的。函数调用会涉及到压栈、跳转等操作，而内联函数在<strong>编译阶段</strong>会直接将函数体插入到调用处，避免了这些开销。</li>
+<li><strong>提高性能</strong>： 对于短小的函数或者频繁调用的函数，避免了函数调用的开销，可以减少不必要的指令执行和内存访问。</li>
+<li><strong>可能导致代码膨胀</strong>： 过度使用内联函数可能会导致代码膨胀，增加可执行程序的大小。因为函数体会被复制到每个调用处，如果函数体较大或者被频繁调用，可能会导致代码量急剧增加。</li>
+<li><strong>建议性的</strong>： <code>inline</code> 关键字只是对编译器的建议，<strong>编译器不一定会采纳</strong>。编译器可能会根据实际情况决定是否对函数进行内联展开。即使不写，函数体也有可能根据优化策略展开。</li>
+</ol>
+<p>内联函数的定义通常放在<strong>头文件</strong>中，这样可以保证在每个使用了该函数的地方都能够进行内联展开。</p>
+<h1 id="volatile"><a href="#volatile" class="headerlink" title="volatile"></a>volatile</h1><ul>
+<li><p>随时改变：此变量最好不要连续取两次</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//在进行本身相乘时，最好不要：</span></span><br><span class="line"><span class="type">int</span> a = *ptr, b = *ptr; <span class="type">int</span> result = a*b;</span><br><span class="line"><span class="comment">//a和b的值很有可能是不一样的，所以最好：</span></span><br><span class="line"><span class="type">int</span> a = *ptr; <span class="type">int</span> result = a*a;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>禁止编译器对变量进行优化</p>
+<p>所修饰的变量可能会在当前程序的外部被改变，阻止编译器因误认为某段代码无法被代码本身多改变，而造成的过度优化。每次读取变量时，<strong>不要使用缓存中的值</strong>，从内存处重新读取。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gcc main.c -o main		<span class="comment">#正常编译命令，没有优化代码</span></span><br><span class="line">gcc -O main.c -o main	<span class="comment">#添加 -O 参数优化，加了volatile后使用了也不优化</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>顺序执行：</p>
+<p>编译器和处理器在处理变量时会按照程序中的顺序执行相关操作，而不会重排序优化。</p>
+<p>在多线程编程中，确保变量的内存可见性，一个线程修改了变量后，另一个线程可立即看到。</p>
+<p>但不能保证线程安全，仍然需要加锁。</p>
+</li>
+</ul>
+<h1 id="explicit"><a href="#explicit" class="headerlink" title="explicit"></a>explicit</h1><p>用于修饰类的构造函数。使用 <code>explicit</code> 关键字可以<strong>防止</strong>编译器使用该构造函数进行<strong>隐式类型转换</strong>。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">explicit</span> <span class="title">MyClass</span><span class="params">(<span class="type">int</span> x)</span> : value(x) &#123;</span>&#125; <span class="comment">// 使用 explicit 关键字修饰构造函数</span></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">getValue</span><span class="params">()</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> value;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> value;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    MyClass obj1 = <span class="number">10</span>; <span class="comment">// 错误！不能进行隐式类型转换</span></span><br><span class="line">    <span class="function">MyClass <span class="title">obj2</span><span class="params">(<span class="number">10</span>)</span></span>; <span class="comment">// 正确！使用显式构造函数进行对象的初始化</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>不能使用<code>int</code>类型值来初始化<code>MyClass</code>类对象。</p>
+<p>它明确了对象的构造方式，避免了一些可能导致不必要错误的隐式类型转换，提高代码的安全性和可读性。</p>
+<p>不使用时<strong>可能的错误</strong>：</p>
+<ul>
+<li><p>意外的隐式类型转换</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Distance</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Distance</span>(<span class="type">int</span> meters) : <span class="built_in">meters_</span>(meters) &#123;&#125;</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">getMeters</span><span class="params">()</span> <span class="type">const</span> </span>&#123;  <span class="keyword">return</span> meters_;  &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> meters_;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">printDistance</span><span class="params">(<span class="type">const</span> Distance&amp; distance)</span> </span>&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Distance: &quot;</span> &lt;&lt; distance.<span class="built_in">getMeters</span>() &lt;&lt; <span class="string">&quot; meters&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="function">Distance <span class="title">d1</span><span class="params">(<span class="number">1000</span>)</span></span>; <span class="comment">// 正确！直接调用构造函数</span></span><br><span class="line">    <span class="built_in">printDistance</span>(d1); <span class="comment">// 正确！调用函数时不涉及隐式类型转换</span></span><br><span class="line">    Distance d2 = <span class="number">2000</span>; <span class="comment">// 错误！此处涉及隐式类型转换，但没有被声明为 explicit</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>main</code> 函数中，试图使用 <code>Distance d2 = 2000;</code> 这样的语句进行隐式类型转换，编译器会将 <code>int</code> 类型的 <code>2000</code> 隐式地转换为 <code>Distance</code> 类型的对象，从而调用了 <code>Distance(int)</code> 构造函数。</p>
+</li>
+<li><p>歧义的函数调用</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Distance</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Distance</span>(<span class="type">int</span> meters) : <span class="built_in">meters_</span>(meters) &#123;&#125;</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">getMeters</span><span class="params">()</span> <span class="type">const</span> </span>&#123;  <span class="keyword">return</span> meters_;  &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> meters_;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">printDistance</span><span class="params">(<span class="type">const</span> Distance&amp; distance)</span> </span>&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Distance: &quot;</span> &lt;&lt; distance.<span class="built_in">getMeters</span>() &lt;&lt; <span class="string">&quot; meters&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">printDistance</span><span class="params">(<span class="type">int</span> value)</span> </span>&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Processing distance value: &quot;</span> &lt;&lt; value &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="function">Distance <span class="title">d1</span><span class="params">(<span class="number">1000</span>)</span></span>; <span class="comment">// 正确！直接调用构造函数</span></span><br><span class="line">    <span class="built_in">printDistance</span>(d1); <span class="comment">// 正确！调用函数时不涉及隐式类型转换</span></span><br><span class="line">    <span class="built_in">processDistance</span>(<span class="number">2000</span>); <span class="comment">// 错误！错误地匹配到了printDistance(int) 函数，而不是 printDistance(const Distance&amp;)</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译器将整数 <code>2000</code> 隐式地转换为 <code>Distance</code> 对象，然后错误地匹配到了接受 <code>int</code> 参数的 <code>printDistance(int)</code> 函数，而不是原本预期的调用 <code>printDistance(const Distance&amp;)</code> 函数。</p>
+</li>
+<li><p>安全性问题</p>
+</li>
+<li><p>代码可读性问题</p>
+</li>
+</ul>
+<h1 id="mutable"><a href="#mutable" class="headerlink" title="mutable"></a>mutable</h1><p>修饰类的成员变量：使用 <code>mutable</code> 关键字修饰的成员变量可以<strong>在常量成员函数中被修改</strong>，即使这些函数被声明为 <code>const</code>。</p>
+<p>作用：允许对象在常量上下文中修改其状态。</p>
+<p>const成员函数可以修改mutable成员变量。</p>
+<h1 id="exteren"><a href="#exteren" class="headerlink" title="exteren"></a>exteren</h1><p>用于声明一个变量或函数的<strong>外部链接性</strong>（external linkage）。<code>extern</code> 声明告诉编译器，被声明的变量或函数是在其他文件中定义的，其定义在当前文件之外。</p>
+<ol>
+<li>声明外部变量</li>
+<li>声明外部函数</li>
+<li></li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="type">int</span> i;		<span class="comment">//只声明，不定义，不分配</span></span><br><span class="line"><span class="function"><span class="keyword">extern</span> <span class="type">void</span> <span class="title">func</span><span class="params">()</span></span>;	<span class="comment">//</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>分离声明和定义</li>
+<li>起链接器作用</li>
+<li>避免多重定义</li>
+<li>避免重复编译，提高效率</li>
+</ul>
+<h1 id="enum"><a href="#enum" class="headerlink" title="enum"></a>enum</h1><p>枚举类型是一种用户自定义的数据类型，用于定义一组具名的整型常量。使用枚举类型可以提高代码的可读性和可维护性，使得程序中的常量具有更好的语义性。</p>
+<h1 id="虚函数相关"><a href="#虚函数相关" class="headerlink" title="虚函数相关"></a>虚函数相关</h1><p>详见虚函数内容。</p>
+<h2 id="virtual-override-final"><a href="#virtual-override-final" class="headerlink" title="virtual&#x2F;override&#x2F;final"></a>virtual&#x2F;override&#x2F;final</h2><ol>
+<li><strong>virtual</strong>： <code>virtual</code> 关键字用于声明虚函数，即可以在派生类中被重写的基类函数。它使得在运行时能够动态地确定调用的是哪个版本的函数。</li>
+<li><strong>override</strong>： <code>override</code> 关键字用于在派生类中显式地声明对基类虚函数的重写。使用 <code>override</code> 可以提高代码的可读性，并在派生类中确保正确地重写了基类的虚函数。</li>
+<li><strong>final</strong>： <code>final</code> 关键字用于在基类中显式地声明某个虚函数不可被派生类重写。在派生类中尝试重写被声明为 <code>final</code> 的虚函数会导致编译错误。</li>
+</ol>
+<h2 id="typeid"><a href="#typeid" class="headerlink" title="typeid"></a>typeid</h2><p><code>typeid</code> 运算符用于获取一个表达式的运行时类型信息。在面向对象的设计中，常用于判断对象的实际类型，与虚函数一起使用可以实现动态多态。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://aaairfox.github.io">Zhang</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://aaairfox.github.io/C%E5%85%B3%E9%94%AE%E5%AD%97/">https://aaairfox.github.io/C%E5%85%B3%E9%94%AE%E5%AD%97/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://aaairfox.github.io" target="_blank">AAAirFox</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/C/">C++</a></div><div class="post_share"><div class="social-share" data-image="/self/img/cover/c.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/CUDA/" title="CUDA基础"><img class="cover" src="/self/img/cover/cuda.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">CUDA基础</div></div></a></div><div class="next-post pull-right"><a href="/C%E7%BA%A2%E9%BB%91%E6%A0%91/" title="C++平衡二叉树&amp;红黑树"><img class="cover" src="/self/img/cover/c.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">C++平衡二叉树&amp;红黑树</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/Linux%E4%B8%8BC++%E7%A8%8B%E5%BA%8F%E4%B8%89%E7%A7%8D%E7%BC%96%E8%AF%91%E6%96%B9%E6%B3%95/" title="Linux下C++程序编译方法（一）"><img class="cover" src="/self/img/cover/c.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-03-15</div><div class="title">Linux下C++程序编译方法（一）</div></div></a></div><div><a href="/Linux%E4%B8%8B%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%BC%80%E5%8F%91/" title="Linux下C++多线程开发（一）"><img class="cover" src="/self/img/cover/c.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-07</div><div class="title">Linux下C++多线程开发（一）</div></div></a></div><div><a href="/Linux%E4%B8%8BC++%E7%A8%8B%E5%BA%8F%E7%BC%96%E8%AF%91%E6%96%B9%E6%B3%95%EF%BC%88%E4%BA%8C%EF%BC%89/" title="Linux下C++程序编译方法（二）"><img class="cover" src="/self/img/cover/c.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-26</div><div class="title">Linux下C++程序编译方法（二）</div></div></a></div><div><a href="/Linux%E4%B8%8B%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%BC%80%E5%8F%91%EF%BC%88%E4%BA%8C%EF%BC%89/" title="Linux下C++多线程开发（二）线程池"><img class="cover" src="/self/img/cover/c.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-07</div><div class="title">Linux下C++多线程开发（二）线程池</div></div></a></div><div><a href="/C%E5%8D%8F%E7%A8%8B/" title="C++协程"><img class="cover" src="/self/img/cover/c.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-04-09</div><div class="title">C++协程</div></div></a></div><div><a href="/C%E7%BA%A2%E9%BB%91%E6%A0%91/" title="C++平衡二叉树&amp;红黑树"><img class="cover" src="/self/img/cover/c.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-06-09</div><div class="title">C++平衡二叉树&amp;红黑树</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Zhang</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">57</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">18</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#static"><span class="toc-number">1.</span> <span class="toc-text">static</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#const"><span class="toc-number">2.</span> <span class="toc-text">const</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#inline"><span class="toc-number">3.</span> <span class="toc-text">inline</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#volatile"><span class="toc-number">4.</span> <span class="toc-text">volatile</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#explicit"><span class="toc-number">5.</span> <span class="toc-text">explicit</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#mutable"><span class="toc-number">6.</span> <span class="toc-text">mutable</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#exteren"><span class="toc-number">7.</span> <span class="toc-text">exteren</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#enum"><span class="toc-number">8.</span> <span class="toc-text">enum</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%99%9A%E5%87%BD%E6%95%B0%E7%9B%B8%E5%85%B3"><span class="toc-number">9.</span> <span class="toc-text">虚函数相关</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#virtual-override-final"><span class="toc-number">9.1.</span> <span class="toc-text">virtual&#x2F;override&#x2F;final</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#typeid"><span class="toc-number">9.2.</span> <span class="toc-text">typeid</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/%E9%A1%B9%E7%9B%AE%E4%B9%8B%E6%B5%8B%E8%AF%95%E4%B8%8E%E4%BA%A4%E4%BB%98/" title="项目之测试与交付"><img src="/self/img/cover/management.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="项目之测试与交付"/></a><div class="content"><a class="title" href="/%E9%A1%B9%E7%9B%AE%E4%B9%8B%E6%B5%8B%E8%AF%95%E4%B8%8E%E4%BA%A4%E4%BB%98/" title="项目之测试与交付">项目之测试与交付</a><time datetime="2024-04-10T06:52:55.000Z" title="发表于 2024-04-10 14:52:55">2024-04-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/C%E5%8D%8F%E7%A8%8B/" title="C++协程"><img src="/self/img/cover/c.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C++协程"/></a><div class="content"><a class="title" href="/C%E5%8D%8F%E7%A8%8B/" title="C++协程">C++协程</a><time datetime="2024-04-09T11:28:42.000Z" title="发表于 2024-04-09 19:28:42">2024-04-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/Hexo+Butterfly%E7%BE%8E%E5%8C%96%E6%93%8D%E4%BD%9C/" title="Hexo+Butterfly美化操作"><img src="/self/img/cover/hexo.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hexo+Butterfly美化操作"/></a><div class="content"><a class="title" href="/Hexo+Butterfly%E7%BE%8E%E5%8C%96%E6%93%8D%E4%BD%9C/" title="Hexo+Butterfly美化操作">Hexo+Butterfly美化操作</a><time datetime="2024-04-06T09:33:17.000Z" title="发表于 2024-04-06 17:33:17">2024-04-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/Hexo+Butterfly%E5%9F%BA%E7%A1%80%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" title="Hexo+Butterfly基础环境配置"><img src="/self/img/cover/hexo.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hexo+Butterfly基础环境配置"/></a><div class="content"><a class="title" href="/Hexo+Butterfly%E5%9F%BA%E7%A1%80%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" title="Hexo+Butterfly基础环境配置">Hexo+Butterfly基础环境配置</a><time datetime="2024-04-06T08:08:43.000Z" title="发表于 2024-04-06 16:08:43">2024-04-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/windows%E9%80%9A%E8%BF%87vscode%E8%BF%9E%E6%8E%A5%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="windows通过vscode连接服务器"><img src="/self/img/cover/vscode.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="windows通过vscode连接服务器"/></a><div class="content"><a class="title" href="/windows%E9%80%9A%E8%BF%87vscode%E8%BF%9E%E6%8E%A5%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="windows通过vscode连接服务器">windows通过vscode连接服务器</a><time datetime="2024-04-01T08:20:31.000Z" title="发表于 2024-04-01 16:20:31">2024-04-01</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2024 By Zhang</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hello World!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div></div></body></html>
