@@ -1,0 +1,251 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>GPU架构 | AAAirFox</title><meta name="author" content="Zhang"><meta name="copyright" content="Zhang"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="参考链接：GPU架构总结  GPU架构组成：  CUDA 核心：GPU 架构中的主要计算单元，能够处理各种数学和逻辑运算。  内存Cache系统 三级缓存机制，存在于CPU、GPU与主存之间，用于存储数据和指令，以减少 GPU 访问主存的延迟。 L1：通常是指显卡核心内部的缓存，位于SM内，其速度非常快，但容量较小，主要用于对local内存进行缓存，特别是当寄存器溢出时。L1缓存的优势在于能够快速">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GPU架构">
+<meta property="og:url" content="https://aaairfox.github.io/GPU%E6%9E%B6%E6%9E%84/index.html">
+<meta property="og:site_name" content="AAAirFox">
+<meta property="og:description" content="参考链接：GPU架构总结  GPU架构组成：  CUDA 核心：GPU 架构中的主要计算单元，能够处理各种数学和逻辑运算。  内存Cache系统 三级缓存机制，存在于CPU、GPU与主存之间，用于存储数据和指令，以减少 GPU 访问主存的延迟。 L1：通常是指显卡核心内部的缓存，位于SM内，其速度非常快，但容量较小，主要用于对local内存进行缓存，特别是当寄存器溢出时。L1缓存的优势在于能够快速">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://aaairfox.github.io/self/img/cover/nvidia.jpg">
+<meta property="article:published_time" content="2024-04-22T01:08:44.000Z">
+<meta property="article:modified_time" content="2024-04-22T03:27:59.669Z">
+<meta property="article:author" content="Zhang">
+<meta property="article:tag" content="Nvidia">
+<meta property="article:tag" content="GPU">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://aaairfox.github.io/self/img/cover/nvidia.jpg"><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://aaairfox.github.io/GPU%E6%9E%B6%E6%9E%84/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'GPU架构',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-04-22 11:27:59'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.1.1"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">92</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">27</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-tags"></i><span> 标签</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tags/%E7%AE%97%E6%B3%95/"><span> 算法</span></a></li><li><a class="site-page child" href="/tags/Cuda/"><span> CUDA</span></a></li><li><a class="site-page child" href="/tags/C/"><span> C++</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/%E5%85%AB%E8%82%A1/"><span> 八股</span></a></li><li><a class="site-page child" href="/categories/Ubuntu%E6%93%8D%E4%BD%9C/"><span> Ubuntu</span></a></li><li><a class="site-page child" href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA/"><span> 机器人</span></a></li><li><a class="site-page child" href="/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"><span> 博客搭建</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="AAAirFox"><img class="site-icon" src="/img/favicon.ico"/><span class="site-name">AAAirFox</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-tags"></i><span> 标签</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tags/%E7%AE%97%E6%B3%95/"><span> 算法</span></a></li><li><a class="site-page child" href="/tags/Cuda/"><span> CUDA</span></a></li><li><a class="site-page child" href="/tags/C/"><span> C++</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/%E5%85%AB%E8%82%A1/"><span> 八股</span></a></li><li><a class="site-page child" href="/categories/Ubuntu%E6%93%8D%E4%BD%9C/"><span> Ubuntu</span></a></li><li><a class="site-page child" href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA/"><span> 机器人</span></a></li><li><a class="site-page child" href="/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"><span> 博客搭建</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">GPU架构</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2024-04-22T01:08:44.000Z" title="发表于 2024-04-22 09:08:44">2024-04-22</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></span></div><div class="meta-secondline"></div></div></div><article class="post-content" id="article-container"><p>参考链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_43543209/article/details/136287163">GPU架构总结</a></p>
+<p><img src="/./GPU%E6%9E%B6%E6%9E%84/image-20240422112758034.png" alt="image-20240422112758034"></p>
+<h1 id="GPU架构"><a href="#GPU架构" class="headerlink" title="GPU架构"></a>GPU架构</h1><p>组成：</p>
+<ul>
+<li><p>CUDA 核心：GPU 架构中的主要计算单元，能够处理各种数学和逻辑运算。</p>
+</li>
+<li><p>内存Cache系统</p>
+<p>三级缓存机制，存在于CPU、GPU与主存之间，<strong>用于存储数据和指令，以减少 GPU 访问主存的延迟</strong>。</p>
+<p>L1：通常是指<strong>显卡核心内部的缓存</strong>，位于<strong>SM内</strong>，其速度非常快，但容量较小，主要用于对local内存进行缓存，特别是当寄存器溢出时。L1缓存的优势在于能够<strong>快速响应CPU</strong>的读写操作，降低内存延迟，从而提高程序的运行速度。在图形渲染等复杂任务中，L1缓存能够快速提供显卡核心所需的数据，提升图形处理效率。【对每个SM的所有线程可见】</p>
+<p>L2：位于<strong>整个GPU芯片</strong>上，<strong>多个SM共享</strong>，其速度相对L1较慢，但<strong>容量</strong>更大。L2缓存存储了未被L1缓存所缓存的数据，并且当<strong>多个处理单元或线程组</strong>需要访问相同的数据时，这些数据可以从L2缓存中读取，而不是每次都从显存中读取。这大大提高了数据访问的速度。更大的L2缓存可以存储更多的数据，从而减少从显存中读取数据的次数，进一步提升了GPU的性能。</p>
+<p>L3：通常是指<strong>显卡芯片之外</strong>的缓存，<strong>对整个GPU芯片上的所有SM可见</strong>，容量更大，但速度更慢。L3缓存的作用主要是作为<strong>L2缓存和主存之间的桥梁</strong>，进一步减少CPU访问主存的次数，提高访问速度。在GPU中，L3缓存同样能够协助存储和快速访问大量数据，尤其是在处理大型图形和计算任务时，其大容量的特点能够显著减少数据访问的延迟。</p>
+<blockquote>
+<p>缓存行（Cache Line）是缓存中的基本存储单元。它是<strong>缓存与主存之间数据交换的最小单位</strong>。当GPU从主存中读取数据时，它通常以缓存行的大小为单位进行读取。这样做的原因是，通过预取和存储相邻的数据，可以提高后续数据访问的命中率，进一步减少访问延迟。</p>
+</blockquote>
+</li>
+<li><p>TPC(纹理处理集群)&#x2F;SM(流多处理器)：CUDA 核心的分组结构，一个 TPC 包含两个 SM，每个 SM 都有自己的 CUDA 核心和内存。</p>
+</li>
+<li><p>Tensor Core（ 2017 年 Volta 架构引入）：Tensor张量核心，用于执行张量计算，支持并行执行FP32与INT32运算。</p>
+</li>
+<li><p>RT Core（2018 年 Turing 架构引入 ）：光线追踪核心，负责处理光线追踪加速。</p>
+</li>
+<li><p>NVIDIA GPU 架构还包括内存控制器、高速缓存控制器、CUDA 编译器和驱动程序等其他组件，这些组件与SM 和其他核心组件协同工作，可以实现高效的并行计算和内存访问，提高 GPU 的性能和能效。</p>
+</li>
+</ul>
+<h2 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h2><blockquote>
+<p>寄存器 → shared memory → 三级Cache → Local Memory → Global Memory</p>
+</blockquote>
+<p><img src="/./GPU%E6%9E%B6%E6%9E%84/6e48c6c157c94237b15be5bda2f15f12.png" alt="在这里插入图片描述"></p>
+<ol>
+<li><p>寄存器、Local Memory、Global Memory</p>
+<p>首先，寄存器是CPU（中央处理器）内的高速存储区域，用于临时存储数据和指令。在GPU中，寄存器同样用于存储线程执行过程中需要频繁访问的数据和指令。寄存器的访问速度非常快，可以使得GPU更高效地处理数据和执行指令。【核函数中声明变量时】</p>
+<p>Local Memory是GPU中为<strong>每个线程或线程组</strong>分配的内存空间。当线程中的变量或数据量超出寄存器的容量时，这些数据就会被存储在Local Memory中。Local Memory的访问速度相对较快，但仍然比寄存器慢。因此，合理地使用寄存器和Local Memory，可以确保线程执行过程中需要频繁访问的数据和指令能够快速地被获取，从而提高GPU的性能。</p>
+<p>Global Memory则是GPU中最基础的内存，其空间最大，但访问延迟也最高。Global Memory可以被设备内的所有线程访问和共享。任何线程都可以在整个程序的生命周期中获取Global Memory中的状态。Global Memory主要用于存储大型数据集和需要在多个线程之间共享的数据。</p>
+</li>
+<li><p>寄存器 &amp; Cache</p>
+<p>寄存器是<strong>GPU内部</strong>的一种高速存储单元，用于存储线程执行过程中<strong>需要频繁访问的数据和指令</strong>。寄存器的访问速度非常快，因为它通常直接集成在处理核心中，可以使得GPU在处理数据和执行指令时更加高效。每个线程或线程组通常都有自己的寄存器集，用于存储其私有数据和状态。</p>
+<p>而Cache（缓存）则是位于GPU处理核心与主存或显存<strong>之间</strong>的一种存储结构，用于缓存<strong>最近访问过的数据或指令</strong>。Cache的目的是为了减少GPU对主存或显存的访问次数，降低访问延迟，从而提高数据访问的速度和效率。当GPU需要读取或写入数据时，它会首先检查Cache中是否有该数据。如果Cache命中，GPU就可以直接从Cache中获取数据，而无需访问较慢的主存或显存。</p>
+<p>总结一下，寄存器和Cache的主要区别在于：</p>
+<ul>
+<li>寄存器是处理核心内部的高速存储单元，用于存储线程执行过程中需要频繁访问的数据和指令。</li>
+<li>Cache是位于处理核心与主存或显存之间的存储结构，用于缓存最近访问过的数据或指令，以减少访问延迟。</li>
+</ul>
+</li>
+<li><p>shared memory</p>
+<p>主要用于提高<strong>线程间</strong>数据访问的速度和效率。它是位于SM（流多处理器）上的一种硬件内存，可以被SM上的所有线程块共享使用。</p>
+<p>访问速度非常快，是GPU上访问最快的内存之一，<strong>仅次于寄存器</strong>。当线程块开始执行时，GPU会分配一定数量的shared memory给该线程块，该内存的地址空间会被线程块中的所有线程共享。<br>当多个线程块访问相同的数据时，它们可以直接从shared memory中读取数据，避免了重复从全局内存加载数据的操作，进一步提高了访存效率。shared memory还可以增加数据的重用，当一个线程块需要多次访问相同的数据时，将这些数据加载到shared memory中可以显著提高数据访问的效率。</p>
+</li>
+<li><p>GPU-style的内存架构ALU定夺，GPU上下文（Context）多，吞吐量高，依赖高带宽与系统内存交换数据</p>
+<ol>
+<li><strong>ALU定夺（ALU-Dominated）</strong>：ALU是算术逻辑单元，负责执行计算任务。在GPU中，内存访问通常是计算密集型任务中的瓶颈，而ALU的数量通常比内存访问能力更多。因此，GPU的内存架构通常被描述为“ALU定夺”，意味着GPU更适合处理<strong>大量的计算操作</strong>而不是频繁的内存访问。</li>
+<li><strong>GPU上下文多（Multiple GPU Contexts）</strong>：GPU通常能够同时支持多个上下文（Context），每个上下文代表一个独立的任务或程序在GPU上的执行环境。这意味着GPU可以同时<strong>处理多个任务</strong>，从而提高了系统的并行性和吞吐量。</li>
+<li><strong>吞吐量高（High Throughput）</strong>：GPU以并行方式处理大量数据和任务，因此具有高吞吐量。这意味着GPU能够同时处理多个操作，并在单位时间内完成大量的计算任务。</li>
+<li><strong>依赖高带宽与系统内存交换数据（Dependence on High Bandwidth and System Memory for Data Exchange）</strong>：GPU通常需要大量的数据来进行计算，而这些数据通常存储在系统内存中。因此，GPU对<strong>高带宽的系统内存</strong>通常有很强的依赖，以便有效地将数据传输到GPU内存中进行处理。高带宽的数据交换确保了GPU能够在处理大规模数据时保持高效率。</li>
+</ol>
+</li>
+<li></li>
+</ol>
+<h2 id="SM"><a href="#SM" class="headerlink" title="SM"></a>SM</h2><p><img src="/./GPU%E6%9E%B6%E6%9E%84/566d070d28654eafa4fcc13a8e9c1bb2.png" alt="在这里插入图片描述"></p>
+<ul>
+<li><p>PolyMorph Engine：多边形引擎负责属性装配（attribute Setup）、顶点拉取(VertexFetch)、曲面细分、栅格化（这个模块可以理解专门处理<strong>顶点相关</strong>的东西）。</p>
+</li>
+<li><p>指令缓存（Instruction Cache）</p>
+</li>
+<li><p>2个Warp Schedulers：这个模块负责warp调度，一个warp由32个线程组成，warp调度器的指令通过Dispatch Units送到Core执行。</p>
+<p>warp用于描述线程组的基本执行单元，是GPU执行指令的最小单位。一个warp是一组连续的线程，通常包含32个线程。</p>
+</li>
+<li><p>指令调度单元(Dispatch Units) 负责将Warp Schedulers的指令送往Core执行</p>
+</li>
+<li><p>128KB Register File（寄存器）</p>
+</li>
+<li><p>16个LD&#x2F;ST（load&#x2F;store）用来加载和存储数据</p>
+</li>
+<li><p>Core （Core，也叫流处理器Stream Processor）</p>
+</li>
+<li><p>4个SFU（Special function units 特殊运算单元）执行特殊数学运算（sin、cos、log等）</p>
+</li>
+<li><p>内部链接网络（Interconnect Network）</p>
+</li>
+<li><p>64KB shared memory&#x2F;L1 cache</p>
+</li>
+<li><p>全局内存缓存（Uniform Cache）</p>
+</li>
+<li><p>纹理读取单元(Tex)</p>
+</li>
+</ul>
+<h2 id="CUDA-Core"><a href="#CUDA-Core" class="headerlink" title="CUDA Core"></a>CUDA Core</h2><p>统一计算设备架构 (Compute Unified Device Architecture)，是一个并行计算平台，同时也是一个应用程序编程接口 (API)。</p>
+<p><img src="/./GPU%E6%9E%B6%E6%9E%84/2c92e7b67be34d01acc028917b2d0ff7.png" alt="在这里插入图片描述"></p>
+<p>包括控制单元Dispatch Port、操作数接收器Operand Collector，以及浮点计算单元FP Unit、整数计算单元Int Unit，另外还包括计算结果队列。当然还有Compare、Logic、Branch等。相当于微型CPU。</p>
+<h2 id="Tensor-Core"><a href="#Tensor-Core" class="headerlink" title="Tensor Core"></a>Tensor Core</h2><p>CUDA 核心足以满足计算工作负载，但 Tensor Core 的速度明显更快。CUDA 核心每个时间周期只能执行一项操作，但 Tensor 核心可以处理多项操作，从而带来令人难以置信的性能提升。</p>
+<p>从根本意义上来说，Tensor Core 所做的就是<strong>提高矩阵乘法的速度</strong>。</p>
+<p>CUDA Core 专门处理图形工作负载，Tensor Core 更擅长处理数字工作负载。</p>
+<h2 id="RT-Core"><a href="#RT-Core" class="headerlink" title="RT Core"></a>RT Core</h2><p>为了实时光线追踪，一种可以让画面更换新的渲染演算法。</p>
+<p>光线追踪（Ray Tracing）的原理是从用户端为起点，寻找光线反射和折射的路径并算出用户会看到的物体颜色及亮度。</p>
+<h3 id="CPU-GPU异构系统"><a href="#CPU-GPU异构系统" class="headerlink" title="CPU-GPU异构系统"></a>CPU-GPU异构系统</h3><p>分离式架构</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://aaairfox.github.io">Zhang</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://aaairfox.github.io/GPU%E6%9E%B6%E6%9E%84/">https://aaairfox.github.io/GPU%E6%9E%B6%E6%9E%84/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://aaairfox.github.io" target="_blank">AAAirFox</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Nvidia/">Nvidia</a><a class="post-meta__tags" href="/tags/GPU/">GPU</a></div><div class="post_share"><div class="social-share" data-image="/self/img/cover/nvidia.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/EffectiveC%EF%BC%88%E4%B8%80%EF%BC%89/" title="EffectiveC（一）习惯C++"><img class="cover" src="/self/img/cover/c.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">EffectiveC（一）习惯C++</div></div></a></div><div class="next-post pull-right"><a href="/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%8E%A8%E6%B5%81%E6%96%B9%E6%A1%88/" title="目标检测推流方案"><img class="cover" src="/self/img/cover/detect.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">目标检测推流方案</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/CUDA/" title="CUDA基础"><img class="cover" src="/self/img/cover/cuda.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-02-29</div><div class="title">CUDA基础</div></div></a></div><div><a href="/Nvidia%E5%BC%80%E5%8F%91%E6%9D%BF%E6%80%A7%E8%83%BD%E5%AF%B9%E6%AF%94/" title="Nvidia开发板性能对比"><img class="cover" src="/self/img/cover/nvidia.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-02-07</div><div class="title">Nvidia开发板性能对比</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Zhang</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">92</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">27</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#GPU%E6%9E%B6%E6%9E%84"><span class="toc-number">1.</span> <span class="toc-text">GPU架构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E5%AD%98"><span class="toc-number">1.1.</span> <span class="toc-text">内存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SM"><span class="toc-number">1.2.</span> <span class="toc-text">SM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CUDA-Core"><span class="toc-number">1.3.</span> <span class="toc-text">CUDA Core</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Tensor-Core"><span class="toc-number">1.4.</span> <span class="toc-text">Tensor Core</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RT-Core"><span class="toc-number">1.5.</span> <span class="toc-text">RT Core</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CPU-GPU%E5%BC%82%E6%9E%84%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.5.1.</span> <span class="toc-text">CPU-GPU异构系统</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/C%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E7%A1%80/" title="C分布式系统（一）基础"><img src="/self/img/cover/cover-4.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C分布式系统（一）基础"/></a><div class="content"><a class="title" href="/C%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E7%A1%80/" title="C分布式系统（一）基础">C分布式系统（一）基础</a><time datetime="2024-04-26T14:24:16.000Z" title="发表于 2024-04-26 22:24:16">2024-04-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/EffectiveC%EF%BC%88%E4%B8%89%EF%BC%89/" title="EffectiveC（三）资源管理"><img src="/self/img/cover/c.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="EffectiveC（三）资源管理"/></a><div class="content"><a class="title" href="/EffectiveC%EF%BC%88%E4%B8%89%EF%BC%89/" title="EffectiveC（三）资源管理">EffectiveC（三）资源管理</a><time datetime="2024-04-24T15:15:31.000Z" title="发表于 2024-04-24 23:15:31">2024-04-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/EffectiveC%EF%BC%88%E5%9B%9B%EF%BC%89/" title="EffectiveC（三）资源管理"><img src="/self/img/cover/c.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="EffectiveC（三）资源管理"/></a><div class="content"><a class="title" href="/EffectiveC%EF%BC%88%E5%9B%9B%EF%BC%89/" title="EffectiveC（三）资源管理">EffectiveC（三）资源管理</a><time datetime="2024-04-24T15:15:31.000Z" title="发表于 2024-04-24 23:15:31">2024-04-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/EffectiveC%EF%BC%88%E4%BA%8C%EF%BC%89/" title="EffectiveC（二）构造/析构/赋值运算"><img src="/self/img/cover/c.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="EffectiveC（二）构造/析构/赋值运算"/></a><div class="content"><a class="title" href="/EffectiveC%EF%BC%88%E4%BA%8C%EF%BC%89/" title="EffectiveC（二）构造/析构/赋值运算">EffectiveC（二）构造/析构/赋值运算</a><time datetime="2024-04-24T08:50:48.000Z" title="发表于 2024-04-24 16:50:48">2024-04-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/EffectiveC%EF%BC%88%E4%B8%80%EF%BC%89/" title="EffectiveC（一）习惯C++"><img src="/self/img/cover/c.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="EffectiveC（一）习惯C++"/></a><div class="content"><a class="title" href="/EffectiveC%EF%BC%88%E4%B8%80%EF%BC%89/" title="EffectiveC（一）习惯C++">EffectiveC（一）习惯C++</a><time datetime="2024-04-24T04:39:53.000Z" title="发表于 2024-04-24 12:39:53">2024-04-24</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2024 By Zhang</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hello World!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div></div></body></html>

@@ -1,0 +1,245 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>EffectiveC（一）习惯C++ | AAAirFox</title><meta name="author" content="Zhang"><meta name="copyright" content="Zhang"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="01 视C++为一个语言联邦C++是一个多重范型编程语言，一个同时支持过程形式、面向对象形式、函数形式、泛型形式、元编程形式的语言。  C Object-Oriented C++ Template C++ STL  是四个语言组成的联邦政府，每个次语言都有自己的规约。 02 尽量以 const, enum, inline 替换 #define尽量以编译器替换预处理器。 1#define PIE 3">
+<meta property="og:type" content="article">
+<meta property="og:title" content="EffectiveC（一）习惯C++">
+<meta property="og:url" content="https://aaairfox.github.io/EffectiveC%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
+<meta property="og:site_name" content="AAAirFox">
+<meta property="og:description" content="01 视C++为一个语言联邦C++是一个多重范型编程语言，一个同时支持过程形式、面向对象形式、函数形式、泛型形式、元编程形式的语言。  C Object-Oriented C++ Template C++ STL  是四个语言组成的联邦政府，每个次语言都有自己的规约。 02 尽量以 const, enum, inline 替换 #define尽量以编译器替换预处理器。 1#define PIE 3">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://aaairfox.github.io/self/img/cover/c.jpg">
+<meta property="article:published_time" content="2024-04-24T04:39:53.000Z">
+<meta property="article:modified_time" content="2024-04-24T08:50:24.144Z">
+<meta property="article:author" content="Zhang">
+<meta property="article:tag" content="C++">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://aaairfox.github.io/self/img/cover/c.jpg"><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://aaairfox.github.io/EffectiveC%EF%BC%88%E4%B8%80%EF%BC%89/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'EffectiveC（一）习惯C++',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-04-24 16:50:24'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.1.1"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">92</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">27</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-tags"></i><span> 标签</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tags/%E7%AE%97%E6%B3%95/"><span> 算法</span></a></li><li><a class="site-page child" href="/tags/Cuda/"><span> CUDA</span></a></li><li><a class="site-page child" href="/tags/C/"><span> C++</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/%E5%85%AB%E8%82%A1/"><span> 八股</span></a></li><li><a class="site-page child" href="/categories/Ubuntu%E6%93%8D%E4%BD%9C/"><span> Ubuntu</span></a></li><li><a class="site-page child" href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA/"><span> 机器人</span></a></li><li><a class="site-page child" href="/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"><span> 博客搭建</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="AAAirFox"><img class="site-icon" src="/img/favicon.ico"/><span class="site-name">AAAirFox</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-tags"></i><span> 标签</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tags/%E7%AE%97%E6%B3%95/"><span> 算法</span></a></li><li><a class="site-page child" href="/tags/Cuda/"><span> CUDA</span></a></li><li><a class="site-page child" href="/tags/C/"><span> C++</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/%E5%85%AB%E8%82%A1/"><span> 八股</span></a></li><li><a class="site-page child" href="/categories/Ubuntu%E6%93%8D%E4%BD%9C/"><span> Ubuntu</span></a></li><li><a class="site-page child" href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA/"><span> 机器人</span></a></li><li><a class="site-page child" href="/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"><span> 博客搭建</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">EffectiveC（一）习惯C++</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2024-04-24T04:39:53.000Z" title="发表于 2024-04-24 12:39:53">2024-04-24</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/C/">C++</a></span></div><div class="meta-secondline"></div></div></div><article class="post-content" id="article-container"><h1 id="01-视C-为一个语言联邦"><a href="#01-视C-为一个语言联邦" class="headerlink" title="01 视C++为一个语言联邦"></a>01 视C++为一个语言联邦</h1><p>C++是一个多重范型编程语言，一个同时支持过程形式、面向对象形式、函数形式、泛型形式、元编程形式的语言。</p>
+<ul>
+<li>C</li>
+<li>Object-Oriented C++</li>
+<li>Template C++</li>
+<li>STL</li>
+</ul>
+<p>是四个语言组成的联邦政府，每个次语言都有自己的规约。</p>
+<h1 id="02-尽量以-const-enum-inline-替换-define"><a href="#02-尽量以-const-enum-inline-替换-define" class="headerlink" title="02 尽量以 const, enum, inline 替换 #define"></a>02 尽量以 const, enum, inline 替换 #define</h1><p>尽量以编译器替换预处理器。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> PIE 3.1415926</span></span><br></pre></td></tr></table></figure>
+
+<p>【疑问】：记号PIE也许从未被编译器看见，可能在编译器处理之前就被顶处理器移走了，于是<strong>记号可能没有进入记号表内</strong>，当运用此常量时显示3.1415926编译错误。</p>
+<p>define可能存在的问题：</p>
+<ol>
+<li>安全性问题<ul>
+<li><strong>文本替换导致的错误</strong>：宏定义是简单的文本替换，这可能导致一些非预期的行为。例如，如果宏的参数在替换文本中多次出现，且没有使用括号保护，那么操作符的优先级可能会导致问题。</li>
+<li><strong>边界效应</strong>：宏定义没有作用域限制，可能导致在不同文件中定义的宏名冲突，或者在宏定义之后的代码中意外地扩展了不该扩展的文本。</li>
+<li><strong>重复定义</strong>：如果在多个地方定义了相同的宏，可能会引发重复定义的错误。</li>
+</ul>
+</li>
+<li>可读性和可维护性问题<ul>
+<li><strong>缺乏类型检查</strong>：宏定义不会进行类型检查，这可能导致类型不匹配的错误，而这些错误在编译时可能不会被捕获。</li>
+<li><strong>难以调试</strong>：由于宏是文本替换，调试时可能难以追踪到问题的源头，因为宏的展开可能发生在多个地方。</li>
+<li><strong>不易于重构</strong>：如果宏定义被用于多处，修改宏定义可能需要搜索整个项目来确保所有使用的地方都被更新，这增加了重构的难度。</li>
+</ul>
+</li>
+<li>其他问题<ul>
+<li><strong>与内建函数或关键字冲突</strong>：如果宏的名称与C++的内建函数或关键字冲突，可能导致编译错误或不可预测的行为。</li>
+<li><strong>无法携带调试信息</strong>：宏定义展开后的代码通常不包含原始宏定义的任何信息，这使得在调试时难以追踪宏的来源。</li>
+</ul>
+</li>
+</ol>
+<p>总之，使用 <code>const</code>、<code>enum</code> 和 <code>inline</code> 替代 <code>#define</code> 可以使代码更安全、更易于阅读和维护。这些特性提供了类型检查、作用域规则，并避免了宏定义可能导致的文本替换问题。</p>
+<h1 id="03-尽可能使用const"><a href="#03-尽可能使用const" class="headerlink" title="03 尽可能使用const"></a>03 尽可能使用const</h1><ol>
+<li><p>修饰返回值：操作符重载时</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Rational</span>&#123;...&#125;;</span><br><span class="line"><span class="type">const</span> Rational <span class="keyword">operator</span>* (<span class="type">const</span> Rational&amp; lhs, <span class="type">const</span> Rational&amp; rhs);</span><br></pre></td></tr></table></figure>
+
+<p>操作符重载时，如果不限定const，<code>(a * b) = c</code>语句就是可行的了。但<strong>一个良好的用户自定义类型的特征是避免于内置类型不兼容（条款18）</strong>，所以此语句无意义。</p>
+</li>
+<li><p>修饰成员函数</p>
+<p>为了确认该成员函数可用于const对象身上——更易读 + 可操作。有const成员函数后可用来处理取得的const对象，<strong>改善C++程序效率的一个根本办法是以pass by reference-to-const方式传递对象（条款20）</strong>。</p>
+<p><u>两个成员函数如果只是constness不同，可以被重载。</u></p>
+<blockquote>
+<p>bitwise constness &amp; logical constness</p>
+<ul>
+<li><p>bitwise constness：const成员函数不可更改任何non-static成员变量。（但如果其中成员是指针，改变指针指向的对象不会引发错误）</p>
+</li>
+<li><p>logical constness：一个const成员函数可以在检测不出的情况下修改某些数据。</p>
+</li>
+</ul>
+<p>如何解决坚持bitwise constness但是实现是logical constness的情况？</p>
+<ul>
+<li>用mutable修饰可能改变的成员变量。</li>
+</ul>
+</blockquote>
+</li>
+<li><p>常量性转除</p>
+<p>现在需要定义const和non-const版本的两个同样的函数。const 版本的 <code>operator[]</code> 完全做了non- const 版本该做的一切，唯一的区别是返回值多了一个 const 限定符。因此如果能够安全地将返回值的 const 限定符移除，就可以使用一个函数实现两个版本的功能，避免代码的重复。</p>
+<p>由于const对象不能调用non-const成员，所以调用non-const operator的一定是一个non-const对象，因此，</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">TextBlock</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    ...</span><br><span class="line">    <span class="type">const</span> <span class="type">char</span>&amp; <span class="keyword">operator</span>[](std::<span class="type">size_t</span> position) <span class="type">const</span>&#123;</span><br><span class="line">        ...</span><br><span class="line">        ... <span class="comment">//重复的代码</span></span><br><span class="line">        <span class="keyword">return</span> text[position];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">char</span>&amp; <span class="keyword">operator</span>[](std::<span class="type">size_t</span> position) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">const_cast</span>&lt;<span class="type">char</span>&amp;&gt;(</span><br><span class="line">            <span class="built_in">static_cast</span>&lt;<span class="type">const</span> TextBlock&amp;&gt;(*<span class="keyword">this</span>)[position]</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>想让non-const operator[]调用const operator[]，不处理的话会在内部递归调用，所以将(*this)从TestBlock&amp;类型转成const TextBlock&amp;类型。最后从const operator[]的返回值中移除const。</p>
+<p>cast是糟不良实践（条款27）。</p>
+</li>
+</ol>
+<ul>
+<li><p>声明为const可帮助编译器检测出错误用法，const可被施加于任何作用域内的对象、函数参数、函数返回类型、成员函数本体。</p>
+</li>
+<li><p>编译器强制执行bitwise constness，但编写程序时应该使用“概念上的常量性”。</p>
+<p>函数中不能直接修改任何数据成员的值，包括非<code>mutable</code>的数据成员。</p>
+</li>
+<li><p>当const和non-const成员函数有实质等价的实现时，可以令non-const版本调用const版本避免代码重复。</p>
+</li>
+</ul>
+<h1 id="04-确定对象被使用前已被初始化"><a href="#04-确定对象被使用前已被初始化" class="headerlink" title="04 确定对象被使用前已被初始化"></a>04 确定对象被使用前已被初始化</h1><ul>
+<li><p>对内置类型对象进行手工初始化，因为C++不保证初始化他们。</p>
+<p>避免出现未定义行为：如果不手工初始化内置类型的对象，它们的值是未定义的，即它们的初始值是不确定的。</p>
+</li>
+<li><p>构造函数最好使用初始化列表，而不是在函数体内赋值。初始化列表排列顺序应该和class中的声明顺序相同。</p>
+<p>初始化列表中的参数初始化是在对象的<strong>构造函数开始执行之前</strong>进行的，而构造函数体中的赋值则是在对象的构造函数<strong>执行过程</strong>中的一部分。</p>
+<p>初始化列表可以避免先调用默认构造函数初始化成员变量，再在函数体内赋值的额外开销。</p>
+<p>顺序：为了维护提高可读性。</p>
+</li>
+<li><p>为避免“跨编译单元初始化次序”的问题，用local static对象替换non-local static对象。</p>
+<p>当在不同的编译单元中定义了多个非局部static 对象时，它们的初始化次序是不确定的。如a.cpp中的static赋值时使用了b.cpp中的另一个static变量，此时b.cpp中的static可能还未初始化。</p>
+<p>将非局部static 对象替换为函数内的 local static 对象，因为 local static 对象的初始化次序是确定的，它们在第一次调用时才会被初始化。</p>
+<p>编译单元：产出单一目标文件的源码+头文件。<u>多个编译单元内的nono-local static对象经由<strong>模版隐式具现化</strong>(implicit template instantiations)形成</u>，不但不可能确定顺序，甚至往往不值得寻找“可决定正确次序”的特殊情况。</p>
+</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://aaairfox.github.io">Zhang</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://aaairfox.github.io/EffectiveC%EF%BC%88%E4%B8%80%EF%BC%89/">https://aaairfox.github.io/EffectiveC%EF%BC%88%E4%B8%80%EF%BC%89/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://aaairfox.github.io" target="_blank">AAAirFox</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/C/">C++</a></div><div class="post_share"><div class="social-share" data-image="/self/img/cover/c.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/EffectiveC%EF%BC%88%E4%BA%8C%EF%BC%89/" title="EffectiveC（二）构造/析构/赋值运算"><img class="cover" src="/self/img/cover/c.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">EffectiveC（二）构造/析构/赋值运算</div></div></a></div><div class="next-post pull-right"><a href="/GPU%E6%9E%B6%E6%9E%84/" title="GPU架构"><img class="cover" src="/self/img/cover/nvidia.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">GPU架构</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/Linux%E4%B8%8BC++%E7%A8%8B%E5%BA%8F%E4%B8%89%E7%A7%8D%E7%BC%96%E8%AF%91%E6%96%B9%E6%B3%95/" title="Linux下C++程序编译方法（一）"><img class="cover" src="/self/img/cover/c.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-03-15</div><div class="title">Linux下C++程序编译方法（一）</div></div></a></div><div><a href="/Linux%E4%B8%8B%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%BC%80%E5%8F%91/" title="Linux下C++多线程开发（一）"><img class="cover" src="/self/img/cover/c.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-07</div><div class="title">Linux下C++多线程开发（一）</div></div></a></div><div><a href="/Linux%E4%B8%8BC++%E7%A8%8B%E5%BA%8F%E7%BC%96%E8%AF%91%E6%96%B9%E6%B3%95%EF%BC%88%E4%BA%8C%EF%BC%89/" title="Linux下C++程序编译方法（二）"><img class="cover" src="/self/img/cover/c.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-26</div><div class="title">Linux下C++程序编译方法（二）</div></div></a></div><div><a href="/Linux%E4%B8%8B%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%BC%80%E5%8F%91%EF%BC%88%E4%BA%8C%EF%BC%89/" title="Linux下C++多线程开发（二）线程池"><img class="cover" src="/self/img/cover/c.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-07</div><div class="title">Linux下C++多线程开发（二）线程池</div></div></a></div><div><a href="/C%E5%8D%8F%E7%A8%8B/" title="C++协程"><img class="cover" src="/self/img/cover/c.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-04-09</div><div class="title">C++协程</div></div></a></div><div><a href="/C%E7%BA%A2%E9%BB%91%E6%A0%91/" title="C++平衡二叉树&amp;红黑树"><img class="cover" src="/self/img/cover/c.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-06-09</div><div class="title">C++平衡二叉树&amp;红黑树</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Zhang</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">92</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">27</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#01-%E8%A7%86C-%E4%B8%BA%E4%B8%80%E4%B8%AA%E8%AF%AD%E8%A8%80%E8%81%94%E9%82%A6"><span class="toc-number">1.</span> <span class="toc-text">01 视C++为一个语言联邦</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#02-%E5%B0%BD%E9%87%8F%E4%BB%A5-const-enum-inline-%E6%9B%BF%E6%8D%A2-define"><span class="toc-number">2.</span> <span class="toc-text">02 尽量以 const, enum, inline 替换 #define</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#03-%E5%B0%BD%E5%8F%AF%E8%83%BD%E4%BD%BF%E7%94%A8const"><span class="toc-number">3.</span> <span class="toc-text">03 尽可能使用const</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#04-%E7%A1%AE%E5%AE%9A%E5%AF%B9%E8%B1%A1%E8%A2%AB%E4%BD%BF%E7%94%A8%E5%89%8D%E5%B7%B2%E8%A2%AB%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">4.</span> <span class="toc-text">04 确定对象被使用前已被初始化</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/C%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E7%A1%80/" title="C分布式系统（一）基础"><img src="/self/img/cover/cover-4.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C分布式系统（一）基础"/></a><div class="content"><a class="title" href="/C%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E7%A1%80/" title="C分布式系统（一）基础">C分布式系统（一）基础</a><time datetime="2024-04-26T14:24:16.000Z" title="发表于 2024-04-26 22:24:16">2024-04-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/EffectiveC%EF%BC%88%E4%B8%89%EF%BC%89/" title="EffectiveC（三）资源管理"><img src="/self/img/cover/c.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="EffectiveC（三）资源管理"/></a><div class="content"><a class="title" href="/EffectiveC%EF%BC%88%E4%B8%89%EF%BC%89/" title="EffectiveC（三）资源管理">EffectiveC（三）资源管理</a><time datetime="2024-04-24T15:15:31.000Z" title="发表于 2024-04-24 23:15:31">2024-04-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/EffectiveC%EF%BC%88%E5%9B%9B%EF%BC%89/" title="EffectiveC（三）资源管理"><img src="/self/img/cover/c.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="EffectiveC（三）资源管理"/></a><div class="content"><a class="title" href="/EffectiveC%EF%BC%88%E5%9B%9B%EF%BC%89/" title="EffectiveC（三）资源管理">EffectiveC（三）资源管理</a><time datetime="2024-04-24T15:15:31.000Z" title="发表于 2024-04-24 23:15:31">2024-04-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/EffectiveC%EF%BC%88%E4%BA%8C%EF%BC%89/" title="EffectiveC（二）构造/析构/赋值运算"><img src="/self/img/cover/c.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="EffectiveC（二）构造/析构/赋值运算"/></a><div class="content"><a class="title" href="/EffectiveC%EF%BC%88%E4%BA%8C%EF%BC%89/" title="EffectiveC（二）构造/析构/赋值运算">EffectiveC（二）构造/析构/赋值运算</a><time datetime="2024-04-24T08:50:48.000Z" title="发表于 2024-04-24 16:50:48">2024-04-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/EffectiveC%EF%BC%88%E4%B8%80%EF%BC%89/" title="EffectiveC（一）习惯C++"><img src="/self/img/cover/c.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="EffectiveC（一）习惯C++"/></a><div class="content"><a class="title" href="/EffectiveC%EF%BC%88%E4%B8%80%EF%BC%89/" title="EffectiveC（一）习惯C++">EffectiveC（一）习惯C++</a><time datetime="2024-04-24T04:39:53.000Z" title="发表于 2024-04-24 12:39:53">2024-04-24</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2024 By Zhang</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hello World!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div></div></body></html>

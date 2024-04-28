@@ -1,0 +1,213 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>C++设计模式（四）装饰器模式 | AAAirFox</title><meta name="author" content="Zhang"><meta name="copyright" content="Zhang"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="参考链接： https:&#x2F;&#x2F;blog.csdn.net&#x2F;m0_56069910&#x2F;article&#x2F;details&#x2F;136708426 https:&#x2F;&#x2F;blog.csdn.net&#x2F;h8062651&#x2F;article&#x2F;details&#x2F;136495783 定义是一种结构型设计模式，它允许动态地给一个对象添加一些额外的职责，就增加功能来说，装饰器模式相比生成子类更为灵活，它可以在不修改现有类结构的情况下增加新">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++设计模式（四）装饰器模式">
+<meta property="og:url" content="https://aaairfox.github.io/C%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%9B%9B%EF%BC%89%E8%A3%85%E9%A5%B0%E5%99%A8%E6%A8%A1%E5%BC%8F/index.html">
+<meta property="og:site_name" content="AAAirFox">
+<meta property="og:description" content="参考链接： https:&#x2F;&#x2F;blog.csdn.net&#x2F;m0_56069910&#x2F;article&#x2F;details&#x2F;136708426 https:&#x2F;&#x2F;blog.csdn.net&#x2F;h8062651&#x2F;article&#x2F;details&#x2F;136495783 定义是一种结构型设计模式，它允许动态地给一个对象添加一些额外的职责，就增加功能来说，装饰器模式相比生成子类更为灵活，它可以在不修改现有类结构的情况下增加新">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://aaairfox.github.io/self/img/cover/c.jpg">
+<meta property="article:published_time" content="2023-08-24T23:31:17.000Z">
+<meta property="article:modified_time" content="2024-04-26T10:13:57.190Z">
+<meta property="article:author" content="Zhang">
+<meta property="article:tag" content="C++">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://aaairfox.github.io/self/img/cover/c.jpg"><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://aaairfox.github.io/C%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%9B%9B%EF%BC%89%E8%A3%85%E9%A5%B0%E5%99%A8%E6%A8%A1%E5%BC%8F/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'C++设计模式（四）装饰器模式',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-04-26 18:13:57'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.1.1"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">92</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">27</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-tags"></i><span> 标签</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tags/%E7%AE%97%E6%B3%95/"><span> 算法</span></a></li><li><a class="site-page child" href="/tags/Cuda/"><span> CUDA</span></a></li><li><a class="site-page child" href="/tags/C/"><span> C++</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/%E5%85%AB%E8%82%A1/"><span> 八股</span></a></li><li><a class="site-page child" href="/categories/Ubuntu%E6%93%8D%E4%BD%9C/"><span> Ubuntu</span></a></li><li><a class="site-page child" href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA/"><span> 机器人</span></a></li><li><a class="site-page child" href="/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"><span> 博客搭建</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="AAAirFox"><img class="site-icon" src="/img/favicon.ico"/><span class="site-name">AAAirFox</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-tags"></i><span> 标签</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tags/%E7%AE%97%E6%B3%95/"><span> 算法</span></a></li><li><a class="site-page child" href="/tags/Cuda/"><span> CUDA</span></a></li><li><a class="site-page child" href="/tags/C/"><span> C++</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/%E5%85%AB%E8%82%A1/"><span> 八股</span></a></li><li><a class="site-page child" href="/categories/Ubuntu%E6%93%8D%E4%BD%9C/"><span> Ubuntu</span></a></li><li><a class="site-page child" href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA/"><span> 机器人</span></a></li><li><a class="site-page child" href="/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"><span> 博客搭建</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">C++设计模式（四）装饰器模式</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2023-08-24T23:31:17.000Z" title="发表于 2023-08-25 07:31:17">2023-08-25</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/C/">C++</a></span></div><div class="meta-secondline"></div></div></div><article class="post-content" id="article-container"><p>参考链接：</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_56069910/article/details/136708426">https://blog.csdn.net/m0_56069910/article/details/136708426</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/h8062651/article/details/136495783">https://blog.csdn.net/h8062651/article/details/136495783</a></p>
+<h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><p>是一种结构型设计模式，它允许动态地给一个对象添加一些额外的职责，就增加功能来说，装饰器模式相比生成子类更为灵活，它可以在不修改现有类结构的情况下增加新的功能。</p>
+<ul>
+<li><p>组件 Componet</p>
+<p>接口，定义了核心功能，允许组件被装饰。</p>
+</li>
+<li><p>具体组件 Concrete Componet</p>
+<p>实现了组件接口的具体类。它是被装饰的对象。</p>
+</li>
+<li><p>装饰器 Decorator</p>
+<p>接口，继承自**<u>组件接口</u><strong>，并<u>持有一个组件对象的</strong>引用**</u>。装饰器允许在运行时向组件添加职责。</p>
+</li>
+<li><p>具体装饰器 Concrete Decorator</p>
+<p>实现了装饰器接口的具体类。给组件添加额外的功能。</p>
+</li>
+</ul>
+<p>具体装饰器类会<strong>继承</strong>装饰器基类，并在其方法中实现对组件的调用以及额外的功能。装饰器对象会持有一个组件对象的引用，并在其方法中将其传递给其他装饰器或具体组件。</p>
+<p><img src="/./C%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%9B%9B%EF%BC%89%E8%A3%85%E9%A5%B0%E5%99%A8%E6%A8%A1%E5%BC%8F/image-20240426173842279.png" alt="装饰器实现方法"></p>
+<h1 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h1><p><strong>（1）扩展功能而不修改源代码：</strong> 当你想要给一个已存在的类添加新功能，但又不想修改其源代码时，装饰器模式非常有用。通过创建装饰器类来包装原始类，你可以在不改变原始类结构的情况下添加新功能。</p>
+<p><strong>（2）动态行为组合：</strong> 你可以使用不同的装饰器来动态地组合对象的行为。例如，一个对象可以在不同时间点上被不同的装饰器装饰，从而实现不同的功能组合。</p>
+<p><strong>（3）遵循开闭原则：</strong> 装饰器模式遵循开闭原则，意味着软件实体（类、模块、函数等）应当是可扩展，而不可修改的。通过使用装饰器，你可以在不修改现有代码的情况下扩展系统的功能。</p>
+<p><strong>（4）实现灵活的功能扩展：</strong> 与继承相比，装饰器模式提供了更加灵活的功能扩展机制。通过继承实现的功能扩展是静态的，而装饰器模式允许动态地添加或移除功能。</p>
+<p><strong>（5）多层次的功能组合：</strong> 装饰器模式支持多层次的功能组合。你可以通过嵌套使用多个装饰器来组合多个功能，实现复杂的功能组合。</p>
+<p><strong>（6）处理具有多种可选行为的对象：</strong> 如果一个对象有多种可选行为，并且这些行为可以动态地改变，那么装饰器模式是一个很好的选择。例如，一个文本编辑器可能有多种可选的字体、颜色、大小等设置，这些设置可以动态地改变编辑器的外观和行为。</p>
+<p>在实际应用中，装饰器模式常用于实现如I&#x2F;O流、网络协议、GUI框架、数据库查询优化等场景，其中需要动态地组合和扩展功能。通过使用装饰器模式，你可以提高代码的灵活性和可维护性，同时保持代码的清晰和易于理解。</p>
+<h1 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h1><h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><p><strong>（1）动态增加功能：</strong> 装饰器模式允许在运行时动态地给对象添加新的功能，这使得程序具有更大的灵活性和可扩展性。可以根据需要添加或删除装饰器，而无需修改原始类的代码。</p>
+<p><strong>（2）遵循开闭原则：</strong> 使用装饰器模式，可以在不修改原始类的情况下扩展其功能，这符合开闭原则，即“软件实体（类、模块、函数等等）应当是可扩展，而不可修改的”。</p>
+<p><strong>（3）减少耦合：</strong> 装饰器和被装饰的对象可以独立发展，它们之间的耦合度很低。这意味着可以独立地改变装饰器或原始类的实现，而不会影响到另一方。</p>
+<p><strong>（4）提供多种组合方式：</strong> 通过组合不同的装饰器，可以实现不同的功能组合，从而满足不同的需求。</p>
+<h2 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h2><p><strong>（1）增加系统复杂性：</strong> 使用装饰器模式可能会增加系统的复杂性，因为需要创建大量的装饰器类来实现不同的功能。这可能会导致代码难以理解和维护。</p>
+<p><strong>（2）性能开销：</strong> 由于装饰器模式涉及到对象的嵌套和链式调用，可能会带来一定的性能开销。在每次调用方法时，都需要遍历装饰器链，这可能会降低程序的执行效率。</p>
+<p><strong>（3）调试困难：</strong> 当使用多层装饰器时，调试可能会变得困难。因为错误可能发生在原始对象、装饰器或它们之间的交互中，需要仔细检查每个部分的代码来确定问题的根源。</p>
+<h1 id="实现步骤"><a href="#实现步骤" class="headerlink" title="实现步骤"></a>实现步骤</h1><ul>
+<li><p>定义组件接口</p>
+<p>定义抽象类，定义核心功能。</p>
+<p>关键部分，允许装饰器和组件对象以统一的方式工作。</p>
+</li>
+<li><p>实现具体组件</p>
+<p>包含实际要执行的操作。</p>
+</li>
+<li><p>创建装饰器接口</p>
+<p><strong>继承</strong>自组件接口，提供一个<strong>构造函数</strong>，允许在创建装饰器对象时传入一个组件对象。</p>
+</li>
+<li><p>实现具体装饰器</p>
+<p>实现装饰器接口，添加额外功能，调用组件对象操作。</p>
+<p>在运行时动态地增强组件的功能。</p>
+</li>
+<li><p>使用装饰器</p>
+<p>创建组件对象，用装饰器增强功能。</p>
+<p>简单地创建装饰器对象并将组件对象作为参数传递来实现。</p>
+<p>可以嵌套使用，从而添加多个额外的功能。</p>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 步骤 1: 定义组件接口  </span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Component</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">virtual</span> ~<span class="built_in">Component</span>() = <span class="keyword">default</span>;</span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">operation</span><span class="params">()</span> </span>= <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 步骤 2: 实现具体组件  </span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ConcreteComponent</span> : <span class="keyword">public</span> Component &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">operation</span><span class="params">()</span> <span class="keyword">override</span> </span>&#123;</span><br><span class="line">		std::cout &lt;&lt; <span class="string">&quot;ConcreteComponent operation&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 步骤 3: 创建装饰器接口  </span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Decorator</span> : <span class="keyword">public</span> Component &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">explicit</span> <span class="title">Decorator</span><span class="params">(std::unique_ptr&lt;Component&gt; comp)</span> : component(std::move(comp)) &#123;</span>&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">operation</span><span class="params">()</span> <span class="keyword">override</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (component != <span class="literal">nullptr</span>) &#123;</span><br><span class="line">			component-&gt;<span class="built_in">operation</span>();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">	std::unique_ptr&lt;Component&gt; component;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 步骤 4: 实现具体装饰器  </span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ConcreteDecoratorA</span> : <span class="keyword">public</span> Decorator &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">explicit</span> <span class="title">ConcreteDecoratorA</span><span class="params">(std::unique_ptr&lt;Component&gt; comp)</span> : Decorator(std::move(comp)) &#123;</span>&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">operation</span><span class="params">()</span> <span class="keyword">override</span> </span>&#123;</span><br><span class="line">		std::cout &lt;&lt; <span class="string">&quot;ConcreteDecoratorA operation&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">		Decorator::<span class="built_in">operation</span>();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ConcreteDecoratorB</span> : <span class="keyword">public</span> Decorator &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">explicit</span> <span class="title">ConcreteDecoratorB</span><span class="params">(std::unique_ptr&lt;Component&gt; comp)</span> : Decorator(std::move(comp)) &#123;</span>&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">operation</span><span class="params">()</span> <span class="keyword">override</span> </span>&#123;</span><br><span class="line">		Decorator::<span class="built_in">operation</span>();</span><br><span class="line">		std::cout &lt;&lt; <span class="string">&quot;ConcreteDecoratorB operation&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 步骤 5: 使用装饰器  </span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="comment">// 创建组件对象并使用智能指针管理  </span></span><br><span class="line">	std::unique_ptr&lt;Component&gt; component = std::<span class="built_in">make_unique</span>&lt;ConcreteComponent&gt;();</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 使用装饰器增强组件，并传递智能指针  </span></span><br><span class="line">	component = std::<span class="built_in">make_unique</span>&lt;ConcreteDecoratorA&gt;(std::<span class="built_in">move</span>(component));</span><br><span class="line">	component = std::<span class="built_in">make_unique</span>&lt;ConcreteDecoratorB&gt;(std::<span class="built_in">move</span>(component));</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 执行操作  </span></span><br><span class="line">	component-&gt;<span class="built_in">operation</span>();</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 智能指针会自动管理内存，无需手动删除  </span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://aaairfox.github.io">Zhang</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://aaairfox.github.io/C%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%9B%9B%EF%BC%89%E8%A3%85%E9%A5%B0%E5%99%A8%E6%A8%A1%E5%BC%8F/">https://aaairfox.github.io/C%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%9B%9B%EF%BC%89%E8%A3%85%E9%A5%B0%E5%99%A8%E6%A8%A1%E5%BC%8F/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://aaairfox.github.io" target="_blank">AAAirFox</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/C/">C++</a></div><div class="post_share"><div class="social-share" data-image="/self/img/cover/c.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/C%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%BA%94%EF%BC%89%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/" title="C++设计模式（五）观察者模式"><img class="cover" src="/self/img/cover/c.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">C++设计模式（五）观察者模式</div></div></a></div><div class="next-post pull-right"><a href="/C%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%89%EF%BC%89%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" title="C++设计模式（三）全部工厂模式"><img class="cover" src="/self/img/cover/c.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">C++设计模式（三）全部工厂模式</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/Linux%E4%B8%8BC++%E7%A8%8B%E5%BA%8F%E4%B8%89%E7%A7%8D%E7%BC%96%E8%AF%91%E6%96%B9%E6%B3%95/" title="Linux下C++程序编译方法（一）"><img class="cover" src="/self/img/cover/c.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-03-15</div><div class="title">Linux下C++程序编译方法（一）</div></div></a></div><div><a href="/Linux%E4%B8%8B%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%BC%80%E5%8F%91/" title="Linux下C++多线程开发（一）"><img class="cover" src="/self/img/cover/c.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-07</div><div class="title">Linux下C++多线程开发（一）</div></div></a></div><div><a href="/Linux%E4%B8%8BC++%E7%A8%8B%E5%BA%8F%E7%BC%96%E8%AF%91%E6%96%B9%E6%B3%95%EF%BC%88%E4%BA%8C%EF%BC%89/" title="Linux下C++程序编译方法（二）"><img class="cover" src="/self/img/cover/c.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-26</div><div class="title">Linux下C++程序编译方法（二）</div></div></a></div><div><a href="/Linux%E4%B8%8B%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%BC%80%E5%8F%91%EF%BC%88%E4%BA%8C%EF%BC%89/" title="Linux下C++多线程开发（二）线程池"><img class="cover" src="/self/img/cover/c.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-07</div><div class="title">Linux下C++多线程开发（二）线程池</div></div></a></div><div><a href="/C%E5%8D%8F%E7%A8%8B/" title="C++协程"><img class="cover" src="/self/img/cover/c.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-04-09</div><div class="title">C++协程</div></div></a></div><div><a href="/C%E7%BA%A2%E9%BB%91%E6%A0%91/" title="C++平衡二叉树&amp;红黑树"><img class="cover" src="/self/img/cover/c.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-06-09</div><div class="title">C++平衡二叉树&amp;红黑树</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Zhang</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">92</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">27</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89"><span class="toc-number">1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">2.</span> <span class="toc-text">使用场景</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-number">3.</span> <span class="toc-text">优缺点</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%98%E7%82%B9"><span class="toc-number">3.1.</span> <span class="toc-text">优点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%BA%E7%82%B9"><span class="toc-number">3.2.</span> <span class="toc-text">缺点</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E6%AD%A5%E9%AA%A4"><span class="toc-number">4.</span> <span class="toc-text">实现步骤</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/C%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E7%A1%80/" title="C分布式系统（一）基础"><img src="/self/img/cover/cover-4.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C分布式系统（一）基础"/></a><div class="content"><a class="title" href="/C%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E7%A1%80/" title="C分布式系统（一）基础">C分布式系统（一）基础</a><time datetime="2024-04-26T14:24:16.000Z" title="发表于 2024-04-26 22:24:16">2024-04-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/EffectiveC%EF%BC%88%E4%B8%89%EF%BC%89/" title="EffectiveC（三）资源管理"><img src="/self/img/cover/c.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="EffectiveC（三）资源管理"/></a><div class="content"><a class="title" href="/EffectiveC%EF%BC%88%E4%B8%89%EF%BC%89/" title="EffectiveC（三）资源管理">EffectiveC（三）资源管理</a><time datetime="2024-04-24T15:15:31.000Z" title="发表于 2024-04-24 23:15:31">2024-04-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/EffectiveC%EF%BC%88%E5%9B%9B%EF%BC%89/" title="EffectiveC（三）资源管理"><img src="/self/img/cover/c.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="EffectiveC（三）资源管理"/></a><div class="content"><a class="title" href="/EffectiveC%EF%BC%88%E5%9B%9B%EF%BC%89/" title="EffectiveC（三）资源管理">EffectiveC（三）资源管理</a><time datetime="2024-04-24T15:15:31.000Z" title="发表于 2024-04-24 23:15:31">2024-04-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/EffectiveC%EF%BC%88%E4%BA%8C%EF%BC%89/" title="EffectiveC（二）构造/析构/赋值运算"><img src="/self/img/cover/c.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="EffectiveC（二）构造/析构/赋值运算"/></a><div class="content"><a class="title" href="/EffectiveC%EF%BC%88%E4%BA%8C%EF%BC%89/" title="EffectiveC（二）构造/析构/赋值运算">EffectiveC（二）构造/析构/赋值运算</a><time datetime="2024-04-24T08:50:48.000Z" title="发表于 2024-04-24 16:50:48">2024-04-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/EffectiveC%EF%BC%88%E4%B8%80%EF%BC%89/" title="EffectiveC（一）习惯C++"><img src="/self/img/cover/c.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="EffectiveC（一）习惯C++"/></a><div class="content"><a class="title" href="/EffectiveC%EF%BC%88%E4%B8%80%EF%BC%89/" title="EffectiveC（一）习惯C++">EffectiveC（一）习惯C++</a><time datetime="2024-04-24T04:39:53.000Z" title="发表于 2024-04-24 12:39:53">2024-04-24</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2024 By Zhang</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hello World!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div></div></body></html>
