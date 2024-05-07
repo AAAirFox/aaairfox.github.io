@@ -1,0 +1,189 @@
+/* ----------------------------------------- 字体特效 ------------------------------------- */
+/* 小标签 */
+font {
+    display: inline;
+    text-align: center;
+    vertical-align: baseline;
+    margin: 0px;
+    padding: 2px 4px;
+    font-family: 'ZhanKu_YvYangTi';
+    font-size: 1.0rem;
+    font-weight: 400;
+    line-height: 1.6;
+    color: #ffffff;
+    background-color: #6aaf7e;
+    border: none;
+    border-radius: 2px;
+}
+font[title="red"] {
+    background-color:#fe5f58;
+}
+font[title="yellow"] {
+    background-color:#ffc50a;
+}
+font[title="green"] {
+    background-color:#8bc34a;
+}
+font[title="blue"] {
+    background-color:#02aaf4;
+}
+font[title="gray"] {
+    background-color:#4c4c4c;
+}
+
+/*  强调型文本  */
+span[alt]{
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Ali_PuHuiTi';
+    font-size: 1.0rem;
+    font-weight: 400;
+    line-height: 1.5;
+}
+span[alt='solid'] {
+    text-decoration-line: underline;
+    text-decoration-color: #fc9846;
+    text-decoration-style: solid;
+    text-underline-offset: 2px;
+    text-decoration-thickness: 2px;
+    text-decoration-skip-ink: none;
+}
+span[alt='dashed'] {
+    text-decoration-line: underline;
+    text-decoration-color: #fc9846;
+    text-decoration-style: dashed;
+    text-underline-offset: 2px;
+    text-decoration-thickness: 2px;
+    text-decoration-skip-ink: none;
+}
+span[alt='dotted'] {
+    text-decoration-line: underline;
+    text-decoration-color: #fc9846;
+    text-decoration-style: dotted;
+    text-underline-offset: 2px;
+    text-decoration-thickness: 3px;
+    text-decoration-skip-ink: none;
+}
+span[alt='wavy'] {
+    text-decoration-line: underline;
+    text-decoration-color: #fc9846;
+    text-decoration-style: wavy;
+    text-underline-offset: 2px;
+    text-decoration-thickness: 2px;
+    text-decoration-skip-ink: none;
+}
+span[alt='delete'] {
+    text-decoration-line: line-through;
+    text-decoration-color: #fc9846;
+    text-decoration-style: solid;
+    text-decoration-thickness: 2px;
+}
+span[alt='shadow']{
+    text-shadow: 1px 1px 2px #FC0;
+}
+
+/* 空心字特效 */
+span[alt="hollow"]{
+    color:white;
+    text-shadow:1px 1px black,-1px -1px black,1px -1px black,-1px 1px black;
+}
+
+/* 闪烁特效 */
+@keyframes blink-smooth{50%{color:transparent;}}
+span[alt="blink"]{
+  animation:0.5s blink-smooth infinite alternate linear;
+}
+
+/* KBD */
+kbd {
+    margin: 0px;
+    padding: 2px 4px;
+    vertical-align: baseline;
+    font-family: 'Consolas';
+    font-size: 1.0rem;
+    font-weight: 200;
+    color: #000000;
+    background-color: #ffffff;
+    border-radius: 2px;
+    border-width: 2px;
+    border-color: #000000;
+}
+/* --------------------------------------------------------------------------------------- */
+
+/* ---------------------------------------- 表格 --------------------------------------- */
+/* 三线表 */
+div[alt="three-table"] table tr {
+    border: none;  
+    background-color: #fff;
+    font-weight: var(--table-tr-font-weight); 
+}
+
+div[alt="three-table"] table tr th{
+    border: none;
+    border-top: 2px solid #000;
+    border-bottom: 2px solid #000;
+    font-weight: 400; 
+    font-size: 1.0rem;
+    background-color: #fff;
+}
+
+div[alt="three-table"] table tr td{
+    border: none;
+}
+div[alt="three-table"] table tr:nth-last-child(1){
+    border-bottom: 2px solid #000;
+}
+
+*[alt="center"]{
+    text-align: center;
+}
+*[alt="left"]{
+    text-align: left;
+}
+*[alt="right"]{
+    text-align: right;
+}
+/* ------------------------------------------------------------------------------------- */
+
+
+/* ----------------------------------------- 引用块 -------------------------------------- */
+blockquote{
+    margin: 10px 0px;
+    padding: 10px;
+    font-family: 'SiYuan_HeiTi';
+    font-size: 1.0rem;
+    font-weight: 300;
+    line-height: 1.5;
+    border-left: 5px solid #a68bff;
+    background-color:  #f3f0ff;
+}
+
+blockquote[alt="info"]>*,
+blockquote[alt="warn"]>*,
+blockquote[alt="success"]>*,
+blockquote[alt="danger"]>* {
+    margin-left: 1.5em;
+}
+
+blockquote[alt="info"] {
+    border-left: 5px solid #5fa7e4;
+    background-color: #e4edf6;
+}
+
+
+blockquote[alt="warn"] {
+    border-left: 5px solid #f0ad4e;
+    background-color: #FFFACD;
+}
+
+
+blockquote[alt="danger"] {
+    border-left: 5px solid #db524f;
+    background-color: #fdeaea;
+}
+
+blockquote[alt="success"] {
+    border-left: 5px solid #5cb85c;
+    background-color: #eef7f0;
+}
+/* --------------------------------------------------------------------------------------- */
