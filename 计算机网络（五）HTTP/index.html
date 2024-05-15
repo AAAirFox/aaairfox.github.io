@@ -1,0 +1,596 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>计算机网络（五）HTTP | AAAirFox</title><meta name="author" content="Zhang"><meta name="copyright" content="Zhang"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="参考链接： http:&#x2F;&#x2F;t.csdnimg.cn&#x2F;sBijH HTTP概念HTTP概念应用层：超文本传输协议。 核心功能：在网络上的客户端和服务器之间传输超文本数据, 而这个传输过程最重要的就是构建HTTP请求和响应报文。 请求信息：客户端发给服务端。 响应信息：服务端返回客户端。  一问一答模型协议：  客户端向服务器发送http请求； 服务器收到后，根据请求，找到对应资源，并通过http响应">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机网络（五）HTTP">
+<meta property="og:url" content="https://aaairfox.github.io/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%EF%BC%88%E4%BA%94%EF%BC%89HTTP/index.html">
+<meta property="og:site_name" content="AAAirFox">
+<meta property="og:description" content="参考链接： http:&#x2F;&#x2F;t.csdnimg.cn&#x2F;sBijH HTTP概念HTTP概念应用层：超文本传输协议。 核心功能：在网络上的客户端和服务器之间传输超文本数据, 而这个传输过程最重要的就是构建HTTP请求和响应报文。 请求信息：客户端发给服务端。 响应信息：服务端返回客户端。  一问一答模型协议：  客户端向服务器发送http请求； 服务器收到后，根据请求，找到对应资源，并通过http响应">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://aaairfox.github.io/self/img/cover/cover-2.png">
+<meta property="article:published_time" content="2022-01-09T09:57:14.000Z">
+<meta property="article:modified_time" content="2024-05-15T03:39:41.925Z">
+<meta property="article:author" content="Zhang">
+<meta property="article:tag" content="计算机网络">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://aaairfox.github.io/self/img/cover/cover-2.png"><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://aaairfox.github.io/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%EF%BC%88%E4%BA%94%EF%BC%89HTTP/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '计算机网络（五）HTTP',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-05-15 11:39:41'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/self/css/stylefronts.css?1"><meta name="generator" content="Hexo 7.1.1"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">97</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">27</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-tags"></i><span> 标签</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tags/%E7%AE%97%E6%B3%95/"><span> 算法</span></a></li><li><a class="site-page child" href="/tags/Cuda/"><span> CUDA</span></a></li><li><a class="site-page child" href="/tags/C/"><span> C++</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/%E5%85%AB%E8%82%A1/"><span> 八股</span></a></li><li><a class="site-page child" href="/categories/Ubuntu%E6%93%8D%E4%BD%9C/"><span> Ubuntu</span></a></li><li><a class="site-page child" href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA/"><span> 机器人</span></a></li><li><a class="site-page child" href="/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"><span> 博客搭建</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="AAAirFox"><img class="site-icon" src="/img/favicon.ico"/><span class="site-name">AAAirFox</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-tags"></i><span> 标签</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tags/%E7%AE%97%E6%B3%95/"><span> 算法</span></a></li><li><a class="site-page child" href="/tags/Cuda/"><span> CUDA</span></a></li><li><a class="site-page child" href="/tags/C/"><span> C++</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/%E5%85%AB%E8%82%A1/"><span> 八股</span></a></li><li><a class="site-page child" href="/categories/Ubuntu%E6%93%8D%E4%BD%9C/"><span> Ubuntu</span></a></li><li><a class="site-page child" href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA/"><span> 机器人</span></a></li><li><a class="site-page child" href="/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"><span> 博客搭建</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">计算机网络（五）HTTP</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2022-01-09T09:57:14.000Z" title="发表于 2022-01-09 17:57:14">2022-01-09</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%85%AB%E8%82%A1/">八股</a></span></div><div class="meta-secondline"></div></div></div><article class="post-content" id="article-container"><p>参考链接：</p>
+<p><a target="_blank" rel="noopener" href="http://t.csdnimg.cn/sBijH">http://t.csdnimg.cn/sBijH</a></p>
+<h1 id="HTTP概念"><a href="#HTTP概念" class="headerlink" title="HTTP概念"></a>HTTP概念</h1><h2 id="HTTP概念-1"><a href="#HTTP概念-1" class="headerlink" title="HTTP概念"></a>HTTP概念</h2><p>应用层：<strong>超文本传输协议</strong>。</p>
+<p>核心功能：<strong>在网络上的客户端和服务器之间传输超文本数据</strong>, 而这个传输过程最重要的就是构建HTTP请求和响应报文。</p>
+<p>请求信息：客户端发给服务端。</p>
+<p>响应信息：服务端返回客户端。</p>
+<p><img src="./%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%EF%BC%88%E4%BA%94%EF%BC%89HTTP/1b3c2a352e20c8ac147bf6ce268f3966.png" alt="image-20240510212019020"></p>
+<p>一问一答模型协议：</p>
+<ol>
+<li>客户端向服务器发送http请求；</li>
+<li>服务器收到后，根据请求，找到对应资源，并通过http响应返回给浏览器；</li>
+<li>客户端收到html后，对页面进行渲染。</li>
+</ol>
+<h2 id="URL"><a href="#URL" class="headerlink" title="URL"></a>URL</h2><ul>
+<li><font>URI</font>：统一资源标志符</li>
+<li><font>URL</font>：统一资源定位符</li>
+<li><font>URN</font>：统一资源名称</li>
+</ul>
+<p>URL是URI的一个子集。$URI = URL ∪ URN$</p>
+<h3 id="格式"><a href="#格式" class="headerlink" title="格式"></a>格式</h3><blockquote>
+<p>标准：RFC 1738 - Uniform Resource Locators (URL)</p>
+<p><code>scheme://[username:password@]hostname[:port][/path][;parameters][?query][#fragment]</code></p>
+<p><code>[]</code>内的是非必须的。</p>
+</blockquote>
+<ul>
+<li><strong>scheme</strong>：协议。常用的协议有 http、https、ftp等，另外 scheme 也常常被称为 protocol。</li>
+<li><strong>[username:passowrd]</strong>：用户名和密码，有时候登陆时会显示，现在用到比较少</li>
+<li><strong>hostname</strong>：主机地址，该地址可以是域名也可以是IP地址，比如 <a target="_blank" rel="noopener" href="https://www.baidu.com">https://www.baidu.com</a> 这个 URL 中的 hostname 就是 www.baidu.com（百度的二级域名）。</li>
+<li><strong>port</strong>：端口，这个就是服务器设定的服务端口，例如 https:127.0.0.1:8080 这个 URL 中的端口就是 8080。但是有些 URL 中没有端口信息，这是使用了默认端口，例如 <span alt='wavy'>http 协议的默认端口是 80，https 协议的默认端口是443</span>。</li>
+<li><strong>path</strong>：路径，指的就是网络资源在服务器中的指定地址</li>
+<li><strong>parameters</strong>：参数，用来指定访问某个资源时的附加信息</li>
+<li><strong>query</strong>：查询，用来查询某个类资源，如果又多个资源，则用 <code>&amp;</code> 隔开</li>
+<li><strong>fragment</strong>：片段，是对资源描述的部分补充。</li>
+</ul>
+<h3 id="转义-URL-encode"><a href="#转义-URL-encode" class="headerlink" title="转义 URL encode"></a>转义 URL encode</h3><p><code>/ ? : @</code> 等已经被URL当做特殊字符使用，如果查询中涉及，可能导致该 URL 解析错误。所以需要对URL中的特殊字符进行<font>转义</font>。</p>
+<p>如，空格会被转义成它的<span alt='wavy'>Unicode16进制编码</span>“%20”.</p>
+<p>查看转义：<a target="_blank" rel="noopener" href="http://mytju.com/classcode/tools/encode_utf8.asp">查看字符编码UTF-8</a></p>
+<h1 id="HTTP请求"><a href="#HTTP请求" class="headerlink" title="HTTP请求"></a>HTTP请求</h1><p>4部分结构：</p>
+<ul>
+<li>请求行</li>
+<li>请求头</li>
+<li>空行：消息头和正文之间要用空行隔开</li>
+<li>请求体/请求正文</li>
+</ul>
+<p><img src="./%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%EF%BC%88%E4%BA%94%EF%BC%89HTTP/4692f215240240f3bdf27e866d37f500.png" alt="请求"></p>
+<h2 id="请求行"><a href="#请求行" class="headerlink" title="请求行"></a>请求行</h2><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GET /s?wd=%E6%89%8B%E6%9C%BA HTTP/1.1       </span><br><span class="line"># GET(请求方法)  /s?wd=%E6%89%8B%E6%9C%BA(请求资源)   HTTP/1.1 (请求协议)</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>请求方法：以何种请求方法向当前的地址发起请求。</p>
+<p>常见的请求方法有<font>GET</font>和<font>POST</font>两种。GET和POST请求方法主要的区别在于语义上面的不同。</p>
+<ul>
+<li><p>本质区别：GET主要用来进行<strong>查询数据</strong>，POST主要用来进行<strong>提交数据</strong>。</p>
+</li>
+<li><p>请求参数位置不同：是浏览器的默认行为。</p>
+<p>对于浏览器来说，浏览器在发送GET请求时，会将请求参数附着在地址栏，也就是请求报文的请求资源后；发送POST请求时，请求参数会位于请求体中，但是这仅仅是浏览器的行为，不是两者之间的本质区别。</p>
+</li>
+<li><p>安全性区别</p>
+</li>
+</ul>
+<p>另外还有<font>PUT</font>上传资源/数据，<font>DELETE</font>删除资源/数据，<font>HEAD</font>获取相应头信息，<font>OPTIONS</font>获取请求方式/测试链接。</p>
+<p>| 方法    | 说明                   | 支持的HTTP协议版本 |<br>| ———- | ——————————— | ————————— |<br>| GET     | 获取资源               | 1.0、1.1           |<br>| POST    | 传输实体主体           | 1.0、1.1           |<br>| PUT     | 传输文件               | 1.0、1.1           |<br>| HEAD    | 获取报文首部           | 1.0、1.1           |<br>| DELETE  | 删除文件               | 1.0、1.1           |<br>| OPTIONS | 询问支持的方法         | 1.1                |<br>| TRACE   | 追踪路径               | 1.1                |<br>| CONNECT | 要求用隧道协议连接代理 | 1.1                |<br>| LINK    | 建立和资源之间的联系   | 1.0                |<br>| UNLINE  | 断开连接关系           | 1.0                |</p>
+</li>
+<li><p>请求资源</p>
+<p>URL：协议，域名ORIP+端口，服务器内部路径，参数<br><a target="_blank" rel="noopener" href="https://www.baidu.com/s?rsv_idx=2&amp;hisfilter=1">https://www.baidu.com/s?rsv_idx=2&amp;hisfilter=1</a></p>
+<p>服务器内部路径(并不是真实存在的路径，只是个标识) + 参数：给目标服务器看的 -&gt; 让目标服务根据这个信息，分析用户想要什么</p>
+<p><a target="_blank" rel="noopener" href="http://101.43.69.31:8080/#/login?redirect=%2Fdashboard">http://101.43.69.31:8080/#/login?redirect=%2Fdashboard</a></p>
+</li>
+</ol>
+<p>   s?rsv_idx=2&amp;hisfilter=1  这个就是请求资源</p>
+<p>   // 访问两个不同页面时，主要的区别在于请求资源不同。它是一个给目标服务器的重要标识。</p>
+<ol>
+<li><p>请求协议</p>
+<p>目前HTTP协议的版本是HTTP/1.1，之前的一个版本是HTTP/1.0。</p>
+<p>1.0和1.1之间最大的区别在于是否支持长连接。长连接就是在一个TCP连接内发送多个HTTP请求。HTTP/1.1默认支持长连接；HTTP/1.0不支持长连接。所以1.1相较于1.0，网络访问速度会有明显提升。</p>
+</li>
+</ol>
+<h2 id="请求头"><a href="#请求头" class="headerlink" title="请求头"></a>请求头</h2><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Host</span><span class="punctuation">: </span>www.cskaoyan.com</span><br><span class="line"># 初始URL中的主机和端口,用来指明要访问目标服务器上的哪一个虚拟主机</span><br><span class="line"><span class="attribute">Connection</span><span class="punctuation">: </span>keep-alive</span><br><span class="line"># 表示是否需要持久连接。如果服务器看到这里的值为“Keep -Alive”，或者看到请求使用的是HTTP 1.1（HTTP 1.1默认进行持久连接）</span><br><span class="line"><span class="attribute">Upgrade-Insecure-Requests</span><span class="punctuation">: </span>1</span><br><span class="line"><span class="attribute">User-Agent</span><span class="punctuation">: </span>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36</span><br><span class="line"># 发出请求的浏览器类型(有些是冒充的)</span><br><span class="line"><span class="attribute">Accept</span><span class="punctuation">: </span>text/html,application/xhtml+xml,application/xml;</span><br><span class="line"># 浏览器可接受的`MIME类型`写法为` (大类型)/(小类型)`。 MIME就是使用一种大类型/小类型的方式将互联网上面的资源进行分类，比如text/html，text/txt，image/jpeg，image/png，video/mp4，video/mp3等。因为客户端和服务器在相互通讯时，需要知晓对方传递的资源类型。</span><br><span class="line"><span class="attribute">Accept-Encoding</span><span class="punctuation">: </span>gzip, deflate</span><br><span class="line"># 浏览器能够进行解码的数据编码方式，比如gzip。请求头是给服务器看的，意思是指如果服务器返回响应时需要对数据进行压缩，设置编码方式，那么应当使用客户端可以支持的编码方式。</span><br><span class="line"><span class="attribute">Accept-Language</span><span class="punctuation">: </span>zh-CN,zh;q=0.9,en;q=0.8</span><br><span class="line"># 浏览器所希望的语言种类</span><br><span class="line"><span class="attribute">Cookie</span><span class="punctuation">: </span>__yjs_duid=1_94c0d6c26a48d04ztHBDp1OrzJxavJbibLH2u7JlFEirZPMlmtowns;  </span><br><span class="line"># 保存登录信息，用来验证请求者信息</span><br></pre></td></tr></table></figure>
+<h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><h1 id="HTTP响应"><a href="#HTTP响应" class="headerlink" title="HTTP响应"></a>HTTP响应</h1><p>4部分结构：</p>
+<ul>
+<li>首行</li>
+<li>响应头</li>
+<li>空行：消息头和正文之间要用空行隔开</li>
+<li>响应体/响应正文</li>
+</ul>
+<p><img src="./%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%EF%BC%88%E4%BA%94%EF%BC%89HTTP/92df8a8a17d7455b82e4d1978aa17792.png" alt="响应"></p>
+<h2 id="首行"><a href="#首行" class="headerlink" title="首行"></a>首行</h2><p><img src="./%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%EF%BC%88%E4%BA%94%EF%BC%89HTTP/38f58559840c4f7fb3dbea3a8f593e7b.png" alt="首行"></p>
+<p>状态码有很多种，主要分为五类：1xx、2xx、3xx、4xx、5xx</p>
+<p>下面列举出各个分类常见的状态码。</p>
+<p>1xx：信息响应</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">状态码</th>
+<th style="text-align:left">说明</th>
+<th style="text-align:left">详情</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">100</td>
+<td style="text-align:left">继续</td>
+<td style="text-align:left">请求者应当继续提出请求。服务器已收到请求的一部分，正在等待其余部分</td>
+</tr>
+<tr>
+<td style="text-align:left">101</td>
+<td style="text-align:left">切换协议</td>
+<td style="text-align:left">请求者已要求服务器切换协议，服务器已确认并准备切换</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>2xx：成功响应</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">状态码</th>
+<th style="text-align:left">说明</th>
+<th style="text-align:left">详情</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">200</td>
+<td style="text-align:left">成功</td>
+<td style="text-align:left">服务器已成功处理请求</td>
+</tr>
+<tr>
+<td style="text-align:left">201</td>
+<td style="text-align:left">已创建</td>
+<td style="text-align:left">请求成功并且服务器创建了新的资源</td>
+</tr>
+<tr>
+<td style="text-align:left">202</td>
+<td style="text-align:left">已接收</td>
+<td style="text-align:left">服务器已接收请求，但尚未处理</td>
+</tr>
+<tr>
+<td style="text-align:left">203</td>
+<td style="text-align:left">非授权信息</td>
+<td style="text-align:left">服务器已成功处理了请求，但返回的信息肯来自另一个源</td>
+</tr>
+<tr>
+<td style="text-align:left">204</td>
+<td style="text-align:left">无内容</td>
+<td style="text-align:left">服务器成功处理了请求，但没有返回任何内容</td>
+</tr>
+<tr>
+<td style="text-align:left">205</td>
+<td style="text-align:left">重置内容</td>
+<td style="text-align:left">服务器成功处理了请求，内容被重置</td>
+</tr>
+<tr>
+<td style="text-align:left">206</td>
+<td style="text-align:left">部分内容</td>
+<td style="text-align:left">服务器成功处理了部分请求</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>3xx：重定向</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">状态码</th>
+<th style="text-align:left">说明</th>
+<th style="text-align:left">详情</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">300</td>
+<td style="text-align:left">多种选择</td>
+<td style="text-align:left">针对请求，服务器可执行多种操作</td>
+</tr>
+<tr>
+<td style="text-align:left">301</td>
+<td style="text-align:left">永久移动</td>
+<td style="text-align:left">请求的网页已永久移动到新位置，即永久重定向</td>
+</tr>
+<tr>
+<td style="text-align:left">302</td>
+<td style="text-align:left">临时移动</td>
+<td style="text-align:left">请求的网页暂时跳转到其他页面，即暂时重定向</td>
+</tr>
+<tr>
+<td style="text-align:left">303</td>
+<td style="text-align:left">查看其他位置</td>
+<td style="text-align:left">如果原来的请求是POST，重定向目标文档应该通过GET提取</td>
+</tr>
+<tr>
+<td style="text-align:left">304</td>
+<td style="text-align:left">未修改</td>
+<td style="text-align:left">此处请求返回的网页未经修改，继续使用上次的资源</td>
+</tr>
+<tr>
+<td style="text-align:left">305</td>
+<td style="text-align:left">使用代理</td>
+<td style="text-align:left">请求者应该使用代理访问该页面</td>
+</tr>
+<tr>
+<td style="text-align:left">307</td>
+<td style="text-align:left">临时重定向</td>
+<td style="text-align:left">临时从其他位置响应请求的资源</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>4xx：客户端错误</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">状态码</th>
+<th style="text-align:left">说明</th>
+<th style="text-align:left">详情</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">400</td>
+<td style="text-align:left">错误请求</td>
+<td style="text-align:left">服务器无法解析该请求</td>
+</tr>
+<tr>
+<td style="text-align:left">401</td>
+<td style="text-align:left">未授权</td>
+<td style="text-align:left">请求无法解析该请求</td>
+</tr>
+<tr>
+<td style="text-align:left">403</td>
+<td style="text-align:left">禁止访问</td>
+<td style="text-align:left">服务器拒绝此请求</td>
+</tr>
+<tr>
+<td style="text-align:left">404</td>
+<td style="text-align:left">未找到</td>
+<td style="text-align:left">服务器找不到请求的页面</td>
+</tr>
+<tr>
+<td style="text-align:left">405</td>
+<td style="text-align:left">方法禁用</td>
+<td style="text-align:left">服务器禁用了请求中指定的方法</td>
+</tr>
+<tr>
+<td style="text-align:left">406</td>
+<td style="text-align:left">不接收</td>
+<td style="text-align:left">无法使用请求的内容响应请求的页面</td>
+</tr>
+<tr>
+<td style="text-align:left">407</td>
+<td style="text-align:left">需要代理授权</td>
+<td style="text-align:left">请求者需要使用代理授权</td>
+</tr>
+<tr>
+<td style="text-align:left">408</td>
+<td style="text-align:left">请求超时</td>
+<td style="text-align:left">服务器请求超时</td>
+</tr>
+<tr>
+<td style="text-align:left">409</td>
+<td style="text-align:left">冲突</td>
+<td style="text-align:left">服务器在完成请求时发送的冲突</td>
+</tr>
+<tr>
+<td style="text-align:left">410</td>
+<td style="text-align:left">已删除</td>
+<td style="text-align:left">请求的资源已永久删除</td>
+</tr>
+<tr>
+<td style="text-align:left">411</td>
+<td style="text-align:left">需要有效长度</td>
+<td style="text-align:left">服务器不接收不含有效内容长度标头字段请求</td>
+</tr>
+<tr>
+<td style="text-align:left">412</td>
+<td style="text-align:left">未满足前提条件</td>
+<td style="text-align:left">服务器未满足请求者在请求中设置的某一个前提条件</td>
+</tr>
+<tr>
+<td style="text-align:left">413</td>
+<td style="text-align:left">请求实体过大</td>
+<td style="text-align:left">请求实体过大，超出服务器的处理能力</td>
+</tr>
+<tr>
+<td style="text-align:left">414</td>
+<td style="text-align:left">请求 URI 过长</td>
+<td style="text-align:left">请求的网址太长，服务器无法处理</td>
+</tr>
+<tr>
+<td style="text-align:left">415</td>
+<td style="text-align:left">不支持类型</td>
+<td style="text-align:left">请求格式不被请求页面支持</td>
+</tr>
+<tr>
+<td style="text-align:left">416</td>
+<td style="text-align:left">请求范围不符</td>
+<td style="text-align:left">页面无法提供请求范围</td>
+</tr>
+<tr>
+<td style="text-align:left">417</td>
+<td style="text-align:left">未满足期望值</td>
+<td style="text-align:left">服务器未满足期望请求标头字段的要求</td>
+</tr>
+<tr>
+<td style="text-align:left">418</td>
+<td style="text-align:left">彩蛋</td>
+<td style="text-align:left">愚人节笑话</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>5xx：服务器错误</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">状态码</th>
+<th style="text-align:left">说明</th>
+<th style="text-align:left">详情</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">500</td>
+<td style="text-align:left">服务器内部错误</td>
+<td style="text-align:left">服务器遇到错误，无法完成请求</td>
+</tr>
+<tr>
+<td style="text-align:left">501</td>
+<td style="text-align:left">未实现</td>
+<td style="text-align:left">服务器不具备完成请求的能力</td>
+</tr>
+<tr>
+<td style="text-align:left">502</td>
+<td style="text-align:left">错误网关</td>
+<td style="text-align:left">服务器作为网关或代理，接收到上游服务器的无效响应</td>
+</tr>
+<tr>
+<td style="text-align:left">503</td>
+<td style="text-align:left">服务不可用</td>
+<td style="text-align:left">服务器目前无法使用</td>
+</tr>
+<tr>
+<td style="text-align:left">504</td>
+<td style="text-align:left">网关超时</td>
+<td style="text-align:left">服务器作为网关或代理，没有及时从上游服务器收到请求</td>
+</tr>
+<tr>
+<td style="text-align:left">505</td>
+<td style="text-align:left">HTTP版本不支持</td>
+<td style="text-align:left">服务器不支持请求中使用 HTTP 协议版本</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="响应头"><a href="#响应头" class="headerlink" title="响应头"></a>响应头</h2><p>与请求头相同，都是多个键值对，每个键值对占一行。</p>
+<h2 id="正文-1"><a href="#正文-1" class="headerlink" title="正文"></a>正文</h2><p> 响应体，也能叫正文，响应的数据都存在正文中，例如请求一个网页，正文就是网页的 HTML代码。</p>
+<h1 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h1><h1 id="面试题"><a href="#面试题" class="headerlink" title="面试题"></a>面试题</h1><ol>
+<li><p>HTTP的中文全称是什么？从全称的每个字段来说明HTTP的特点。</p>
+</li>
+<li><p>URI由哪些部分组成？</p>
+</li>
+<li><p>HTTP请求报文和响应报文由哪些部分组成？HTTP常用方法有哪些？HTTP常用状态码有哪些？</p>
+</li>
+<li><p>对称加密和非对称加密有什么区别？简要说明HTTPS的握手阶段流程。</p>
+<p><strong>对称加密</strong>：</p>
+<pre><code>密钥：对称加密使用相同的密钥来加密和解密数据。
+速度：加密和解密速度快，适合于大数据量的加密。
+密钥管理：需要确保密钥的安全性，因为发送方和接收方必须共享同一密钥。
+应用：常用于数据传输和加密存储，例如AES（高级加密标准）算法。
+</code></pre><p><strong>非对称加密</strong>：</p>
+<pre><code>密钥：非对称加密使用一对密钥，公钥和私钥，公钥用于加密，私钥用于解密。
+安全性：公钥可以公开分享，私钥必须保密，提供更高的安全性。
+复杂性：加密和解密速度较慢，适合小数据量的加密，例如数字签名和安全通信。
+应用：常用于数字签名、身份验证、安全通信等，例如RSA（RSA算法）和ECC（椭圆曲线密码算法）。
+</code></pre><p><strong>流程</strong>：</p>
+<pre><code>用户向服务器发起请求: 为了获取服务器的证书和公钥
+服务器返回给用户证书和公钥
+用户验证证书是否合法
+用户使用服务器的公钥把自己的加密的机制加密, 发给服务器
+服务器拿到用户的经过公钥的加密方式, 使用私钥解密
+用户和服务器都获得了用户的加密方式
+以用户的加密方式加密信息, 进行通信
+</code></pre></li>
+<li><p>HTTP的GET和POST的区别有哪些？</p>
+<p><strong>参数位置</strong>：</p>
+<pre><code>GET请求：参数会附加在URL后面，以?分隔URL和参数，参数之间用&amp;连接，例如：http://example.com/path?name=John&amp;age=30
+POST请求：参数会作为请求的一部分发送给服务器，而不是直接暴露在URL中。
+</code></pre><p><strong>安全性</strong>：</p>
+<pre><code>GET请求：参数在URL中可见，不适合传输敏感数据，如密码等。
+POST请求：参数不直接暴露在URL中，更适合用于传输敏感数据，因为参数在请求体中，不会被直接暴露。
+</code></pre><p><strong>数据长度限制</strong>：</p>
+<pre><code>GET请求：受浏览器和服务器对URL长度的限制，传输的数据量有限。
+POST请求：可以传输更多数据量，因为请求体中可以传输较大的数据。
+</code></pre><p><strong>缓存</strong>：</p>
+<pre><code>GET请求：请求可被缓存，适合获取不经常改变的数据。
+POST请求：请求不会被缓存，适合传输需要动态修改或更新的数据。
+</code></pre><p><strong>幂等性</strong>：</p>
+<pre><code>GET请求：幂等操作，对同一URL的多次请求应该返回相同的结果。
+POST请求：非幂等操作，多次提交相同的POST请求可能导致资源状态发生改变。
+</code></pre></li>
+<li></li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://aaairfox.github.io">Zhang</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://aaairfox.github.io/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%EF%BC%88%E4%BA%94%EF%BC%89HTTP/">https://aaairfox.github.io/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%EF%BC%88%E4%BA%94%EF%BC%89HTTP/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://aaairfox.github.io" target="_blank">AAAirFox</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></div><div class="post_share"><div class="social-share" data-image="/self/img/cover/cover-2.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%88%E4%B8%80%EF%BC%89%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/" title="操作系统（一）进程与线程"><img class="cover" src="/self/img/cover/cover-1.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">操作系统（一）进程与线程</div></div></a></div><div class="next-post pull-right"><a href="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%EF%BC%88%E5%9B%9B%EF%BC%89%E5%9C%BA%E6%99%AF%E9%A2%98/" title="计算机网络（四）场景题"><img class="cover" src="/self/img/cover/cover-1.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">计算机网络（四）场景题</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%EF%BC%88%E4%B8%80%EF%BC%89OSI%E6%A8%A1%E5%9E%8B/" title="计算机网络（一）OSI模型"><img class="cover" src="/self/img/cover/cover-7.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-08</div><div class="title">计算机网络（一）OSI模型</div></div></a></div><div><a href="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%EF%BC%88%E4%B8%89%EF%BC%89Socket/" title="计算机网络（三）Socket"><img class="cover" src="/self/img/cover/cover-5.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-08</div><div class="title">计算机网络（三）Socket</div></div></a></div><div><a href="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%EF%BC%88%E4%BA%8C%EF%BC%89TCP-UDP/" title="计算机网络（二）TCP&#x2F;UDP"><img class="cover" src="/self/img/cover/cover-5.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-08</div><div class="title">计算机网络（二）TCP&#x2F;UDP</div></div></a></div><div><a href="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%EF%BC%88%E5%9B%9B%EF%BC%89%E5%9C%BA%E6%99%AF%E9%A2%98/" title="计算机网络（四）场景题"><img class="cover" src="/self/img/cover/cover-1.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-08</div><div class="title">计算机网络（四）场景题</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Zhang</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">97</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">27</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#HTTP%E6%A6%82%E5%BF%B5"><span class="toc-number">1.</span> <span class="toc-text">HTTP概念</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP%E6%A6%82%E5%BF%B5-1"><span class="toc-number">1.1.</span> <span class="toc-text">HTTP概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#URL"><span class="toc-number">1.2.</span> <span class="toc-text">URL</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.2.1.</span> <span class="toc-text">格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AC%E4%B9%89-URL-encode"><span class="toc-number">1.2.2.</span> <span class="toc-text">转义 URL encode</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HTTP%E8%AF%B7%E6%B1%82"><span class="toc-number">2.</span> <span class="toc-text">HTTP请求</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E8%A1%8C"><span class="toc-number">2.1.</span> <span class="toc-text">请求行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E5%A4%B4"><span class="toc-number">2.2.</span> <span class="toc-text">请求头</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A3%E6%96%87"><span class="toc-number">2.3.</span> <span class="toc-text">正文</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HTTP%E5%93%8D%E5%BA%94"><span class="toc-number">3.</span> <span class="toc-text">HTTP响应</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A6%96%E8%A1%8C"><span class="toc-number">3.1.</span> <span class="toc-text">首行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%93%8D%E5%BA%94%E5%A4%B4"><span class="toc-number">3.2.</span> <span class="toc-text">响应头</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A3%E6%96%87-1"><span class="toc-number">3.3.</span> <span class="toc-text">正文</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HTTPS"><span class="toc-number">4.</span> <span class="toc-text">HTTPS</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="toc-number">5.</span> <span class="toc-text">面试题</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/C%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" title="C正则表达式"><img src="/self/img/cover/c.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C正则表达式"/></a><div class="content"><a class="title" href="/C%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" title="C正则表达式">C正则表达式</a><time datetime="2024-05-14T02:46:23.000Z" title="发表于 2024-05-14 10:46:23">2024-05-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/%E5%8D%8F%E7%A8%8B%E4%B9%8Blibco%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%EF%BC%88%E4%B8%80%EF%BC%89/" title="协程之libco源码阅读（一）"><img src="/self/img/cover/c.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="协程之libco源码阅读（一）"/></a><div class="content"><a class="title" href="/%E5%8D%8F%E7%A8%8B%E4%B9%8Blibco%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%EF%BC%88%E4%B8%80%EF%BC%89/" title="协程之libco源码阅读（一）">协程之libco源码阅读（一）</a><time datetime="2024-05-12T06:53:35.000Z" title="发表于 2024-05-12 14:53:35">2024-05-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/Typora%E6%B7%BB%E5%8A%A0%E6%A0%87%E9%A2%98%E8%87%AA%E5%8A%A8%E5%BA%8F%E5%8F%B7/" title="Typora添加标题自动序号"><img src="/self/img/cover/markdown.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Typora添加标题自动序号"/></a><div class="content"><a class="title" href="/Typora%E6%B7%BB%E5%8A%A0%E6%A0%87%E9%A2%98%E8%87%AA%E5%8A%A8%E5%BA%8F%E5%8F%B7/" title="Typora添加标题自动序号">Typora添加标题自动序号</a><time datetime="2024-05-07T02:37:53.000Z" title="发表于 2024-05-07 10:37:53">2024-05-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/happysimple-demo/" title="自定义标签方法及测试demo"><img src="/self/img/cover/markdown.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="自定义标签方法及测试demo"/></a><div class="content"><a class="title" href="/happysimple-demo/" title="自定义标签方法及测试demo">自定义标签方法及测试demo</a><time datetime="2024-04-27T10:21:49.000Z" title="发表于 2024-04-27 18:21:49">2024-04-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/C%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E7%A1%80/" title="C分布式系统（一）基础"><img src="/self/img/cover/cover-4.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C分布式系统（一）基础"/></a><div class="content"><a class="title" href="/C%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E7%A1%80/" title="C分布式系统（一）基础">C分布式系统（一）基础</a><time datetime="2024-04-26T14:24:16.000Z" title="发表于 2024-04-26 22:24:16">2024-04-26</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2024 By Zhang</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hello World!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div></div></body></html>
