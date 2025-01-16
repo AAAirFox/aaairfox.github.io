@@ -7,6 +7,9 @@
         <mxCell id="K3VsKg-aY73Qc9NV4_kC-1" value="采集" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="60" y="180" width="60" height="60" as="geometry" />
         </mxCell>
+        <mxCell id="K3VsKg-aY73Qc9NV4_kC-2" value="预处理" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="140" y="180" width="60" height="60" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
